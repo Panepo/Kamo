@@ -83,3 +83,12 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# =========================
+*.map
+*.bak
+*.bat
+test*.html
+test*.js
+test*.json
+bundle.js
