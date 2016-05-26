@@ -7,7 +7,8 @@ class Content extends Component {
 		const {  } = this.props
 		
 		return (
-			<main>
+			<main className="mdl-layout__content">
+				<div className="page-content">Content</div>
 			</main>
 		)
 	}
