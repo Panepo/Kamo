@@ -20,8 +20,8 @@ class Header extends Component {
 					modelId={listStatusS[i]}
 					display={dispStatus}
 					onClickFunc={(modelId) => statusChange(modelId)}
-					Cactive={"mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent mdl-button--raised"}
-					Cinactive={"mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent"}
+					Cactive={"mdl-layout__tab is-active"}
+					Cinactive={"mdl-layout__tab"}
 					title={listStatus[i]} />
 			)
 			buttonOut.push(buttonTemp)
@@ -30,11 +30,17 @@ class Header extends Component {
 		return (
 			<header className="mdl-layout__header">
 				<div className="mdl-layout__header-row">
-					<span className="mdl-layout-title">Title</span>
+					<span className="mdl-layout-title">Kamo</span>
 					<div className="mdl-layout-spacer"></div>
 					<nav className="mdl-navigation mdl-layout--large-screen-only">
-						{buttonOut}
+						<a className="mdl-navigation__link" href="">Link</a>
+						<a className="mdl-navigation__link" href="">Link</a>
+						<a className="mdl-navigation__link" href="">Link</a>
+						<a className="mdl-navigation__link" href="">Link</a>
 					</nav>
+				</div>
+				<div className="mdl-layout__tab-bar mdl-js-ripple-effect">
+					{buttonOut}
 				</div>
 			</header>
 		)
