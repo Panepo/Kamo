@@ -30,7 +30,7 @@ class Header extends Component {
 		return (
 			<header className="mdl-layout__header">
 				<div className="mdl-layout__header-row">
-					<span className="mdl-layout-title">Kamo</span>
+					<span className="mdl-layout-title">KAMO</span>
 					<div className="mdl-layout-spacer"></div>
 					<nav className="mdl-navigation mdl-layout--large-screen-only">
 						<a className="mdl-navigation__link" href="">Link</a>

@@ -1,1 +1,2 @@
 export const STATUS_CHANGE = 'STATUS_CHANGE'
+export const TYPE_CHANGE = 'TYPE_CHANGE'

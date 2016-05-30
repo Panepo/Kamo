@@ -1,7 +1,7 @@
 {
   "name": "kamo",
   "version": "1.0.0",
-  "description": "Kancolle Aircontrol M O",
+  "description": "Kancolle Aircontrol Manipulation Object",
   "main": "index.js",
 	"scripts": {
     "parser": "lsc  ./raw/parser.ls --nodejs --harmoy",

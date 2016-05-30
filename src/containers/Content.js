@@ -25,13 +25,11 @@ class Content extends Component {
 						<FleetStatus />
 					</div>
 				break
-				break
 			case listStatusS[2]:
 				dispTemp = 
 					<div className={listStatusS[2]}>
 						<FleetMap />
 					</div>
-				break
 				break
 			default:
 				dispTemp = <div className={dispStatus}>{dispStatus}</div>

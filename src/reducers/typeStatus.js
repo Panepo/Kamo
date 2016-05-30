@@ -1,14 +1,14 @@
 import {
-	STATUS_CHANGE
+	TYPE_CHANGE
 } from '../constants/ConstActionTypes'
 
 const initialState = {
-	status: 'group'
+	status: 'fighter'
 }
 
-export default function dispStatus(state = initialState, action) {
+export default function typeStatus(state = initialState, action) {
 	switch (action.type) {
-		case STATUS_CHANGE:
+		case TYPE_CHANGE:
 			return Object.assign({}, state, {
 				status: action.modelId
 			})

@@ -7,3 +7,10 @@ export function statusChange(modelId) {
 	}
 }
 
+export function typeChange(modelId) {
+	return {
+		type: types.TYPE_CHANGE,
+		modelId
+	}
+}
+
