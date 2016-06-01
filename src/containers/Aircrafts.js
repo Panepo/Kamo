@@ -3,14 +3,19 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import ToggleImgButton from '../components/ToggleImgButton'
+import ListAircraft from '../components/ListAircraft'
 
 import { typeChange } from '../actions'
 import { listAircraft, listAircraftS } from '../constants/ConstList'
 import '../../css/Aircrafts.css'
 
 class Aircrafts extends Component {
+	componentDidUpdate() {
+		componentHandler.upgradeDom()
+	}
+	
 	render() {
-		const { typeStatus, typeChange } = this.props
+		const { typeSelect, typeChange, data } = this.props
 		
 		var buttonTemp
 		var buttonOut = []
@@ -19,7 +24,7 @@ class Aircrafts extends Component {
 				<ToggleImgButton
 					key={"imgButton" + i.toString()}
 					modelId={listAircraft[i]}
-					display={typeStatus}
+					display={typeSelect}
 					onClickFunc={(modelId) => typeChange(modelId)}
 					Cactive={"img-button img-active"}
 					Cinactive={"img-button img-inactive"}
@@ -29,33 +34,44 @@ class Aircrafts extends Component {
 			buttonOut.push(buttonTemp)
 		}
 		
+		
 		return (
 			<div>
-				{buttonOut}
+				<div className="button-table mdl-shadow--2dp">
+					{buttonOut}
+				</div>
+				<div>
+					<ListAircraft
+						data={data}
+						onClickFunc={(modelId) => typeChange(modelId)}
+						/>
+				</div>
 			</div>
 		)
 	}
 }
 
 Aircrafts.propTypes = {
-	typeStatus: PropTypes.string.isRequired
+	typeSelect: PropTypes.string.isRequired,
+	data: PropTypes.array.isRequired
 }
 
 const mapStateToProps = (state) => {
 	return {
-		typeStatus: state.typeStatus.status
+		typeSelect: state.dataAircraft.typeSelect,
+		data: state.dataAircraft.output
 	}
 }
 
-/*const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
 	return {
 		typeChange: bindActionCreators(typeChange, dispatch)
 
 	}
-}*/
+}
 
 
 export default connect(
 	mapStateToProps,
-	{ typeChange }
+	mapDispatchToProps
 )(Aircrafts)

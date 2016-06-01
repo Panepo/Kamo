@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
 import { default as dispStatus } from './dispStatus'
-import { default as typeStatus } from './typeStatus'
+import { default as dataAircraft } from './dataAircraft'
 
 export default combineReducers({
 	dispStatus,
-	typeStatus
+	dataAircraft
 })

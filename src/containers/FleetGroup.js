@@ -9,7 +9,7 @@ class FleetGroup extends Component {
 		return (
 			<div className="page-content">
 				<div className="mdl-grid">
-					<div className="mdl-cell mdl-cell--2-col mdl-color--white mdl-shadow--4dp">
+					<div className="mdl-cell mdl-cell--2-col mdl-color--white">
 						<Aircrafts />
 					</div>
 					<div className="mdl-cell mdl-cell--4-col mdl-color--white mdl-shadow--4dp">4</div>
