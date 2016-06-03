@@ -14,3 +14,10 @@ export function typeChange(modelId) {
 	}
 }
 
+export function aircraftChange(modelId) {
+	return {
+		type: types.AIRCRAFT_CHANGE,
+		modelId
+	}
+}
+

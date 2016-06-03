@@ -25,3 +25,11 @@
 	width: 100%;
 	margin-top: 5px;
 }
+
+.aircraft-button {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: calc(100% - 42px);
+}

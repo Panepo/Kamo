@@ -8,6 +8,10 @@ import { listStatus, listStatusS } from '../constants/ConstList'
 import '../../css/Content.css'
 
 class Content extends Component {
+	componentDidUpdate() {
+		componentHandler.upgradeDom()
+	}
+	
 	render() {
 		const { dispStatus } = this.props
 		

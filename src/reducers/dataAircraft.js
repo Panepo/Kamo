@@ -1,5 +1,6 @@
 import {
-	TYPE_CHANGE
+	TYPE_CHANGE,
+	AIRCRAFT_CHANGE
 } from '../constants/ConstActionTypes'
 
 import lokijs from 'lokijs'
@@ -14,7 +15,8 @@ for (var i=0; i<aircraftData.length; i++) {
 
 const initialState = {
 	typeSelect: 'fighter',
-	output: dbAircraft.chain().find({ 'type': 'fighter' }).simplesort('id').data()
+	output: dbAircraft.chain().find({ 'type': 'fighter' }).simplesort('id').data(),
+	aircraftSelect: '0'
 }
 
 export default function dataAircraft(state = initialState, action) {
@@ -24,6 +26,16 @@ export default function dataAircraft(state = initialState, action) {
 				typeSelect: action.modelId,
 				output: dbAircraft.chain().find({ 'type': action.modelId }).simplesort('id').data()
 			})
+		case AIRCRAFT_CHANGE:
+			if ( state.aircraftSelect === action.modelId ) {
+				return Object.assign({}, state, {
+					aircraftSelect: '0'
+				})
+			} else {
+				return Object.assign({}, state, {
+					aircraftSelect: action.modelId
+				})
+			}
 		default:
 			return state
 	}

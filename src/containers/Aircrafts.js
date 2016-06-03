@@ -2,10 +2,10 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+import ToggleButton from '../components/ToggleButton'
 import ToggleImgButton from '../components/ToggleImgButton'
-import ListAircraft from '../components/ListAircraft'
 
-import { typeChange } from '../actions'
+import { typeChange, aircraftChange } from '../actions'
 import { listAircraft, listAircraftS } from '../constants/ConstList'
 import '../../css/Aircrafts.css'
 
@@ -15,7 +15,7 @@ class Aircrafts extends Component {
 	}
 	
 	render() {
-		const { typeSelect, typeChange, data } = this.props
+		const { typeSelect, typeChange, aircraftData, aircraftSelect, aircraftChange } = this.props
 		
 		var buttonTemp
 		var buttonOut = []
@@ -34,17 +34,29 @@ class Aircrafts extends Component {
 			buttonOut.push(buttonTemp)
 		}
 		
+		var tableTemp
+		var tableOut = []
+		for (var i=0; i<aircraftData.length; i++){
+			tableTemp = (
+				<ToggleButton
+					modelId={aircraftData[i].id}
+					key={"tableAircraft" + i.toString()}
+					display={aircraftSelect}
+					onClickFunc={(modelId) => aircraftChange(modelId)}
+					Cactive={"aircraft-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"}
+					Cinactive={"aircraft-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"}
+					title={aircraftData[i].name} />
+			)
+			tableOut.push(tableTemp)
+		}
 		
 		return (
 			<div>
 				<div className="button-table mdl-shadow--2dp">
 					{buttonOut}
 				</div>
-				<div>
-					<ListAircraft
-						data={data}
-						onClickFunc={(modelId) => typeChange(modelId)}
-						/>
+				<div className="aircraft-table mdl-shadow--2dp">
+					{tableOut}
 				</div>
 			</div>
 		)
@@ -53,20 +65,22 @@ class Aircrafts extends Component {
 
 Aircrafts.propTypes = {
 	typeSelect: PropTypes.string.isRequired,
-	data: PropTypes.array.isRequired
+	aircraftData: PropTypes.array.isRequired,
+	aircraftSelect: PropTypes.string.isRequired
 }
 
 const mapStateToProps = (state) => {
 	return {
 		typeSelect: state.dataAircraft.typeSelect,
-		data: state.dataAircraft.output
+		aircraftData: state.dataAircraft.output,
+		aircraftSelect: state.dataAircraft.aircraftSelect
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		typeChange: bindActionCreators(typeChange, dispatch)
-
+		typeChange: bindActionCreators(typeChange, dispatch),
+		aircraftChange: bindActionCreators(aircraftChange, dispatch)
 	}
 }
 
