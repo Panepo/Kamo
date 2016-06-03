@@ -7,13 +7,6 @@ export function statusChange(modelId) {
 	}
 }
 
-export function typeChange(modelId) {
-	return {
-		type: types.TYPE_CHANGE,
-		modelId
-	}
-}
-
 export function aircraftChange(modelId) {
 	return {
 		type: types.AIRCRAFT_CHANGE,
@@ -21,3 +14,16 @@ export function aircraftChange(modelId) {
 	}
 }
 
+export function aircraftTypeChange(modelId) {
+	return {
+		type: types.AIRCRAFT_TYPE_CHANGE,
+		modelId
+	}
+}
+
+export function carrierSortChange(modelId) {
+	return {
+		type: types.CARRIER_SORT_CHANGE,
+		modelId
+	}
+}

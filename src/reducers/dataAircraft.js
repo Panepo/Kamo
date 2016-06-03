@@ -1,5 +1,5 @@
 import {
-	TYPE_CHANGE,
+	AIRCRAFT_TYPE_CHANGE,
 	AIRCRAFT_CHANGE
 } from '../constants/ConstActionTypes'
 
@@ -21,7 +21,7 @@ const initialState = {
 
 export default function dataAircraft(state = initialState, action) {
 	switch (action.type) {
-		case TYPE_CHANGE:
+		case AIRCRAFT_TYPE_CHANGE:
 			return Object.assign({}, state, {
 				typeSelect: action.modelId,
 				output: dbAircraft.chain().find({ 'type': action.modelId }).simplesort('id').data()

@@ -1,8 +1,27 @@
-#slotAircraft = <[name type id bomb torpedo air scout sonar desc]>
+#slotAircraft = <[name type id torpedo bomb air sonar scout]>
 aircrafts = [
-["九六式艦戦"					"fighter"		"19", 0, 0, 2, 0, 0, "対空+2"]
-["零式艦戦21型"				"fighter"		"20", 0, 0, 5, 0, 0, "対空+5"]
-["零式艦戦52型"				"fighter"		"21", 0, 0, 6, 0, 0, "対空+6"]
+["九六式艦戦"							"fighter"		"19",  0, 0, 2, 0, 0]
+["零式艦戦21型"						"fighter"		"20",  0, 0, 5, 0, 0]
+["零式艦戦52型"						"fighter"		"21",  0, 0, 6, 0, 0]
+
+
+["零式艦戦62型(爆戦)"			"bomber"		"60",  0, 4, 4, 3, 0]
+["零戦62型(爆戦/岩井隊)"	"bomber"		"154", 0, 4, 7, 3, 1]
+
+["九七式艦攻"							"torpedo"		"16",  5, 0, 0, 4, 1]
+["九七式艦攻(九三一空)"		"torpedo"		"82",  6, 0, 0, 7, 2]
+
+["二式艦上偵察機"					"scout"			"61",  0, 0, 0, 0, 7]
+
+["瑞雲"										"seaplane"	"26",  0, 4, 2, 4, 6]
+
+["Ro.44水上戦闘機"				"seaplaneX"	"164", 0, 0, 2, 1, 2]
+
+["カ号観測機"							"heli"			"69",  0, 0, 0, 9, 0]
+
+["三式指揮連絡機(対潜)"		"blue"			"70",  0, 0, 0, 7, 1]
+
+["二式大艇"								"big"				"138", 0, 0, 0, 1, 12]
 ]
 
 module.exports = aircrafts
