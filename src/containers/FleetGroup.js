@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import AircraftType from './AircraftType'
 import Aircrafts from './Aircrafts'
 import Carriers from './Carriers'
+import Group from './Group'
 
 class FleetGroup extends Component {
 	componentDidUpdate() {
@@ -14,12 +16,10 @@ class FleetGroup extends Component {
 		return (
 			<div className="page-content">
 				<div className="mdl-grid">
-					<div className="mdl-cell mdl-cell--3-col">
-						<Aircrafts />
-					</div>
-					<div className="mdl-cell mdl-cell--9-col">
-						<Carriers />
-					</div>
+					<AircraftType />
+					<Aircrafts />
+					<Carriers />
+					<Group />
 				</div>
 			</div>
 		)

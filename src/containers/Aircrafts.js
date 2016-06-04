@@ -2,9 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import ToggleButton from '../components/ToggleButton'
-import ToggleImgButton from '../components/ToggleImgButton'
-import { aircraftTypeChange, aircraftChange } from '../actions'
-import { listAircraft, listAircraftS } from '../constants/ConstList'
+import { aircraftChange } from '../actions'
 import '../../css/Aircrafts.css'
 
 class Aircrafts extends Component {
@@ -13,26 +11,7 @@ class Aircrafts extends Component {
 	}
 	
 	render() {
-		const { typeSelect, aircraftTypeChange, aircraftData, aircraftSelect, aircraftChange } = this.props
-		
-		var stringTemp = ''
-		var buttonTemp
-		var buttonOut = []
-		for (var i=0; i<listAircraft.length; i++){
-			stringTemp = "./image/icon/" + listAircraftS[i]
-			buttonTemp = (
-				<ToggleImgButton
-					key={"imgButton" + i.toString()}
-					modelId={listAircraft[i]}
-					display={typeSelect}
-					onClickFunc={(modelId) => aircraftTypeChange(modelId)}
-					Cactive={"img-button img-active"}
-					Cinactive={"img-button img-inactive"}
-					imgSrc={stringTemp}
-					title={listAircraft[i]} />
-			)
-			buttonOut.push(buttonTemp)
-		}
+		const { aircraftData, aircraftSelect, aircraftChange } = this.props
 		
 		var tableTemp
 		var tableOut = []
@@ -51,27 +30,20 @@ class Aircrafts extends Component {
 		}
 		
 		return (
-			<div>
-				<div className="button-table mdl-shadow--4dp">
-					{buttonOut}
-				</div>
-				<div className="aircraft-table mdl-shadow--4dp">
-					{tableOut}
-				</div>
+			<div className="overflow-list mdl-cell mdl-cell--2-col mdl-shadow--4dp">
+				{tableOut}
 			</div>
 		)
 	}
 }
 
 Aircrafts.propTypes = {
-	typeSelect: PropTypes.string.isRequired,
 	aircraftData: PropTypes.array.isRequired,
 	aircraftSelect: PropTypes.string.isRequired
 }
 
 const mapStateToProps = (state) => {
 	return {
-		typeSelect: state.dataAircraft.typeSelect,
 		aircraftData: state.dataAircraft.output,
 		aircraftSelect: state.dataAircraft.aircraftSelect
 	}
@@ -79,7 +51,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		aircraftTypeChange: bindActionCreators(aircraftTypeChange, dispatch),
 		aircraftChange: bindActionCreators(aircraftChange, dispatch)
 	}
 }

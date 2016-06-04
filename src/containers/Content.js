@@ -41,7 +41,7 @@ class Content extends Component {
 		
 		
 		return (
-			<main className="mdl-layout__content">
+			<main className="content mdl-layout__content">
 				{dispTemp}
 			</main>
 		)

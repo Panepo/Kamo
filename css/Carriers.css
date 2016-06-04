@@ -1,3 +1,7 @@
-.carrier-table {
-	width: 100%;
+.carrier-button {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: calc(100% - 10px);
 }

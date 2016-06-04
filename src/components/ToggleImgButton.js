@@ -11,10 +11,10 @@ export default class ToggleImgButton extends Component {
 			bClassName = "mdl-button mdl-js-button mdl-js-ripple-effect " + Cinactive
 		}
 		
-		var srcTemp = imgSrc + '.png'
+		var srcTemp = imgSrc
 		return (
 			<button className={bClassName} onClick={onClickFunc.bind(null, modelId)}>
-				<img src={srcTemp} alt={title} height="30" width="30" />
+				<img src={srcTemp} alt={title} />
 			</button>
 		)
 	}

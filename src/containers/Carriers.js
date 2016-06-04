@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import ToggleButton from '../components/ToggleButton'
-import { carrierSortChange } from '../actions'
-import { listCarrierThead, listCarrierTbody } from '../constants/ConstList'
+import ToggleImgButton from '../components/ToggleImgButton'
+import { carrierSelect } from '../actions'
 import '../../css/Carriers.css'
 
 class Carriers extends Component {
@@ -12,92 +11,60 @@ class Carriers extends Component {
 	}
 	
 	render() {
-		const { carrierData, carrierSort, carrierSortChange } = this.props
+		const { carrierData, carrierSelect, selectData } = this.props
 		
-		var theadTemp
-		var theadOut = []
 		var stringTemp = ''
-		for (var i=0; i<listCarrierThead.length; i++){
-			stringTemp = 'thead' + i.toString()
-			theadTemp = (
-				<th key={stringTemp} >
-					<ToggleButton
-						modelId={listCarrierTbody[i]}
-						key={"thCarrier" + i.toString()}
-						display={carrierSort}
-						onClickFunc={(modelId) => carrierSortChange(modelId)}
-						Cactive={"mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"}
-						Cinactive={"mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"}
-						title={listCarrierThead[i]} />
-				</th>
-				)
-			theadOut.push(theadTemp)
-		}
-		theadOut = <thead><tr>{theadOut}</tr></thead>
-		
-		var tdTemp
-		var tdOut = []
-		var tbodyOut = []
-		var imgSrcTemp = ''
 		var idTemp = ''
+		var buttonTemp
+		var buttonOut = []
 		for (var i=0; i<carrierData.length; i++){
-			tdOut = []
-			for (var j=0; j<listCarrierTbody.length; j++){
-				stringTemp = 'tbody' + i.toString() + j.toString()
-				if ( j === 0 ) {
-					imgSrcTemp = 'image/ship/' + carrierData[i][listCarrierTbody[j]] + '.jpg'
-					tdTemp = (
-						<td key={stringTemp}>
-							<img src={imgSrcTemp} />
-						</td>
-						)
-				} else {
-					idTemp = carrierData[i].id + listCarrierTbody[j]
-					tdTemp = (
-						<td key={stringTemp}>
-							<ToggleButton
-								modelId={idTemp}
-								key={"tdCarrier" + i.toString()}
-								display={"0"}
-								onClickFunc={(modelId) => carrierSortChange(modelId)}
-								Cactive={"carrier-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"}
-								Cinactive={"carrier-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"}
-								title={ carrierData[i][listCarrierTbody[j]].toString() } />
-						</td>
-						)
+			stringTemp = "./image/ship/" + carrierData[i].id + '.jpg'
+			
+			if ( selectData.length > 0) {
+				for (var j=0; j<selectData.length; j++){
+					if ( selectData[j].id === carrierData[i].id) {
+						idTemp = carrierData[i].id
+					}
 				}
-				tdOut.push(tdTemp)
 			}
-			stringTemp = 'tr' + i.toString()
-			tdOut = <tr key={stringTemp}>{tdOut}</tr>
-			tbodyOut.push(tdOut)
+			
+			buttonTemp = (
+				<ToggleImgButton
+					key={"carrierButton" + i.toString()}
+					modelId={carrierData[i].id}
+					display={idTemp}
+					onClickFunc={(modelId) => carrierSelect(modelId)}
+					Cactive={"carrier-button mdl-button--raised mdl-button--colored"}
+					Cinactive={"carrier-button"}
+					imgSrc={stringTemp}
+					title={carrierData[i].name} />
+			)
+			buttonOut.push(buttonTemp)
 		}
-		tbodyOut = <tbody>{tbodyOut}</tbody>
 		
 		return (
-			<table className="carrier-table mdl-data-table mdl-js-data-table mdl-shadow--4dp">
-				{theadOut}
-				{tbodyOut}
-			</table>
+			<div className="overflow-list mdl-cell mdl-cell--2-col mdl-shadow--4dp">
+				{buttonOut}
+			</div>
 		)
 	}
 }
 
 Carriers.propTypes = {
 	carrierData: PropTypes.array.isRequired,
-	carrierSort: PropTypes.string.isRequired
+	selectData: PropTypes.array.isRequired
 }
 
 const mapStateToProps = (state) => {
 	return {
-		carrierData: state.dataCarrier.output,
-		carrierSort: state.dataCarrier.sort
+		carrierData: state.dataCarrier.dbTypeQuery,
+		selectData: state.dataCarrier.dbSelect
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		carrierSortChange: bindActionCreators(carrierSortChange, dispatch)
+		carrierSelect: bindActionCreators(carrierSelect, dispatch)
 	}
 }
 

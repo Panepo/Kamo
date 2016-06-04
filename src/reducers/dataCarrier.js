@@ -1,6 +1,6 @@
 import {
 	AIRCRAFT_TYPE_CHANGE,
-	CARRIER_SORT_CHANGE
+	CARRIER_SELECT
 } from '../constants/ConstActionTypes'
 
 import lokijs from 'lokijs'
@@ -14,23 +14,33 @@ for (var i=0; i<carrierData.length; i++) {
 }
 
 const initialState = {
-	output: dbCarrier.chain().find({ 'fighter': 1 }).simplesort('id').data(),
-	typeSelect: 'fighter',
-	sort: 'id'
+	dbTypeQuery: dbCarrier.chain().find({ 'fighter': 1 }).simplesort('type').data(),
+	dbSelect: []
 }
 
 export default function dataCarrier(state = initialState, action) {
 	switch (action.type) {
 		case AIRCRAFT_TYPE_CHANGE:
 			return Object.assign({}, state, {
-				typeSelect: action.modelId,
-				output: dbCarrier.chain().where( function( obj ){ return obj[action.modelId] == 1 }).simplesort(state.sort).data()
+				dbTypeQuery: dbCarrier.chain().where( function( obj ){ return obj[action.modelId] == 1 }).simplesort('type').data()
 			})
-		case CARRIER_SORT_CHANGE:
+		case CARRIER_SELECT:
+			var carrierSelect = dbCarrier.findOne({'id': action.modelId })
+			var carrierSelected = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('type').data()
+			
+			if ( carrierSelect.select > 0 ) {
+				carrierSelect.select = 0;
+			} else {
+				if ( carrierSelected.length < 6) {
+					carrierSelect.select = 11 + carrierSelected.length;
+				}
+			}
+			dbCarrier.update(carrierSelect)
+			
 			return Object.assign({}, state, {
-				sort: action.modelId,
-				output: dbCarrier.chain().where( function( obj ){ return obj[state.typeSelect] == 1 }).simplesort(action.modelId).data()
+				dbSelect: dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
 			})
+			
 		default:
 			return state
 	}

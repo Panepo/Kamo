@@ -21,9 +21,9 @@ export function aircraftTypeChange(modelId) {
 	}
 }
 
-export function carrierSortChange(modelId) {
+export function carrierSelect(modelId) {
 	return {
-		type: types.CARRIER_SORT_CHANGE,
+		type: types.CARRIER_SELECT,
 		modelId
 	}
 }
