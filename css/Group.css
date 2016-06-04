@@ -1,3 +1,7 @@
 .group-table {
 	width: 100%;
 }
+
+.group-button {
+	max-width: 20%;
+}

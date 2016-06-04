@@ -57,8 +57,8 @@ Carriers.propTypes = {
 
 const mapStateToProps = (state) => {
 	return {
-		carrierData: state.dataCarrier.dbTypeQuery,
-		selectData: state.dataCarrier.dbSelect
+		carrierData: state.dbStore.dbCarrierTypeQuery,
+		selectData: state.dbStore.dbCarrierSelect
 	}
 }
 

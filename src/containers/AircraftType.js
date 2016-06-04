@@ -47,7 +47,7 @@ AircraftType.propTypes = {
 
 const mapStateToProps = (state) => {
 	return {
-		typeSelect: state.dataAircraft.typeSelect
+		typeSelect: state.dbStore.aircraftTypeSelect
 	}
 }
 
