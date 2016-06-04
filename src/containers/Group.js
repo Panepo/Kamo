@@ -60,7 +60,7 @@ class Group extends Component {
 					var classTemp = "group-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"
 					
 					if ( selectData[i][slotID] ) {
-						textTemp = selectData[i][slotName]
+						textTemp = selectData[i][slotName].slice(0,5)
 						
 						switch ( selectData[i][slotType] ) {
 							case listAircraft[0]:
@@ -76,19 +76,19 @@ class Group extends Component {
 								classTemp = classTemp + " mdl-color--yellow-900 mdl-button--raised"
 								break;
 							case listAircraft[4]:
-								classTemp = classTemp + " mdl-color--green-400 mdl-button--raised"
+								classTemp = classTemp + " mdl-color--green-500 mdl-button--raised"
 								break;
 							case listAircraft[5]:
-								classTemp = classTemp + " mdl-color--green-400 mdl-button--raised"
+								classTemp = classTemp + " mdl-color--green-500 mdl-button--raised"
 								break;
 							case listAircraft[6]:
-								classTemp = classTemp + " mdl-color--green-400 mdl-button--raised"
+								classTemp = classTemp + " mdl-color--green-500 mdl-button--raised"
 								break;
 							case listAircraft[7]:
-								classTemp = classTemp + " mdl-color--blue-400 mdl-button--raised"
+								classTemp = classTemp + " mdl-color--blue-500 mdl-button--raised"
 								break;
 							case listAircraft[8]:
-								classTemp = classTemp + " mdl-color--green-400 mdl-button--raised"
+								classTemp = classTemp + " mdl-color--green-500 mdl-button--raised"
 								break;
 						}
 						

@@ -94,17 +94,22 @@ export default function dbStore(state = initialState, action) {
 				seletcedTarget[slotID] = null
 				seletcedTarget[slotName] = null
 				seletcedTarget[slotType] = null
+				dbCarrier.update(seletcedTarget)
+				return Object.assign({}, state, {
+					dbCarrierSelect: dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
+				})
 			} else {
-				seletcedTarget[slotID] = selectedAC.id
-				seletcedTarget[slotName] = selectedAC.name
-				seletcedTarget[slotType] = selectedAC.type
+				if ( seletcedTarget[selectedAC.type] === 1 ) {
+					seletcedTarget[slotID] = selectedAC.id
+					seletcedTarget[slotName] = selectedAC.name
+					seletcedTarget[slotType] = selectedAC.type
+					dbCarrier.update(seletcedTarget)
+					return Object.assign({}, state, {
+						dbCarrierSelect: dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
+					})
+				}
 			}
-			dbCarrier.update(seletcedTarget)
-			
-			return Object.assign({}, state, {
-				dbCarrierSelect: dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
-			})
-		
+			break
 		default:
 			return state
 	}
