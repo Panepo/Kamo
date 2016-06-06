@@ -13,7 +13,29 @@ class Group extends Component {
 	}
 	
 	render() {
-		const { selectData, carrierSelect, carrierSlotSelect } = this.props
+		const { selectData, carrierSelect, carrierSlotSelect, airControl, dbAircraftSelect } = this.props
+		
+		var infoOut = []
+		var infoTemp
+		if ( dbAircraftSelect.length > 0 ) {
+			infoTemp = <div>{dbAircraftSelect[0].name}</div>
+			infoOut.push(infoTemp)
+			
+			if ( dbAircraftSelect[0].torpedo > 0 ) {
+				infoTemp = <label>雷裝: {dbAircraftSelect[0].torpedo} </label>
+				infoOut.push(infoTemp)
+			}
+			
+			if ( dbAircraftSelect[0].bomb > 0 ) {
+				infoTemp = <label>爆裝: {dbAircraftSelect[0].bomb} </label>
+				infoOut.push(infoTemp)
+			}
+			
+			if ( dbAircraftSelect[0].air > 0 ) {
+				infoTemp = <label>対空: {dbAircraftSelect[0].air} </label>
+				infoOut.push(infoTemp)
+			}
+		}
 		
 		var theadTemp
 		var theadOut = []
@@ -21,7 +43,7 @@ class Group extends Component {
 		for (var i=0; i<listCarrierThead.length; i++){
 			stringTemp = 'theadGroup' + i.toString()
 			theadTemp = (
-				<th key={stringTemp}>
+				<th className={stringTemp} key={stringTemp}>
 					{listCarrierThead[i]}
 				</th>
 				)
@@ -122,8 +144,14 @@ class Group extends Component {
 		tbodyOut = <tbody>{tbodyOut}</tbody>
 
 		return (
-			<div className="mdl-cell mdl-cell--8-col mdl-shadow--4dp">
-				<table className="group-table mdl-data-table mdl-js-data-table">
+			<div className="display-area mdl-cell mdl-cell--8-col">
+				<div className="info-box mdl-shadow--4dp">
+					{infoOut}
+				</div>
+				<div className="info-box mdl-shadow--4dp">
+					<label>総制空力: {airControl}</label>
+				</div>
+				<table className="group-table mdl-data-table mdl-js-data-table mdl-shadow--4dp">
 					{theadOut}
 					{tbodyOut}
 				</table>
@@ -133,12 +161,16 @@ class Group extends Component {
 }
 
 Group.propTypes = {
-	selectData: PropTypes.array.isRequired
+	selectData: PropTypes.array.isRequired,
+	airControl: PropTypes.number.isRequired,
+	dbAircraftSelect: PropTypes.array.isRequired
 }
 
 const mapStateToProps = (state) => {
 	return {
-		selectData: state.dbStore.dbCarrierSelect
+		selectData: state.dbStore.dbCarrierSelect,
+		airControl: state.dbStore.airControl,
+		dbAircraftSelect: state.dbStore.dbAircraftSelect
 	}
 }
 

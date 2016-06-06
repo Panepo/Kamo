@@ -1,3 +1,16 @@
 .group-table {
 	width: 100%;
 }
+
+.theadGroup0 {
+	width: 20%;
+}
+
+.theadGroup1 .theadGroup2 .theadGroup3 .theadGroup4{
+	width: 20%;
+}
+
+.info-box {
+	padding: 10px;
+	margin-bottom: 10px;
+}

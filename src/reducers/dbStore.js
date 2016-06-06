@@ -32,7 +32,9 @@ for (var i=0; i<carrierData.length; i++) {
 const initialState = {
 	aircraftTypeSelect: 'fighter',
 	aircraftSelect: '19',
+	airControl: 0,
 	dbAircraftTypeQuery: dbAircraft.chain().find({ 'type': 'fighter' }).simplesort('id').data(),
+	dbAircraftSelect: dbAircraft.chain().find({ 'id': '19' }).data(),
 	dbCarrierTypeQuery: dbCarrier.chain().find({ 'fighter': 1 }).simplesort('type').data(),
 	dbCarrierSelect: []
 }
@@ -55,15 +57,24 @@ export default function dbStore(state = initialState, action) {
 				aircraftTypeSelect: action.modelId,
 				aircraftSelect: tempDb[0].id,
 				dbAircraftTypeQuery: tempDb,
+				dbAircraftSelect: dbAircraft.chain().find({ 'id': tempDb[0].id }).data(),
 				dbCarrierTypeQuery: dbCarrier.chain().where( function( obj ){ return obj[action.modelId] == 1 }).simplesort('type').data()
 			})
 		// ===============================================================================
 		// AIRCRAFT_CHANGE
 		// ===============================================================================
 		case AIRCRAFT_CHANGE:
-			return Object.assign({}, state, {
-				aircraftSelect: action.modelId
-			})
+			if ( state.aircraftSelect === action.modelId ) {
+				return Object.assign({}, state, {
+					aircraftSelect: '0',
+					dbAircraftSelect: []
+				})
+			} else {
+				return Object.assign({}, state, {
+					aircraftSelect: action.modelId,
+					dbAircraftSelect: dbAircraft.chain().find({ 'id': action.modelId }).data()
+				})
+			}
 		// ===============================================================================
 		// CARRIER_SELECT
 		// ===============================================================================
@@ -72,7 +83,19 @@ export default function dbStore(state = initialState, action) {
 			var carrierSelected = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('type').data()
 			
 			if ( carrierSelect.select > 0 ) {
-				carrierSelect.select = 0;
+				carrierSelect.select = 0
+				carrierSelect.slot1id = null
+				carrierSelect.slot1short = null
+				carrierSelect.slot1type = null
+				carrierSelect.slot2id = null
+				carrierSelect.slot2short = null
+				carrierSelect.slot2type = null
+				carrierSelect.slot3id = null
+				carrierSelect.slot3short = null
+				carrierSelect.slot3type = null
+				carrierSelect.slot4id = null
+				carrierSelect.slot4short = null
+				carrierSelect.slot4type = null
 				if ( carrierSelected.length === 1 ) {
 					selectCounter = 10;
 				}
@@ -98,14 +121,30 @@ export default function dbStore(state = initialState, action) {
 			var slotName = selectedSlot + 'short'
 			var slotType = selectedSlot + 'type'
 			var selectedAC = dbAircraft.findOne({'id': state.aircraftSelect })
+			var dbTemp
+			
+			if ( state.aircraftSelect === '0' ) {
+				seletcedTarget[slotID] = null
+				seletcedTarget[slotName] = null
+				seletcedTarget[slotType] = null
+				dbCarrier.update(seletcedTarget)
+				dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
+				return Object.assign({}, state, {
+					dbCarrierSelect: dbTemp,
+					airControl: calcAirControl(dbTemp)
+				})
+			}
 			
 			if ( seletcedTarget[slotID] === state.aircraftSelect ) {
 				seletcedTarget[slotID] = null
 				seletcedTarget[slotName] = null
 				seletcedTarget[slotType] = null
 				dbCarrier.update(seletcedTarget)
+				dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
+				calcAirControl(dbTemp)
 				return Object.assign({}, state, {
-					dbCarrierSelect: dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
+					dbCarrierSelect: dbTemp,
+					airControl: calcAirControl(dbTemp)
 				})
 			} else {
 				if ( seletcedTarget[selectedAC.type] === 1 ) {
@@ -113,8 +152,10 @@ export default function dbStore(state = initialState, action) {
 					seletcedTarget[slotName] = selectedAC.short
 					seletcedTarget[slotType] = selectedAC.type
 					dbCarrier.update(seletcedTarget)
+					dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
 					return Object.assign({}, state, {
-						dbCarrierSelect: dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
+						dbCarrierSelect: dbTemp,
+						airControl: calcAirControl(dbTemp)
 					})
 				}
 			}
@@ -126,3 +167,34 @@ export default function dbStore(state = initialState, action) {
 			return state
 	}
 }
+
+function calcAirControl(input) {
+	const searchName = ["slot1id", "slot2id", "slot3id", "slot4id"]
+	const searchSlot = ["slot1", "slot2", "slot3", "slot4"]
+	
+	var acValue = 0;
+	var tempSelect = []
+	
+	for (var i=0; i<input.length; i++) {
+		for (var j=0; j<searchName.length; j++) {
+			if ( input[i][searchName[j]] ) {
+				tempSelect = dbAircraft.findOne({'id': input[i][searchName[j]] })
+				acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
+			}
+		}
+	}
+
+	return acValue
+}
+
+
+
+
+
+
+
+
+
+
+
+
