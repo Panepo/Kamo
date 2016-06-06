@@ -34,7 +34,7 @@ class AircraftType extends Component {
 		}
 		
 		return (
-			<div className="overflow-list mdl-cell mdl-cell--1-col mdl-shadow--4dp">
+			<div className="mdl-cell mdl-cell--1-col mdl-shadow--4dp">
 				{buttonOut}
 			</div>
 		)

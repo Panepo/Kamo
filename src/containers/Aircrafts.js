@@ -24,13 +24,13 @@ class Aircrafts extends Component {
 					onClickFunc={(modelId) => aircraftChange(modelId)}
 					Cactive={"aircraft-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"}
 					Cinactive={"aircraft-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"}
-					title={aircraftData[i].name} />
+					title={aircraftData[i].short} />
 			)
 			tableOut.push(tableTemp)
 		}
 		
 		return (
-			<div className="overflow-list mdl-cell mdl-cell--2-col mdl-shadow--4dp">
+			<div className="mdl-cell mdl-cell--1-col mdl-shadow--4dp">
 				{tableOut}
 			</div>
 		)

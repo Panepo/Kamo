@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import ToggleButton from '../components/ToggleButton'
 import ToggleImgButton from '../components/ToggleImgButton'
 import { carrierSelect, carrierSlotSelect } from '../actions'
-import { listCarrierThead, listCarrierTbody, listAircraft } from '../constants/ConstList'
+import { listCarrierThead, listCarrierTbody, listAircraft, listAircraftColor } from '../constants/ConstList'
 import '../../css/Group.css'
 
 class Group extends Component {
@@ -52,62 +52,66 @@ class Group extends Component {
 						</td>
 						)
 				} else {
-					var textTemp = ''
-					var idTemp = listCarrierTbody[j] + selectData[i].id
-					var slotID = listCarrierTbody[j] + 'id'
-					var slotName = listCarrierTbody[j] + 'name'
-					var slotType = listCarrierTbody[j] + 'type'
-					var classTemp = "group-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"
-					
-					if ( selectData[i][slotID] ) {
-						textTemp = selectData[i][slotName].slice(0,5)
+					if ( selectData[i][listCarrierTbody[j]] > 0 ) {
+						var textTemp = ''
+						var idTemp = listCarrierTbody[j] + selectData[i].id
+						var slotID = listCarrierTbody[j] + 'id'
+						var slotName = listCarrierTbody[j] + 'short'
+						var slotType = listCarrierTbody[j] + 'type'
+						var classTemp = "group-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"
 						
-						switch ( selectData[i][slotType] ) {
-							case listAircraft[0]:
-								classTemp = classTemp + " mdl-color--green-900 mdl-button--raised"
-								break;
-							case listAircraft[1]:
-								classTemp = classTemp + " mdl-color--red-900 mdl-button--raised"
-								break;
-							case listAircraft[2]:
-								classTemp = classTemp + " mdl-color--blue-900 mdl-button--raised"
-								break;
-							case listAircraft[3]:
-								classTemp = classTemp + " mdl-color--yellow-900 mdl-button--raised"
-								break;
-							case listAircraft[4]:
-								classTemp = classTemp + " mdl-color--green-500 mdl-button--raised"
-								break;
-							case listAircraft[5]:
-								classTemp = classTemp + " mdl-color--green-500 mdl-button--raised"
-								break;
-							case listAircraft[6]:
-								classTemp = classTemp + " mdl-color--green-500 mdl-button--raised"
-								break;
-							case listAircraft[7]:
-								classTemp = classTemp + " mdl-color--blue-500 mdl-button--raised"
-								break;
-							case listAircraft[8]:
-								classTemp = classTemp + " mdl-color--green-500 mdl-button--raised"
-								break;
+						if ( selectData[i][slotID] ) {
+							textTemp = selectData[i][slotName] + "(" + selectData[i][listCarrierTbody[j]].toString() + ")"
+							
+							switch ( selectData[i][slotType] ) {
+								case listAircraft[0]:
+									classTemp = classTemp + " mdl-color--" + listAircraftColor[0] + " mdl-button--raised"
+									break;
+								case listAircraft[1]:
+									classTemp = classTemp + " mdl-color--" + listAircraftColor[1] + " mdl-button--raised"
+									break;
+								case listAircraft[2]:
+									classTemp = classTemp + " mdl-color--" + listAircraftColor[2] + " mdl-button--raised"
+									break;
+								case listAircraft[3]:
+									classTemp = classTemp + " mdl-color--" + listAircraftColor[3] + " mdl-button--raised"
+									break;
+								case listAircraft[4]:
+									classTemp = classTemp + " mdl-color--" + listAircraftColor[4] + " mdl-button--raised"
+									break;
+								case listAircraft[5]:
+									classTemp = classTemp + " mdl-color--" + listAircraftColor[5] + " mdl-button--raised"
+									break;
+								case listAircraft[6]:
+									classTemp = classTemp + " mdl-color--" + listAircraftColor[6] + " mdl-button--raised"
+									break;
+								case listAircraft[7]:
+									classTemp = classTemp + " mdl-color--" + listAircraftColor[7] + " mdl-button--raised"
+									break;
+								case listAircraft[8]:
+									classTemp = classTemp + " mdl-color--" + listAircraftColor[8] + " mdl-button--raised"
+									break;
+							}
+							
+						} else {
+							textTemp = selectData[i][listCarrierTbody[j]].toString()
 						}
 						
+						tdTemp = (
+							<td key={stringTemp}>
+								<ToggleButton
+									modelId={idTemp}
+									key={"tdGroup" + i.toString()}
+									display={"0"}
+									onClickFunc={(modelId) => carrierSlotSelect(modelId)}
+									Cactive={"group-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"}
+									Cinactive={classTemp}
+									title={textTemp} />
+							</td>
+							)
 					} else {
-						textTemp = selectData[i][listCarrierTbody[j]].toString()
+						tdTemp = <td key={stringTemp}></td>
 					}
-					
-					tdTemp = (
-						<td key={stringTemp}>
-							<ToggleButton
-								modelId={idTemp}
-								key={"tdGroup" + i.toString()}
-								display={"0"}
-								onClickFunc={(modelId) => carrierSlotSelect(modelId)}
-								Cactive={"group-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"}
-								Cinactive={classTemp}
-								title={textTemp} />
-						</td>
-						)
 				}
 				tdOut.push(tdTemp)
 			}
@@ -118,7 +122,7 @@ class Group extends Component {
 		tbodyOut = <tbody>{tbodyOut}</tbody>
 
 		return (
-			<div className="mdl-cell mdl-cell--7-col mdl-shadow--4dp">
+			<div className="mdl-cell mdl-cell--8-col mdl-shadow--4dp">
 				<table className="group-table mdl-data-table mdl-js-data-table">
 					{theadOut}
 					{tbodyOut}

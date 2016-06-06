@@ -31,7 +31,7 @@ for (var i=0; i<carrierData.length; i++) {
 
 const initialState = {
 	aircraftTypeSelect: 'fighter',
-	aircraftSelect: '0',
+	aircraftSelect: '19',
 	dbAircraftTypeQuery: dbAircraft.chain().find({ 'type': 'fighter' }).simplesort('id').data(),
 	dbCarrierTypeQuery: dbCarrier.chain().find({ 'fighter': 1 }).simplesort('type').data(),
 	dbCarrierSelect: []
@@ -45,22 +45,28 @@ var selectCounter = 10
 
 export default function dbStore(state = initialState, action) {
 	switch (action.type) {
+		// ===============================================================================
+		// AIRCRAFT_TYPE_CHANGE
+		// ===============================================================================
 		case AIRCRAFT_TYPE_CHANGE:
+			var tempDb = dbAircraft.chain().find({ 'type': action.modelId }).simplesort('id').data()
+			
 			return Object.assign({}, state, {
 				aircraftTypeSelect: action.modelId,
-				dbAircraftTypeQuery: dbAircraft.chain().find({ 'type': action.modelId }).simplesort('id').data(),
+				aircraftSelect: tempDb[0].id,
+				dbAircraftTypeQuery: tempDb,
 				dbCarrierTypeQuery: dbCarrier.chain().where( function( obj ){ return obj[action.modelId] == 1 }).simplesort('type').data()
 			})
+		// ===============================================================================
+		// AIRCRAFT_CHANGE
+		// ===============================================================================
 		case AIRCRAFT_CHANGE:
-			if ( state.aircraftSelect === action.modelId ) {
-				return Object.assign({}, state, {
-					aircraftSelect: '0'
-				})
-			} else {
-				return Object.assign({}, state, {
-					aircraftSelect: action.modelId
-				})
-			}
+			return Object.assign({}, state, {
+				aircraftSelect: action.modelId
+			})
+		// ===============================================================================
+		// CARRIER_SELECT
+		// ===============================================================================
 		case CARRIER_SELECT:
 			var carrierSelect = dbCarrier.findOne({'id': action.modelId })
 			var carrierSelected = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('type').data()
@@ -81,12 +87,15 @@ export default function dbStore(state = initialState, action) {
 			return Object.assign({}, state, {
 				dbCarrierSelect: dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
 			})
+		// ===============================================================================
+		// CARRIER_SLOT_SELECT
+		// ===============================================================================
 		case CARRIER_SLOT_SELECT:
 			var selectedID = action.modelId.slice(5)
 			var selectedSlot = action.modelId.slice(0,5)
 			var seletcedTarget = dbCarrier.findOne({'id': selectedID })
 			var slotID = selectedSlot + 'id'
-			var slotName = selectedSlot + 'name'
+			var slotName = selectedSlot + 'short'
 			var slotType = selectedSlot + 'type'
 			var selectedAC = dbAircraft.findOne({'id': state.aircraftSelect })
 			
@@ -101,7 +110,7 @@ export default function dbStore(state = initialState, action) {
 			} else {
 				if ( seletcedTarget[selectedAC.type] === 1 ) {
 					seletcedTarget[slotID] = selectedAC.id
-					seletcedTarget[slotName] = selectedAC.name
+					seletcedTarget[slotName] = selectedAC.short
 					seletcedTarget[slotType] = selectedAC.type
 					dbCarrier.update(seletcedTarget)
 					return Object.assign({}, state, {
@@ -110,6 +119,9 @@ export default function dbStore(state = initialState, action) {
 				}
 			}
 			break
+		// ===============================================================================
+		// default
+		// ===============================================================================
 		default:
 			return state
 	}

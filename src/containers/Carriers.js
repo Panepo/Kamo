@@ -19,13 +19,8 @@ class Carriers extends Component {
 		var buttonOut = []
 		for (var i=0; i<carrierData.length; i++){
 			stringTemp = "./image/ship/" + carrierData[i].id + '.jpg'
-			
-			if ( selectData.length > 0) {
-				for (var j=0; j<selectData.length; j++){
-					if ( selectData[j].id === carrierData[i].id) {
-						idTemp = carrierData[i].id
-					}
-				}
+			if (  carrierData[i].select > 1) {
+				idTemp = carrierData[i].id
 			}
 			
 			buttonTemp = (
@@ -43,7 +38,7 @@ class Carriers extends Component {
 		}
 		
 		return (
-			<div className="overflow-list mdl-cell mdl-cell--2-col mdl-shadow--4dp">
+			<div className="mdl-cell mdl-cell--2-col mdl-shadow--4dp">
 				{buttonOut}
 			</div>
 		)
