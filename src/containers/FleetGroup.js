@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import AircraftType from './AircraftType'
 import Aircrafts from './Aircrafts'
 import Carriers from './Carriers'
 import Group from './Group'
@@ -16,7 +15,6 @@ class FleetGroup extends Component {
 		return (
 			<div className="page-content">
 				<div className="mdl-grid">
-					<AircraftType />
 					<Aircrafts />
 					<Carriers />
 					<Group />

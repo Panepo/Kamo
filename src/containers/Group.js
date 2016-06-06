@@ -18,21 +18,21 @@ class Group extends Component {
 		var infoOut = []
 		var infoTemp
 		if ( dbAircraftSelect.length > 0 ) {
-			infoTemp = <div>{dbAircraftSelect[0].name}</div>
+			infoTemp = <div key='info-name'>{dbAircraftSelect[0].name}</div>
 			infoOut.push(infoTemp)
 			
 			if ( dbAircraftSelect[0].torpedo > 0 ) {
-				infoTemp = <label>雷裝: {dbAircraftSelect[0].torpedo} </label>
+				infoTemp = <label key='info-torpedo'>雷裝: {dbAircraftSelect[0].torpedo} </label>
 				infoOut.push(infoTemp)
 			}
 			
 			if ( dbAircraftSelect[0].bomb > 0 ) {
-				infoTemp = <label>爆裝: {dbAircraftSelect[0].bomb} </label>
+				infoTemp = <label key='info-bomb'>爆裝: {dbAircraftSelect[0].bomb} </label>
 				infoOut.push(infoTemp)
 			}
 			
 			if ( dbAircraftSelect[0].air > 0 ) {
-				infoTemp = <label>対空: {dbAircraftSelect[0].air} </label>
+				infoTemp = <label key='info-air'>対空: {dbAircraftSelect[0].air} </label>
 				infoOut.push(infoTemp)
 			}
 		}
