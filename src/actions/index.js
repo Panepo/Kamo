@@ -34,3 +34,10 @@ export function carrierSlotSelect(modelId) {
 		modelId
 	}
 }
+
+export function carrierDisplay(modelId) {
+	return {
+		type: types.CARRIER_DISPLAY,
+		modelId
+	}
+}

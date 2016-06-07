@@ -35,6 +35,16 @@ class Group extends Component {
 				infoTemp = <label key='info-air'>対空: {dbAircraftSelect[0].air} </label>
 				infoOut.push(infoTemp)
 			}
+			
+			if ( dbAircraftSelect[0].sonar > 0 ) {
+				infoTemp = <label key='info-sonar'>反潛: {dbAircraftSelect[0].sonar} </label>
+				infoOut.push(infoTemp)
+			}
+			
+			if ( dbAircraftSelect[0].scout > 0 ) {
+				infoTemp = <label key='info-scout'>索敵: {dbAircraftSelect[0].scout} </label>
+				infoOut.push(infoTemp)
+			}
 		}
 		
 		var theadTemp
@@ -44,7 +54,9 @@ class Group extends Component {
 			stringTemp = 'theadGroup' + i.toString()
 			theadTemp = (
 				<th className={stringTemp} key={stringTemp}>
-					{listCarrierThead[i]}
+					<div className="thead">
+						{listCarrierThead[i]}
+					</div>
 				</th>
 				)
 			theadOut.push(theadTemp)

@@ -15,11 +15,9 @@ class Aircrafts extends Component {
 	render() {
 		const { typeSelect, aircraftTypeChange, aircraftData, aircraftSelect, aircraftChange} = this.props
 		
-		var stringTemp = ''
 		var buttonTemp
 		var buttonOut = []
 		for (var i=0; i<listAircraft.length; i++){
-			stringTemp = "./image/icon/" + listAircraftS[i] + ".png"
 			buttonTemp = (
 				<ToggleImgButton
 					key={"imgButton" + i.toString()}
@@ -28,7 +26,7 @@ class Aircrafts extends Component {
 					onClickFunc={(modelId) => aircraftTypeChange(modelId)}
 					Cactive={"img-button mdl-button--raised mdl-button--colored"}
 					Cinactive={"img-button"}
-					imgSrc={stringTemp}
+					imgSrc={"./image/icon/" + listAircraftS[i] + ".png"}
 					title={listAircraft[i]} />
 			)
 			buttonOut.push(buttonTemp)
@@ -43,18 +41,19 @@ class Aircrafts extends Component {
 							key={"tableAircraft" + j.toString()}
 							display={aircraftSelect}
 							onClickFunc={(modelId) => aircraftChange(modelId)}
-							Cactive={"aircraft-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"}
+							Cactive={"aircraft-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised mdl-color--green-800"}
 							Cinactive={"aircraft-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"}
 							title={aircraftData[j].name} />
 					)
 					tableOut.push(tableTemp)
 				}
+				tableOut = <div className="scroll-menu" key={"scroll-menu" + i.toString()} >{tableOut}</div>
 				buttonOut.push(tableOut)
 			}
 		}
 		
 		return (
-			<div className="display-area mdl-cell mdl-cell--2-col mdl-shadow--4dp">
+			<div className="display-area display-list mdl-cell mdl-cell--2-col mdl-shadow--4dp">
 				{buttonOut}
 			</div>
 		)

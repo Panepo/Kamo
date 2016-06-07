@@ -2,7 +2,8 @@ import {
 	AIRCRAFT_TYPE_CHANGE,
 	AIRCRAFT_CHANGE,
 	CARRIER_SELECT,
-	CARRIER_SLOT_SELECT
+	CARRIER_SLOT_SELECT,
+	CARRIER_DISPLAY
 } from '../constants/ConstActionTypes'
 
 // ===============================================================================
@@ -12,6 +13,7 @@ import {
 import lokijs from 'lokijs'
 import aircraftData from '../../raw/aircrafts.json'
 import carrierData from '../../raw/carriers.json'
+import { listAircraft } from '../constants/ConstList'
 
 var db = new lokijs('db')
 var dbAircraft = db.addCollection("dbAircraft")
@@ -33,9 +35,10 @@ const initialState = {
 	aircraftTypeSelect: 'fighter',
 	aircraftSelect: '19',
 	airControl: 0,
+	carrierDisp: 1,
 	dbAircraftTypeQuery: dbAircraft.chain().find({ 'type': 'fighter' }).simplesort('id').data(),
 	dbAircraftSelect: dbAircraft.chain().find({ 'id': '19' }).data(),
-	dbCarrierTypeQuery: dbCarrier.chain().find({ 'fighter': 1 }).simplesort('type').data(),
+	dbCarrierTypeQuery: dbCarrier.chain().find({ 'display': 1 }).find({ 'fighter': 1 }).simplesort('type').data(),
 	dbCarrierSelect: []
 }
 
@@ -51,15 +54,18 @@ export default function dbStore(state = initialState, action) {
 		// AIRCRAFT_TYPE_CHANGE
 		// ===============================================================================
 		case AIRCRAFT_TYPE_CHANGE:
-			var tempDb = dbAircraft.chain().find({ 'type': action.modelId }).simplesort('id').data()
-			
-			return Object.assign({}, state, {
-				aircraftTypeSelect: action.modelId,
-				aircraftSelect: tempDb[0].id,
-				dbAircraftTypeQuery: tempDb,
-				dbAircraftSelect: dbAircraft.chain().find({ 'id': tempDb[0].id }).data(),
-				dbCarrierTypeQuery: dbCarrier.chain().where( function( obj ){ return obj[action.modelId] == 1 }).simplesort('type').data()
-			})
+			if ( state.aircraftTypeSelect != action.modelId ) {
+				var tempDb = dbAircraft.chain().find({ 'type': action.modelId }).simplesort('id').data()
+				
+				return Object.assign({}, state, {
+					aircraftTypeSelect: action.modelId,
+					aircraftSelect: tempDb[0].id,
+					dbAircraftTypeQuery: tempDb,
+					dbAircraftSelect: dbAircraft.chain().find({ 'id': tempDb[0].id }).data(),
+					dbCarrierTypeQuery: dbCarrier.chain().find({ 'display': state.carrierDisp }).where( function( obj ){ return obj[action.modelId] == 1 }).simplesort('type').data()
+				})
+			}
+			break
 		// ===============================================================================
 		// AIRCRAFT_CHANGE
 		// ===============================================================================
@@ -73,6 +79,21 @@ export default function dbStore(state = initialState, action) {
 				return Object.assign({}, state, {
 					aircraftSelect: action.modelId,
 					dbAircraftSelect: dbAircraft.chain().find({ 'id': action.modelId }).data()
+				})
+			}
+		// ===============================================================================
+		// CARRIER_DISPLAY
+		// ===============================================================================
+		case CARRIER_DISPLAY:
+			if ( state.carrierDisp === 1 ) {
+				return Object.assign({}, state, {
+					carrierDisp: 0,
+					dbCarrierTypeQuery: dbCarrier.chain().find({ 'display': 0 }).where( function( obj ){ return obj[state.aircraftTypeSelect] == 1 }).simplesort('type').data()
+				})
+			} else {
+				return Object.assign({}, state, {
+					carrierDisp: 1,
+					dbCarrierTypeQuery: dbCarrier.chain().find({ 'display': 1 }).where( function( obj ){ return obj[state.aircraftTypeSelect] == 1 }).simplesort('type').data()
 				})
 			}
 		// ===============================================================================
@@ -179,7 +200,33 @@ function calcAirControl(input) {
 		for (var j=0; j<searchName.length; j++) {
 			if ( input[i][searchName[j]] ) {
 				tempSelect = dbAircraft.findOne({'id': input[i][searchName[j]] })
-				acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
+
+				switch ( tempSelect.type ) {
+					case listAircraft[0]:
+						acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
+						acValue = acValue + Math.floor(Math.sqrt(10)) + 22
+						break
+					case listAircraft[1]:
+						if ( tempSelect.air > 0 ) {
+							acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
+						}
+						acValue = acValue + Math.floor(Math.sqrt(10))
+						break 
+					case listAircraft[2]:
+						if ( tempSelect.air > 0 ) {
+							acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
+						}
+						acValue = acValue + Math.floor(Math.sqrt(10))
+						break
+					case listAircraft[4]:
+						acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
+						acValue = acValue + Math.floor(Math.sqrt(10)) + 6
+						break
+					case listAircraft[5]:
+						acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
+						acValue = acValue + Math.floor(Math.sqrt(10)) + 22
+						break
+				}
 			}
 		}
 	}

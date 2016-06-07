@@ -17,3 +17,27 @@
 .display-area {
 	height: 100%;
 }
+
+.display-list {
+	overflow:auto;
+	max-height: 645px;
+}
+
+.scroll-menu {
+	margin: auto;
+	display: block;
+	-webkit-animation-name: scroll;
+	-webkit-animation-duration: 0.6s;
+	animation-name: scroll;
+	animation-duration: 0.6s;
+}
+
+@-webkit-keyframes scroll {
+	from {-webkit-transform: scale(1 ,0)} 
+	to {-webkit-transform: scale(1, 1)}
+}
+
+@keyframes scroll {
+	from {transform: scale(1, 0.1)} 
+	to {transform: scale(1, 1)}
+}
