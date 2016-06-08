@@ -1,6 +1,8 @@
 import {
 	AIRCRAFT_TYPE_CHANGE,
 	AIRCRAFT_CHANGE,
+	AIRCRAFT_SKILL_DISPLAY,
+	AIRCRAFT_SKILL_CHANGE,
 	CARRIER_SELECT,
 	CARRIER_SLOT_SELECT,
 	CARRIER_DISPLAY
@@ -34,6 +36,8 @@ for (var i=0; i<carrierData.length; i++) {
 const initialState = {
 	aircraftTypeSelect: 'fighter',
 	aircraftSelect: '19',
+	aircraftSkillDisp: 0,
+	aircraftSkill: 6,
 	airControl: 0,
 	carrierDisp: 1,
 	dbAircraftTypeQuery: dbAircraft.chain().find({ 'type': 'fighter' }).simplesort('id').data(),
@@ -81,6 +85,26 @@ export default function dbStore(state = initialState, action) {
 					dbAircraftSelect: dbAircraft.chain().find({ 'id': action.modelId }).data()
 				})
 			}
+		// ===============================================================================
+		// AIRCRAFT_SKILL_DISPLAY
+		// ===============================================================================
+		case AIRCRAFT_SKILL_DISPLAY:
+			if ( state.aircraftSkillDisp === 0 ) {
+				return Object.assign({}, state, {
+						aircraftSkillDisp: 1
+					})
+			} else {
+				return Object.assign({}, state, {
+						aircraftSkillDisp: 0
+					})
+			}
+		// ===============================================================================
+		// AIRCRAFT_SKILL_CHANGE
+		// ===============================================================================
+		case AIRCRAFT_SKILL_CHANGE:
+			return Object.assign({}, state, {
+					aircraftSkill: action.modelId
+				})
 		// ===============================================================================
 		// CARRIER_DISPLAY
 		// ===============================================================================

@@ -7,7 +7,7 @@ require! {
 # ===============================================================================
 # PARSE AIRCRAFTS DATA
 # ===============================================================================
-slotAircraft = <[name short type id torpedo bomb air sonar scout]>
+slotAircraft = <[name short type id torpedo bomb air sonar scout firepower hit evade]>
 outAircraft = []
 for aircraft, i in aircrafts
 	outAircraft[i] = {}

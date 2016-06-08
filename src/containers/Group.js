@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import InfoBox from './InfoBox'
 import ToggleButton from '../components/ToggleButton'
 import ToggleImgButton from '../components/ToggleImgButton'
 import { carrierSelect, carrierSlotSelect } from '../actions'
@@ -13,39 +14,7 @@ class Group extends Component {
 	}
 	
 	render() {
-		const { selectData, carrierSelect, carrierSlotSelect, airControl, dbAircraftSelect } = this.props
-		
-		var infoOut = []
-		var infoTemp
-		if ( dbAircraftSelect.length > 0 ) {
-			infoTemp = <div key='info-name'>{dbAircraftSelect[0].name}</div>
-			infoOut.push(infoTemp)
-			
-			if ( dbAircraftSelect[0].torpedo > 0 ) {
-				infoTemp = <label key='info-torpedo'>雷裝: {dbAircraftSelect[0].torpedo} </label>
-				infoOut.push(infoTemp)
-			}
-			
-			if ( dbAircraftSelect[0].bomb > 0 ) {
-				infoTemp = <label key='info-bomb'>爆裝: {dbAircraftSelect[0].bomb} </label>
-				infoOut.push(infoTemp)
-			}
-			
-			if ( dbAircraftSelect[0].air > 0 ) {
-				infoTemp = <label key='info-air'>対空: {dbAircraftSelect[0].air} </label>
-				infoOut.push(infoTemp)
-			}
-			
-			if ( dbAircraftSelect[0].sonar > 0 ) {
-				infoTemp = <label key='info-sonar'>反潛: {dbAircraftSelect[0].sonar} </label>
-				infoOut.push(infoTemp)
-			}
-			
-			if ( dbAircraftSelect[0].scout > 0 ) {
-				infoTemp = <label key='info-scout'>索敵: {dbAircraftSelect[0].scout} </label>
-				infoOut.push(infoTemp)
-			}
-		}
+		const { selectData, carrierSelect, carrierSlotSelect, airControl } = this.props
 		
 		var theadTemp
 		var theadOut = []
@@ -157,9 +126,7 @@ class Group extends Component {
 
 		return (
 			<div className="display-area mdl-cell mdl-cell--8-col">
-				<div className="info-box mdl-shadow--4dp">
-					{infoOut}
-				</div>
+				<InfoBox />
 				<div className="info-box mdl-shadow--4dp">
 					<label>総制空力: {airControl}</label>
 				</div>
@@ -174,15 +141,13 @@ class Group extends Component {
 
 Group.propTypes = {
 	selectData: PropTypes.array.isRequired,
-	airControl: PropTypes.number.isRequired,
-	dbAircraftSelect: PropTypes.array.isRequired
+	airControl: PropTypes.number.isRequired
 }
 
 const mapStateToProps = (state) => {
 	return {
 		selectData: state.dbStore.dbCarrierSelect,
-		airControl: state.dbStore.airControl,
-		dbAircraftSelect: state.dbStore.dbAircraftSelect
+		airControl: state.dbStore.airControl
 	}
 }
 

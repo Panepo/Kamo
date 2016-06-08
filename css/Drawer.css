@@ -1,0 +1,11 @@
+.nav-toggle {
+	margin-left: 20px;
+}
+
+.mdl-navigation {
+	height: calc(100% - 257px);
+}
+
+.mdl-layout__drawer {
+	overflow: hidden;
+}
