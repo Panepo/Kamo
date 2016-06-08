@@ -36,8 +36,8 @@ for (var i=0; i<carrierData.length; i++) {
 const initialState = {
 	aircraftTypeSelect: 'fighter',
 	aircraftSelect: '19',
-	aircraftSkillDisp: 0,
-	aircraftSkill: 6,
+	aircraftSkillDisp: 1,
+	aircraftSkill: 7,
 	airControl: 0,
 	carrierDisp: 1,
 	dbAircraftTypeQuery: dbAircraft.chain().find({ 'type': 'fighter' }).simplesort('id').data(),
@@ -165,6 +165,7 @@ export default function dbStore(state = initialState, action) {
 			var slotID = selectedSlot + 'id'
 			var slotName = selectedSlot + 'short'
 			var slotType = selectedSlot + 'type'
+			var slotSkill = selectedSlot + 'skill'
 			var selectedAC = dbAircraft.findOne({'id': state.aircraftSelect })
 			var dbTemp
 			
@@ -172,6 +173,7 @@ export default function dbStore(state = initialState, action) {
 				seletcedTarget[slotID] = null
 				seletcedTarget[slotName] = null
 				seletcedTarget[slotType] = null
+				seletcedTarget[slotSkill] = null
 				dbCarrier.update(seletcedTarget)
 				dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
 				return Object.assign({}, state, {
@@ -181,21 +183,36 @@ export default function dbStore(state = initialState, action) {
 			}
 			
 			if ( seletcedTarget[slotID] === state.aircraftSelect ) {
-				seletcedTarget[slotID] = null
-				seletcedTarget[slotName] = null
-				seletcedTarget[slotType] = null
-				dbCarrier.update(seletcedTarget)
-				dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
-				calcAirControl(dbTemp)
-				return Object.assign({}, state, {
-					dbCarrierSelect: dbTemp,
-					airControl: calcAirControl(dbTemp)
-				})
+				if ( seletcedTarget[slotSkill] === state.aircraftSkill ) {
+					seletcedTarget[slotID] = null
+					seletcedTarget[slotName] = null
+					seletcedTarget[slotType] = null
+					seletcedTarget[slotSkill] = null
+					dbCarrier.update(seletcedTarget)
+					dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
+					calcAirControl(dbTemp)
+					return Object.assign({}, state, {
+						dbCarrierSelect: dbTemp,
+						airControl: calcAirControl(dbTemp)
+					})
+				} else {
+					seletcedTarget[slotID] = selectedAC.id
+					seletcedTarget[slotName] = selectedAC.short
+					seletcedTarget[slotType] = selectedAC.type
+					seletcedTarget[slotSkill] = state.aircraftSkill
+					dbCarrier.update(seletcedTarget)
+					dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
+					return Object.assign({}, state, {
+						dbCarrierSelect: dbTemp,
+						airControl: calcAirControl(dbTemp)
+					})
+				}
 			} else {
 				if ( seletcedTarget[selectedAC.type] === 1 ) {
 					seletcedTarget[slotID] = selectedAC.id
 					seletcedTarget[slotName] = selectedAC.short
 					seletcedTarget[slotType] = selectedAC.type
+					seletcedTarget[slotSkill] = state.aircraftSkill
 					dbCarrier.update(seletcedTarget)
 					dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
 					return Object.assign({}, state, {
@@ -216,6 +233,7 @@ export default function dbStore(state = initialState, action) {
 function calcAirControl(input) {
 	const searchName = ["slot1id", "slot2id", "slot3id", "slot4id"]
 	const searchSlot = ["slot1", "slot2", "slot3", "slot4"]
+	const searchSkill = ["slot1skill", "slot2skill", "slot3skill", "slot4skill"]
 	
 	var acValue = 0;
 	var tempSelect = []
@@ -224,41 +242,100 @@ function calcAirControl(input) {
 		for (var j=0; j<searchName.length; j++) {
 			if ( input[i][searchName[j]] ) {
 				tempSelect = dbAircraft.findOne({'id': input[i][searchName[j]] })
-
 				switch ( tempSelect.type ) {
 					case listAircraft[0]:
+					case listAircraft[6]:
 						acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
-						acValue = acValue + Math.floor(Math.sqrt(10)) + 22
+
+						switch ( input[i][searchSkill[j]] ) {
+							case 1:
+								acValue = acValue + 0 + 1
+								break
+							case 2:
+								acValue = acValue + 2 + 1
+								break
+							case 3:
+								acValue = acValue + 5 + 2
+								break
+							case 4:
+								acValue = acValue + 9 + 2
+								break
+							case 5:
+								acValue = acValue + 14 + 2
+								break
+							case 6:
+								acValue = acValue + 14 + 3
+								break
+							case 7:
+								acValue = acValue + 22 + 3
+								break
+						}
+						
 						break
 					case listAircraft[1]:
-						if ( tempSelect.air > 0 ) {
-							acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
-						}
-						acValue = acValue + Math.floor(Math.sqrt(10))
-						break 
 					case listAircraft[2]:
 						if ( tempSelect.air > 0 ) {
 							acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
 						}
-						acValue = acValue + Math.floor(Math.sqrt(10))
-						break
-					case listAircraft[4]:
-						acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
-						acValue = acValue + Math.floor(Math.sqrt(10)) + 6
-						break
+						
+						switch ( input[i][searchSkill[j]] ) {
+							case 1:
+								acValue = acValue + 1
+								break
+							case 2:
+								acValue = acValue + 1
+								break
+							case 3:
+								acValue = acValue + 2
+								break
+							case 4:
+								acValue = acValue + 2
+								break
+							case 5:
+								acValue = acValue + 2
+								break
+							case 6:
+								acValue = acValue + 3
+								break
+							case 7:
+								acValue = acValue + 3
+								break
+						}
+						
+						break 
 					case listAircraft[5]:
 						acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
-						acValue = acValue + Math.floor(Math.sqrt(10)) + 22
+						
+						switch ( input[i][searchSkill[j]] ) {
+							case 1:
+								acValue = acValue + 0 + 1
+								break
+							case 2:
+								acValue = acValue + 1 + 1
+								break
+							case 3:
+								acValue = acValue + 1 + 2
+								break
+							case 4:
+								acValue = acValue + 1 + 2
+								break
+							case 5:
+								acValue = acValue + 3 + 2
+								break
+							case 6:
+								acValue = acValue + 3 + 3
+								break
+							case 7:
+								acValue = acValue + 6 + 3
+								break
+						}
 						break
 				}
 			}
 		}
 	}
-
 	return acValue
 }
-
-
 
 
 

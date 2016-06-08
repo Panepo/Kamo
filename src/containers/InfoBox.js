@@ -51,7 +51,7 @@ class InfoBox extends Component {
 		return (
 			<div className="mdl-shadow--4dp">
 				<div className="mdl-grid">
-					<div className="mdl-cell mdl-cell--5-col">
+					<div className="mdl-cell mdl-cell--4-col">
 						{infoOut}
 					</div>
 					{buttOut}

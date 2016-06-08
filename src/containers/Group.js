@@ -5,7 +5,7 @@ import InfoBox from './InfoBox'
 import ToggleButton from '../components/ToggleButton'
 import ToggleImgButton from '../components/ToggleImgButton'
 import { carrierSelect, carrierSlotSelect } from '../actions'
-import { listCarrierThead, listCarrierTbody, listAircraft, listAircraftColor } from '../constants/ConstList'
+import { listCarrierThead, listCarrierTbody, listAircraft, listAircraftColor, listAircraftSkill } from '../constants/ConstList'
 import '../../css/Group.css'
 
 class Group extends Component {
@@ -64,8 +64,7 @@ class Group extends Component {
 						var classTemp = "group-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"
 						
 						if ( selectData[i][slotID] ) {
-							textTemp = selectData[i][slotName] + "(" + selectData[i][listCarrierTbody[j]].toString() + ")"
-							
+							textTemp = selectData[i][slotName] + "(" + selectData[i][listCarrierTbody[j]].toString() + ") " + listAircraftSkill[selectData[i][listCarrierTbody[j] + 'skill']]
 							switch ( selectData[i][slotType] ) {
 								case listAircraft[0]:
 									classTemp = classTemp + " mdl-color--" + listAircraftColor[0] + " mdl-button--raised"
