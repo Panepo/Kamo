@@ -7,6 +7,7 @@ export const listAircraftColor = ["green-800", "red-800", "blue-800", "yellow-80
 export const listAircraftType = ["torpedo", "bomb", "air", "sonar", "scout", "firepower", "hit", "evade"]
 export const listAircraftTypeN = ["雷裝", "爆裝", "対空", "反潛", "索敵", "火力", "命中", "迴避"]
 export const listAircraftSkill = ["無熟練", "|", "||", "|||", "/", "//", "///", ">>"]
+export const listAircraftSkill2 = ["", "|", "||", "|||", "/", "//", "///", ">>"]
 
 export const listCarrierThead = ["艦娘", "第一隊", "第二隊", "第三隊", "第四隊"]
 export const listCarrierTbody = ["id", "slot1", "slot2", "slot3", "slot4"]
