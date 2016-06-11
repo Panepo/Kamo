@@ -18,18 +18,6 @@ class Carriers extends Component {
 		var buttonTemp
 		var buttonOut = []
 		
-		buttonTemp = (
-			<ToggleButton
-				modelId={"1"}
-				key={"carrierDispButton"}
-				display={carrierDisp.toString()}
-				onClickFunc={(modelId) => carrierDisplay(modelId)}
-				Cactive={"aircraft-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"}
-				Cinactive={"aircraft-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"}
-				title={"最終改造表示"} />
-		)
-		buttonOut.push(buttonTemp)
-		
 		for (var i=0; i<carrierData.length; i++){
 			if ( carrierData[i].select > 1) {
 				idTemp = carrierData[i].id
@@ -50,7 +38,15 @@ class Carriers extends Component {
 		}
 		
 		return (
-			<div className="display-area display-list mdl-cell mdl-cell--2-col mdl-shadow--4dp">
+			<div className="display-list mdl-cell mdl-cell--2-col mdl-shadow--4dp">
+				<ToggleButton
+					modelId={"1"}
+					key={"carrierDispButton"}
+					display={carrierDisp.toString()}
+					onClickFunc={(modelId) => carrierDisplay(modelId)}
+					Cactive={"aircraft-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"}
+					Cinactive={"aircraft-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"}
+					title={"最終改造表示"} />
 				{buttonOut}
 			</div>
 		)

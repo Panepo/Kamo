@@ -13,8 +13,8 @@ class FleetGroup extends Component {
 		const {  } = this.props
 		
 		return (
-			<div className="page-content">
-				<div className="mdl-grid">
+			<div className="page-content display-area">
+				<div className="mdl-grid display-area">
 					<Aircrafts />
 					<Carriers />
 					<Group />

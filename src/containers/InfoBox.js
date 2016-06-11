@@ -32,9 +32,9 @@ class InfoBox extends Component {
 		if ( aircraftSkillDisp ) {
 			for (var i=0; i<listAircraftSkill.length; i++){
 				buttTemp = (
-					<div className="mdl-cell mdl-cell--1-col">
+					<div key={"info-skill" + i.toString()} className="mdl-cell mdl-cell--1-col">
 						<ToggleButton
-							modelId={i}
+							modelId={i.toString()}
 							key={"info-skill" + i.toString()}
 							display={aircraftSkill.toString()}
 							onClickFunc={(modelId) => aircraftSkillChange(modelId)}
@@ -49,7 +49,7 @@ class InfoBox extends Component {
 
 
 		return (
-			<div className="mdl-shadow--4dp">
+			<div className="group-unit mdl-shadow--4dp">
 				<div className="mdl-grid">
 					<div className="mdl-cell mdl-cell--4-col">
 						{infoOut}

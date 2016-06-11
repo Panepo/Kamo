@@ -17,3 +17,17 @@
 	to {transform: scale(1)}
 }
 
+.content {
+	height: 100%;
+	max-height: calc(100% - 112px);
+	overflow: hidden;
+}
+
+.display-area {
+	height: 100%;
+}
+
+.display-list {
+	overflow:auto;
+	max-height: calc(100% - 32px);
+}

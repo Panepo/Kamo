@@ -19,19 +19,19 @@ class Content extends Component {
 		switch ( dispStatus ) {
 			case listStatusS[0]:
 				dispTemp = 
-					<div className={listStatusS[0]}>
+					<div className={listStatusS[0] + " display-area"}>
 						<FleetGroup />
 					</div>
 				break
 			case listStatusS[1]:
 				dispTemp = 
-					<div className={listStatusS[1]}>
+					<div className={listStatusS[1] + " display-area"}>
 						<FleetStatus />
 					</div>
 				break
 			case listStatusS[2]:
 				dispTemp = 
-					<div className={listStatusS[2]}>
+					<div className={listStatusS[2] + " display-area"}>
 						<FleetMap />
 					</div>
 				break

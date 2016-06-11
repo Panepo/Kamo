@@ -126,10 +126,10 @@ class Group extends Component {
 		return (
 			<div className="display-area mdl-cell mdl-cell--8-col">
 				<InfoBox />
-				<div className="info-box mdl-shadow--4dp">
-					<label>総制空力: {airControl}</label>
+				<div className="group-unit mdl-shadow--4dp mdl-grid">
+					<div className="mdl-cell mdl-cell--12-col">総制空力: {airControl}</div>
 				</div>
-				<table className="group-table mdl-data-table mdl-js-data-table mdl-shadow--4dp">
+				<table className="group-unit group-table mdl-data-table mdl-js-data-table mdl-shadow--4dp">
 					{theadOut}
 					{tbodyOut}
 				</table>

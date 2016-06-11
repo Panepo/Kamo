@@ -53,7 +53,7 @@ class Aircrafts extends Component {
 		}
 		
 		return (
-			<div className="display-area display-list mdl-cell mdl-cell--2-col mdl-shadow--4dp">
+			<div className="display-list mdl-cell mdl-cell--2-col mdl-shadow--4dp">
 				{buttonOut}
 			</div>
 		)
