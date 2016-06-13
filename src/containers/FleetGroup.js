@@ -4,14 +4,12 @@ import Aircrafts from './Aircrafts'
 import Carriers from './Carriers'
 import Group from './Group'
 
-class FleetGroup extends Component {
+export default class FleetGroup extends Component {
 	componentDidUpdate() {
 		componentHandler.upgradeDom()
 	}
 	
 	render() {
-		const {  } = this.props
-		
 		return (
 			<div className="page-content display-area">
 				<div className="mdl-grid display-area">
@@ -23,17 +21,3 @@ class FleetGroup extends Component {
 		)
 	}
 }
-
-FleetGroup.propTypes = {
-
-}
-
-const mapStateToProps = (state) => {
-	return {
-		
-	}
-}
-
-export default connect(
-	mapStateToProps
-)(FleetGroup)

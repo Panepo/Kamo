@@ -1,5 +1,5 @@
 import {
-	STATUS_CHANGE
+	PAGE_CHANGE
 } from '../constants/ConstActionTypes'
 
 const initialState = {
@@ -8,7 +8,7 @@ const initialState = {
 
 export default function dispStatus(state = initialState, action) {
 	switch (action.type) {
-		case STATUS_CHANGE:
+		case PAGE_CHANGE:
 			return Object.assign({}, state, {
 				status: action.modelId
 			})

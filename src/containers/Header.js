@@ -1,15 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { statusChange } from '../actions'
+import { pageChange } from '../actions'
 import ToggleButton from '../components/ToggleButton'
 import { listStatus, listStatusS } from '../constants/ConstList'
-//import { CbuttonActive, CbuttonInactive } from '../constants/ConstClassname'
-//import '../../css/Header.css'
 
 class Header extends Component {
 	render() {
-		const { dispStatus, statusChange } = this.props
+		const { dispStatus, pageChange } = this.props
 		
 		var buttonTemp
 		var buttonOut = []
@@ -19,7 +17,7 @@ class Header extends Component {
 					key={"statusButton" + i.toString()}
 					modelId={listStatusS[i]}
 					display={dispStatus}
-					onClickFunc={(modelId) => statusChange(modelId)}
+					onClickFunc={(modelId) => pageChange(modelId)}
 					Cactive={"mdl-layout__tab is-active"}
 					Cinactive={"mdl-layout__tab"}
 					title={listStatus[i]} />
@@ -59,5 +57,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
 	mapStateToProps,
-	{ statusChange }
+	{ pageChange }
 )(Header)

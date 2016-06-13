@@ -1,8 +1,8 @@
 import * as types from '../constants/ConstActionTypes'
 
-export function statusChange(modelId) {
+export function pageChange(modelId) {
 	return {
-		type: types.STATUS_CHANGE,
+		type: types.PAGE_CHANGE,
 		modelId
 	}
 }
@@ -52,6 +52,20 @@ export function carrierSlotSelect(modelId) {
 export function carrierDisplay(modelId) {
 	return {
 		type: types.CARRIER_DISPLAY,
+		modelId
+	}
+}
+
+export function statusInitial(data) {
+	return {
+		type: types.STATUS_INITIAL,
+		data
+	}
+}
+
+export function statusChange(modelId) {
+	return {
+		type: types.STATUS_CHANGE,
 		modelId
 	}
 }

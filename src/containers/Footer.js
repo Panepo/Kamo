@@ -1,7 +1,6 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
+import React, { Component } from 'react'
 
-class Footer extends Component {
+export default class Footer extends Component {
 	render() {
 		return (
 			<footer className="mdl-mini-footer">
@@ -14,17 +13,3 @@ class Footer extends Component {
 		)
 	}
 }
-
-Footer.propTypes = {
-
-}
-
-const mapStateToProps = (state) => {
-	return {
-
-	}
-}
-
-export default connect(
-	mapStateToProps
-)(Footer)

@@ -5,7 +5,8 @@ import {
 	AIRCRAFT_SKILL_CHANGE,
 	CARRIER_SELECT,
 	CARRIER_SLOT_SELECT,
-	CARRIER_DISPLAY
+	CARRIER_DISPLAY,
+	CALC_STATUS
 } from '../constants/ConstActionTypes'
 
 // ===============================================================================
@@ -17,8 +18,8 @@ import aircraftData from '../../raw/aircrafts.json'
 import carrierData from '../../raw/carriers.json'
 
 var db = new lokijs('db')
-var dbAircraft = db.addCollection("dbAircraft")
-var dbCarrier = db.addCollection("dbCarrier")
+export var dbAircraft = db.addCollection("dbAircraft")
+export var dbCarrier = db.addCollection("dbCarrier")
 
 for (var i=0; i<aircraftData.length; i++) {
 	dbAircraft.insert(aircraftData[i])

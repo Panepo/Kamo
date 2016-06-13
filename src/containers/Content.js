@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-
 import FleetGroup from './FleetGroup'
 import FleetStatus from './FleetStatus'
 import FleetMap from './FleetMap'
