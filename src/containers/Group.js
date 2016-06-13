@@ -14,7 +14,7 @@ class Group extends Component {
 	}
 	
 	render() {
-		const { selectData, carrierSelect, carrierSlotSelect, airControl } = this.props
+		const { selectData, carrierSelect, carrierSlotSelect, airControl, aircraftCount } = this.props
 		
 		var theadTemp
 		var theadOut = []
@@ -93,6 +93,9 @@ class Group extends Component {
 								case listAircraft[8]:
 									classTemp = classTemp + " mdl-color--" + listAircraftColor[8] + " mdl-button--raised"
 									break;
+								case listAircraft[9]:
+									classTemp = classTemp + " mdl-color--" + listAircraftColor[9] + " mdl-button--raised"
+									break;
 							}
 							
 						} else {
@@ -127,7 +130,8 @@ class Group extends Component {
 			<div className="display-area mdl-cell mdl-cell--8-col">
 				<InfoBox />
 				<div className="group-unit mdl-shadow--4dp mdl-grid">
-					<div className="mdl-cell mdl-cell--12-col">総制空力: {airControl}</div>
+					<div className="mdl-cell mdl-cell--2-col">総制空力: {airControl}</div>
+					<div className="mdl-cell mdl-cell--2-col">艦載機総數: {aircraftCount}</div>
 				</div>
 				<table className="group-unit group-table mdl-data-table mdl-js-data-table mdl-shadow--4dp">
 					{theadOut}
@@ -140,13 +144,15 @@ class Group extends Component {
 
 Group.propTypes = {
 	selectData: PropTypes.array.isRequired,
-	airControl: PropTypes.number.isRequired
+	airControl: PropTypes.number.isRequired,
+	aircraftCount: PropTypes.number.isRequired
 }
 
 const mapStateToProps = (state) => {
 	return {
 		selectData: state.dbStore.dbCarrierSelect,
-		airControl: state.dbStore.airControl
+		airControl: state.dbStore.airControl,
+		aircraftCount: state.dbStore.aircraftCount
 	}
 }
 

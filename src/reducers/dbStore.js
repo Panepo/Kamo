@@ -15,7 +15,6 @@ import {
 import lokijs from 'lokijs'
 import aircraftData from '../../raw/aircrafts.json'
 import carrierData from '../../raw/carriers.json'
-import { listAircraft } from '../constants/ConstList'
 
 var db = new lokijs('db')
 var dbAircraft = db.addCollection("dbAircraft")
@@ -35,13 +34,14 @@ for (var i=0; i<carrierData.length; i++) {
 
 const initialState = {
 	aircraftTypeSelect: '',
-	aircraftSelect: '19',
+	aircraftSelect: '',
 	aircraftSkillDisp: 1,
 	aircraftSkill: 7,
+	aircraftCount: 0,
 	airControl: 0,
 	carrierDisp: 1,
-	dbAircraftTypeQuery: dbAircraft.chain().find({ 'type': 'fighter' }).simplesort('name').data(),
-	dbAircraftSelect: dbAircraft.chain().find({ 'id': '19' }).data(),
+	dbAircraftTypeQuery: [],
+	dbAircraftSelect: [],
 	dbCarrierTypeQuery: [],
 	dbCarrierSelect: []
 }
@@ -186,7 +186,8 @@ export default function dbStore(state = initialState, action) {
 				dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
 				return Object.assign({}, state, {
 					dbCarrierSelect: dbTemp,
-					airControl: calcAirControl(dbTemp)
+					airControl: calcAirControl(dbTemp),
+					aircraftCount: state.aircraftCount - seletcedTarget[selectedSlot]
 				})
 			}
 			
@@ -201,7 +202,8 @@ export default function dbStore(state = initialState, action) {
 					calcAirControl(dbTemp)
 					return Object.assign({}, state, {
 						dbCarrierSelect: dbTemp,
-						airControl: calcAirControl(dbTemp)
+						airControl: calcAirControl(dbTemp),
+						aircraftCount: state.aircraftCount - seletcedTarget[selectedSlot]
 					})
 				} else {
 					seletcedTarget[slotID] = selectedAC.id
@@ -212,7 +214,8 @@ export default function dbStore(state = initialState, action) {
 					dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
 					return Object.assign({}, state, {
 						dbCarrierSelect: dbTemp,
-						airControl: calcAirControl(dbTemp)
+						airControl: calcAirControl(dbTemp),
+						aircraftCount: state.aircraftCount + seletcedTarget[selectedSlot]
 					})
 				}
 			} else {
@@ -225,7 +228,8 @@ export default function dbStore(state = initialState, action) {
 					dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
 					return Object.assign({}, state, {
 						dbCarrierSelect: dbTemp,
-						airControl: calcAirControl(dbTemp)
+						airControl: calcAirControl(dbTemp),
+						aircraftCount: state.aircraftCount + seletcedTarget[selectedSlot]
 					})
 				}
 			}
@@ -251,8 +255,8 @@ function calcAirControl(input) {
 			if ( input[i][searchName[j]] ) {
 				tempSelect = dbAircraft.findOne({'id': input[i][searchName[j]] })
 				switch ( tempSelect.type ) {
-					case listAircraft[0]:
-					case listAircraft[6]:
+					case 'fighter':
+					case 'seaplaneX':
 						acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
 
 						switch ( input[i][searchSkill[j]] ) {
@@ -280,8 +284,8 @@ function calcAirControl(input) {
 						}
 						
 						break
-					case listAircraft[1]:
-					case listAircraft[2]:
+					case 'bomber':
+					case 'torpedo':
 						if ( tempSelect.air > 0 ) {
 							acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
 						}
@@ -311,8 +315,10 @@ function calcAirControl(input) {
 						}
 						
 						break 
-					case listAircraft[5]:
-						acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
+					case 'seaplane':
+						if ( tempSelect.air > 0 ) {
+							acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
+						}
 						
 						switch ( input[i][searchSkill[j]] ) {
 							case 1:
