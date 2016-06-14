@@ -5,7 +5,7 @@ import ToggleButton from '../components/ToggleButton'
 import { listAircraftType, listAircraftTypeN, listAircraftSkill } from '../constants/ConstList'
 import { aircraftSkillChange } from '../actions'
 
-class InfoBox extends Component {
+class GroupInfoBox extends Component {
 	componentDidUpdate() {
 		componentHandler.upgradeDom()
 	}
@@ -61,7 +61,7 @@ class InfoBox extends Component {
 	}
 }
 
-InfoBox.propTypes = {
+GroupInfoBox.propTypes = {
 	dbAircraftSelect: PropTypes.array.isRequired,
 	aircraftSkillDisp: PropTypes.number.isRequired,
 	aircraftSkill: PropTypes.number.isRequired
@@ -84,4 +84,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(InfoBox)
+)(GroupInfoBox)

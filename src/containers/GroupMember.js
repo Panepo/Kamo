@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import InfoBox from './InfoBox'
+import GroupInfoBox from './GroupInfoBox'
 import ToggleButton from '../components/ToggleButton'
 import ToggleImgButton from '../components/ToggleImgButton'
 import { carrierSelect, carrierSlotSelect } from '../actions'
 import { listCarrierThead, listCarrierTbody, listAircraft, listAircraftColor, listAircraftSkill, listAircraftSkill2 } from '../constants/ConstList'
-import '../../css/Group.css'
+import '../../css/GroupMember.css'
 
-class Group extends Component {
+class GroupMember extends Component {
 	componentDidUpdate() {
 		componentHandler.upgradeDom()
 	}
@@ -128,7 +128,7 @@ class Group extends Component {
 
 		return (
 			<div className="display-area mdl-cell mdl-cell--8-col">
-				<InfoBox />
+				<GroupInfoBox />
 				<div className="group-unit mdl-shadow--4dp mdl-grid">
 					<div className="mdl-cell mdl-cell--2-col">総制空力: {airControl}</div>
 					<div className="mdl-cell mdl-cell--2-col">艦載機総數: {aircraftCount}</div>
@@ -142,7 +142,7 @@ class Group extends Component {
 	}
 }
 
-Group.propTypes = {
+GroupMember.propTypes = {
 	selectData: PropTypes.array.isRequired,
 	airControl: PropTypes.number.isRequired,
 	aircraftCount: PropTypes.number.isRequired
@@ -166,4 +166,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(Group)
+)(GroupMember)

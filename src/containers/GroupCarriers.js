@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import ToggleButton from '../components/ToggleButton'
 import ToggleImgButton from '../components/ToggleImgButton'
 import { carrierSelect, carrierDisplay } from '../actions'
-import '../../css/Carriers.css'
+import '../../css/GroupCarriers.css'
 
-class Carriers extends Component {
+class GroupCarriers extends Component {
 	componentDidUpdate() {
 		componentHandler.upgradeDom()
 	}
@@ -53,7 +53,7 @@ class Carriers extends Component {
 	}
 }
 
-Carriers.propTypes = {
+GroupCarriers.propTypes = {
 	carrierData: PropTypes.array.isRequired,
 	selectData: PropTypes.array.isRequired,
 	carrierDisp: PropTypes.number.isRequired
@@ -77,4 +77,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(Carriers)
+)(GroupCarriers)

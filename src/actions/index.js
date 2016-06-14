@@ -56,10 +56,10 @@ export function carrierDisplay(modelId) {
 	}
 }
 
-export function statusInitial(data) {
+export function statusInitial( airControl ) {
 	return {
 		type: types.STATUS_INITIAL,
-		data
+		airControl
 	}
 }
 

@@ -5,9 +5,9 @@ import ToggleButton from '../components/ToggleButton'
 import ToggleImgButton from '../components/ToggleImgButton'
 import { aircraftChange, aircraftTypeChange } from '../actions'
 import { listAircraft, listAircraftS } from '../constants/ConstList'
-import '../../css/Aircrafts.css'
+import '../../css/GroupAircrafts.css'
 
-class Aircrafts extends Component {
+class GroupAircrafts extends Component {
 	componentDidUpdate() {
 		componentHandler.upgradeDom()
 	}
@@ -60,7 +60,7 @@ class Aircrafts extends Component {
 	}
 }
 
-Aircrafts.propTypes = {
+GroupAircrafts.propTypes = {
 	typeSelect: PropTypes.string.isRequired,
 	aircraftData: PropTypes.array.isRequired,
 	aircraftSelect: PropTypes.string.isRequired
@@ -85,4 +85,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(Aircrafts)
+)(GroupAircrafts)
