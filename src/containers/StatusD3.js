@@ -18,10 +18,10 @@ class StatusD3 extends Component {
 				d3Output = (
 					<PieChart
 						data={output}
-						width={600}
+						width={400}
 						height={400}
-						radius={150}
-						innerRadius={40}
+						radius={100}
+						innerRadius={20}
 						sectorBorderColor="white"
 						title={"総制空力: " + airControl.toString()}
 					/>
@@ -32,8 +32,7 @@ class StatusD3 extends Component {
 		return (
 			<div className="status-d3output">
 				<div className="mdl-grid">
-					<div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
-					<div className="mdl-cell mdl-cell--8-col">
+					<div className="mdl-cell mdl-cell--12-col">
 						{d3Output}
 					</div>
 				</div>

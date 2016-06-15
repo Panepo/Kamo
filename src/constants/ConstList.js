@@ -1,3 +1,7 @@
+export const searchName = ["slot1id", "slot2id", "slot3id", "slot4id"]
+export const searchSlot = ["slot1", "slot2", "slot3", "slot4"]
+export const searchSkill = ["slot1skill", "slot2skill", "slot3skill", "slot4skill"]
+
 export const listStatus = ["艦隊編成", "ステータス", "出撃海域"]
 export const listStatusS = ["group", "status", "map"]
 

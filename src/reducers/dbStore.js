@@ -9,6 +9,8 @@ import {
 	CALC_STATUS
 } from '../constants/ConstActionTypes'
 
+import { searchName, searchSlot, searchSkill } from '../constants/ConstList'
+
 // ===============================================================================
 // Initial database
 // ===============================================================================
@@ -187,7 +189,7 @@ export default function dbStore(state = initialState, action) {
 				dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
 				return Object.assign({}, state, {
 					dbCarrierSelect: dbTemp,
-					airControl: calcAirControl(dbTemp),
+					airControl: calcAircontrol(dbTemp),
 					aircraftCount: state.aircraftCount - seletcedTarget[selectedSlot]
 				})
 			}
@@ -200,10 +202,10 @@ export default function dbStore(state = initialState, action) {
 					seletcedTarget[slotSkill] = null
 					dbCarrier.update(seletcedTarget)
 					dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
-					calcAirControl(dbTemp)
+					calcAircontrol(dbTemp)
 					return Object.assign({}, state, {
 						dbCarrierSelect: dbTemp,
-						airControl: calcAirControl(dbTemp),
+						airControl: calcAircontrol(dbTemp),
 						aircraftCount: state.aircraftCount - seletcedTarget[selectedSlot]
 					})
 				} else {
@@ -215,7 +217,7 @@ export default function dbStore(state = initialState, action) {
 					dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
 					return Object.assign({}, state, {
 						dbCarrierSelect: dbTemp,
-						airControl: calcAirControl(dbTemp),
+						airControl: calcAircontrol(dbTemp),
 						aircraftCount: state.aircraftCount + seletcedTarget[selectedSlot]
 					})
 				}
@@ -229,7 +231,7 @@ export default function dbStore(state = initialState, action) {
 					dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
 					return Object.assign({}, state, {
 						dbCarrierSelect: dbTemp,
-						airControl: calcAirControl(dbTemp),
+						airControl: calcAircontrol(dbTemp),
 						aircraftCount: state.aircraftCount + seletcedTarget[selectedSlot]
 					})
 				}
@@ -243,109 +245,13 @@ export default function dbStore(state = initialState, action) {
 	}
 }
 
-function calcAirControl(input) {
-	const searchName = ["slot1id", "slot2id", "slot3id", "slot4id"]
-	const searchSlot = ["slot1", "slot2", "slot3", "slot4"]
-	const searchSkill = ["slot1skill", "slot2skill", "slot3skill", "slot4skill"]
-	
+function calcAircontrol(input) {
 	var acValue = 0;
-	var tempSelect = []
 	
 	for (var i=0; i<input.length; i++) {
 		for (var j=0; j<searchName.length; j++) {
 			if ( input[i][searchName[j]] ) {
-				tempSelect = dbAircraft.findOne({'id': input[i][searchName[j]] })
-				switch ( tempSelect.type ) {
-					case 'fighter':
-					case 'seaplaneX':
-						acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
-
-						switch ( input[i][searchSkill[j]] ) {
-							case 1:
-								acValue = acValue + 0 + 1
-								break
-							case 2:
-								acValue = acValue + 2 + 1
-								break
-							case 3:
-								acValue = acValue + 5 + 2
-								break
-							case 4:
-								acValue = acValue + 9 + 2
-								break
-							case 5:
-								acValue = acValue + 14 + 2
-								break
-							case 6:
-								acValue = acValue + 14 + 3
-								break
-							case 7:
-								acValue = acValue + 22 + 3
-								break
-						}
-						
-						break
-					case 'bomber':
-					case 'torpedo':
-						if ( tempSelect.air > 0 ) {
-							acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
-						}
-						
-						switch ( input[i][searchSkill[j]] ) {
-							case 1:
-								acValue = acValue + 1
-								break
-							case 2:
-								acValue = acValue + 1
-								break
-							case 3:
-								acValue = acValue + 2
-								break
-							case 4:
-								acValue = acValue + 2
-								break
-							case 5:
-								acValue = acValue + 2
-								break
-							case 6:
-								acValue = acValue + 3
-								break
-							case 7:
-								acValue = acValue + 3
-								break
-						}
-						
-						break 
-					case 'seaplane':
-						if ( tempSelect.air > 0 ) {
-							acValue = acValue + Math.floor( tempSelect.air * Math.sqrt(input[i][searchSlot[j]] ) )
-						}
-						
-						switch ( input[i][searchSkill[j]] ) {
-							case 1:
-								acValue = acValue + 0 + 1
-								break
-							case 2:
-								acValue = acValue + 1 + 1
-								break
-							case 3:
-								acValue = acValue + 1 + 2
-								break
-							case 4:
-								acValue = acValue + 1 + 2
-								break
-							case 5:
-								acValue = acValue + 3 + 2
-								break
-							case 6:
-								acValue = acValue + 3 + 3
-								break
-							case 7:
-								acValue = acValue + 6 + 3
-								break
-						}
-						break
-				}
+				acValue = acValue + calcSlotAircontrol(input[i][searchName[j]],input[i][searchSlot[j]], input[i][searchSkill[j]] )
 			}
 		}
 	}
@@ -353,7 +259,104 @@ function calcAirControl(input) {
 }
 
 
+export function calcSlotAircontrol(aircraftId, slotSize, slotSkill ) {
+	var aircraftSelect = dbAircraft.findOne({'id': aircraftId })
+	var acValue = 0
+	
+	switch ( aircraftSelect.type ) {
+		case 'fighter':
+		case 'seaplaneX':
+			acValue = acValue + Math.floor( aircraftSelect.air * Math.sqrt(slotSize))
 
+			switch ( slotSkill ) {
+				case 1:
+					acValue = acValue + 0 + 1
+					break
+				case 2:
+					acValue = acValue + 2 + 1
+					break
+				case 3:
+					acValue = acValue + 5 + 2
+					break
+				case 4:
+					acValue = acValue + 9 + 2
+					break
+				case 5:
+					acValue = acValue + 14 + 2
+					break
+				case 6:
+					acValue = acValue + 14 + 3
+					break
+				case 7:
+					acValue = acValue + 22 + 3
+					break
+			}
+			
+			break
+		case 'bomber':
+		case 'torpedo':
+			if ( aircraftSelect.air > 0 ) {
+				acValue = acValue + Math.floor( aircraftSelect.air * Math.sqrt(slotSize))
+			}
+			
+			switch ( slotSkill ) {
+				case 1:
+					acValue = acValue + 1
+					break
+				case 2:
+					acValue = acValue + 1
+					break
+				case 3:
+					acValue = acValue + 2
+					break
+				case 4:
+					acValue = acValue + 2
+					break
+				case 5:
+					acValue = acValue + 2
+					break
+				case 6:
+					acValue = acValue + 3
+					break
+				case 7:
+					acValue = acValue + 3
+					break
+			}
+			
+			break 
+		case 'seaplane':
+			if ( aircraftSelect.air > 0 ) {
+				acValue = acValue + Math.floor( aircraftSelect.air * Math.sqrt(slotSize))
+			}
+			
+			switch ( slotSkill ) {
+				case 1:
+					acValue = acValue + 0 + 1
+					break
+				case 2:
+					acValue = acValue + 1 + 1
+					break
+				case 3:
+					acValue = acValue + 1 + 2
+					break
+				case 4:
+					acValue = acValue + 1 + 2
+					break
+				case 5:
+					acValue = acValue + 3 + 2
+					break
+				case 6:
+					acValue = acValue + 3 + 3
+					break
+				case 7:
+					acValue = acValue + 6 + 3
+					break
+			}
+			break
+	}
+	
+	return acValue
+}
 
 
 
