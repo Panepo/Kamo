@@ -10,18 +10,18 @@ class StatusD3 extends Component {
 	}
 	
 	render() {
-		const { status, output, airControl } = this.props
+		const { status, outputD3, airControl } = this.props
 		
 		var d3Output
 		switch (status) {
 			case "air":
 				d3Output = (
 					<PieChart
-						data={output}
-						width={400}
-						height={400}
-						radius={100}
-						innerRadius={20}
+						data={outputD3}
+						width={600}
+						height={450}
+						radius={150}
+						innerRadius={30}
 						sectorBorderColor="white"
 						title={"総制空力: " + airControl.toString()}
 					/>
@@ -50,7 +50,7 @@ const mapStateToProps = (state) => {
 	return {
 		airControl: state.dbStore.airControl,
 		status: state.statusStore.status,
-		output: state.statusStore.output
+		outputD3: state.statusStore.outputD3
 	}
 }
 

@@ -130,7 +130,7 @@ class GroupMember extends Component {
 			<div className="display-area mdl-cell mdl-cell--8-col">
 				<GroupInfoBox />
 				<div className="group-unit mdl-shadow--4dp mdl-grid">
-					<div className="mdl-cell mdl-cell--2-col">総制空力: {airControl}</div>
+					<div className="mdl-cell mdl-cell--2-col">艦隊総制空力: {airControl}</div>
 					<div className="mdl-cell mdl-cell--2-col">艦載機総數: {aircraftCount}</div>
 				</div>
 				<table className="group-unit group-table mdl-data-table mdl-js-data-table mdl-shadow--4dp">

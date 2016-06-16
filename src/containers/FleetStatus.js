@@ -27,11 +27,11 @@ class FleetStatus extends Component {
 		return (
 			<div className="page-content display-area">
 				<div className="mdl-grid display-area">
-					<div className="mdl-cell mdl-cell--8-col mdl-color--white">
+					<div className="mdl-cell mdl-cell--6-col">
 						<StatusMenu />
 						<StatusInfo />
 					</div>
-					<div className="display-list mdl-cell mdl-cell--4-col mdl-color--white mdl-shadow--4dp">
+					<div className="display-list mdl-cell mdl-cell--6-col mdl-color--white mdl-shadow--4dp">
 						<StatusD3 />
 					</div>
 				</div>

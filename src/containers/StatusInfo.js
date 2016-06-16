@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import {  } from '../actions'
-import { listCarrierThead, listCarrierTbody, listAircraft, listAircraftColor, listAircraftSkill2 } from '../constants/ConstList'
-import { calcSlotAircontrol } from '../reducers/dbStore'
+import { listStautTheadAir, searchSlot } from '../constants/ConstList'
 
 class StatusInfo extends Component {
 	componentDidUpdate() {
@@ -10,20 +8,34 @@ class StatusInfo extends Component {
 	}
 	
 	render() {
-		const { selectData } = this.props
+		const { status, outputInfo } = this.props
 
+		var listStautThead = []
+		
+		switch (status) {
+			case "air":
+				listStautThead = listStautTheadAir
+				break
+		}
+		
 		var theadTemp
 		var theadOut = []
-		var stringTemp = ''
-		for (var i=0; i<listCarrierThead.length; i++){
-			stringTemp = 'theadGroup' + i.toString()
+		for (var i=0; i<listStautThead.length; i++){
+			if ( i === 0 ) {
+				theadTemp = (
+					<th key={'theadStatus' + i.toString()}>
+						<div className="thead">
+							{listStautThead[i]}
+						</div>
+					</th>
+				)
+			} else {
 			theadTemp = (
-				<th className={stringTemp} key={stringTemp}>
-					<div className="thead">
-						{listCarrierThead[i]}
-					</div>
+				<th key={'theadStatus' + i.toString()}>
+					{listStautThead[i]}
 				</th>
 				)
+			}
 			theadOut.push(theadTemp)
 		}
 		theadOut = <thead><tr>{theadOut}</tr></thead>
@@ -31,77 +43,24 @@ class StatusInfo extends Component {
 		var tdTemp
 		var tdOut = []
 		var tbodyOut = []
-		for (var i=0; i<selectData.length; i++){
-			tdOut = []
-			for (var j=0; j<listCarrierTbody.length; j++){
-				stringTemp = 'tbodyGroup' + i.toString() + j.toString()
+		for (var i=0; i<outputInfo.length; i++){
+			var tdOut = []
+			
+			for (var j=0; j<(searchSlot.length+2); j++){
 				if ( j === 0 ) {
-					var imgSrcTemp = 'image/ship/' + selectData[i].id + '.jpg'
-					tdTemp = (
-						<td key={stringTemp}>
-							<img src={imgSrcTemp} alt={selectData[i].name} />
-						</td>
-						)
+					tdTemp = <td key={'tdStatus' + i.toString() + j.toString()}><img src={outputInfo[i].imgsrc} /></td>
+				} else if ( j === 1 ) {
+					tdTemp = <td key={'tdStatus' + i.toString() + j.toString()}>{outputInfo[i]["total"]}</td>
 				} else {
-					if ( selectData[i][listCarrierTbody[j]] > 0 ) {
-						var textTemp = ''
-						var textTemp2 = ''
-						var idTemp = listCarrierTbody[j] + selectData[i].id
-						var slotID = listCarrierTbody[j] + 'id'
-						var slotName = listCarrierTbody[j] + 'short'
-						var slotType = listCarrierTbody[j] + 'type'
-						var classTemp = "group-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"
-						
-						if ( selectData[i][slotID] ) {
-							textTemp = selectData[i][slotName] + "(" + selectData[i][listCarrierTbody[j]].toString() + ") " + listAircraftSkill2[selectData[i][listCarrierTbody[j] + 'skill']]
-							switch ( selectData[i][slotType] ) {
-								case listAircraft[0]:
-									classTemp = classTemp + " mdl-color--" + listAircraftColor[0] + " mdl-button--raised"
-									break;
-								case listAircraft[1]:
-									classTemp = classTemp + " mdl-color--" + listAircraftColor[1] + " mdl-button--raised"
-									break;
-								case listAircraft[2]:
-									classTemp = classTemp + " mdl-color--" + listAircraftColor[2] + " mdl-button--raised"
-									break;
-								case listAircraft[3]:
-									classTemp = classTemp + " mdl-color--" + listAircraftColor[3] + " mdl-button--raised"
-									break;
-								case listAircraft[4]:
-									classTemp = classTemp + " mdl-color--" + listAircraftColor[4] + " mdl-button--raised"
-									break;
-								case listAircraft[5]:
-									classTemp = classTemp + " mdl-color--" + listAircraftColor[5] + " mdl-button--raised"
-									break;
-								case listAircraft[6]:
-									classTemp = classTemp + " mdl-color--" + listAircraftColor[6] + " mdl-button--raised"
-									break;
-								case listAircraft[7]:
-									classTemp = classTemp + " mdl-color--" + listAircraftColor[7] + " mdl-button--raised"
-									break;
-								case listAircraft[8]:
-									classTemp = classTemp + " mdl-color--" + listAircraftColor[8] + " mdl-button--raised"
-									break;
-								case listAircraft[9]:
-									classTemp = classTemp + " mdl-color--" + listAircraftColor[9] + " mdl-button--raised"
-									break;
-							}
-						}
-						
-						tdTemp = (
-							<td key={stringTemp}>
-								<div className={classTemp}>{textTemp}</div>
-							</td>
-							)
-						
+					if ( outputInfo[i][searchSlot[j-2]] ) {
+						tdTemp = <td key={'tdStatus' + i.toString() + j.toString()}>{outputInfo[i][searchSlot[j-2]]}</td>
 					} else {
-						tdTemp = <td key={stringTemp}></td>
+						tdTemp = <td key={'tdStatus' + i.toString() + j.toString()}>-</td>
 					}
 				}
 				tdOut.push(tdTemp)
 			}
-			stringTemp = 'trGroup' + i.toString()
-			tdOut = <tr key={stringTemp}>{tdOut}</tr>
+			tdOut = <tr key={'tbodyStatus' + i.toString()}>{tdOut}</tr>
 			tbodyOut.push(tdOut)
 		}
 		tbodyOut = <tbody>{tbodyOut}</tbody>
@@ -116,12 +75,14 @@ class StatusInfo extends Component {
 }
 
 StatusInfo.propTypes = {
-	selectData: PropTypes.array.isRequired
+	status: PropTypes.string.isRequired,
+	outputInfo: PropTypes.array.isRequired
 }
 
 const mapStateToProps = (state) => {
 	return {
-		selectData: state.dbStore.dbCarrierSelect
+		status: state.statusStore.status,
+		outputInfo: state.statusStore.outputInfo
 	}
 }
 

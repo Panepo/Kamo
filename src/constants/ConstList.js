@@ -1,6 +1,7 @@
 export const searchName = ["slot1id", "slot2id", "slot3id", "slot4id"]
 export const searchSlot = ["slot1", "slot2", "slot3", "slot4"]
 export const searchSkill = ["slot1skill", "slot2skill", "slot3skill", "slot4skill"]
+export const searchText = ["slot1text", "slot2text", "slot3text", "slot4text"]
 
 export const listStatus = ["艦隊編成", "ステータス", "出撃海域"]
 export const listStatusS = ["group", "status", "map"]
@@ -18,3 +19,5 @@ export const listCarrierTbody = ["id", "slot1", "slot2", "slot3", "slot4"]
 
 export const listStatusButton = ["制空能力", "航空攻撃", "砲撃戦攻撃", "対潜攻撃"]
 export const listStatusButtonS = ["air", "airstrike", "firepower", "sonar"]
+
+export const listStautTheadAir = ["艦娘", "艦娘制空力", "第一隊", "第二隊", "第三隊", "第四隊"]
