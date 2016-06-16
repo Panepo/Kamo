@@ -3,7 +3,8 @@ import {
 	STATUS_CHANGE
 } from '../constants/ConstActionTypes'
 
-import { dbAircraft, dbCarrier, calcSlotAircontrol } from './dbStore'
+import { dbCarrier } from './dbStore'
+import { calcSlotAircontrol, calcSlotFirepower, calcSlotAirstrike, calcSlotSonar } from './calcSlot'
 import { listCarrierThead, searchName, searchSlot, searchSkill, searchText } from '../constants/ConstList'
 
 const initialState = {
@@ -12,6 +13,10 @@ const initialState = {
 	outputInfo: [],
 	outputD3: []
 }
+
+// ===============================================================================
+// Reducer main function
+// ===============================================================================
 
 export default function statusStore(state = initialState, action) {
 	var infoOutput = []
@@ -35,6 +40,10 @@ export default function statusStore(state = initialState, action) {
 			return state
 	}
 }
+
+// ===============================================================================
+// Reducer functions: generate output for status -> info page
+// ===============================================================================
 
 function genInfoOutput(status) {
 	var output = []
@@ -86,7 +95,7 @@ function genInfoOutput(status) {
 								tempEvade = tempEvade + tempObject.evade
 							}
 						}
-						tempFirepower = tempFirepower + 55 + dbCarrierSelect[i].firepower * 1.5
+						tempFirepower = tempFirepower + 55 + Math.floor(dbCarrierSelect[i].firepower * 1.5)
 						break
 					default:
 						for (var j=0; j<searchName.length; j++) {
@@ -99,7 +108,7 @@ function genInfoOutput(status) {
 						}
 						tempFirepower = dbCarrierSelect[i].firepower + 5
 				}
-				
+				output[i].firepower = tempFirepower
 				output[i].total = "火力:" + tempFirepower + " 命中+" + tempHit + " 迴避+" + tempEvade
 			}
 			break
@@ -133,7 +142,7 @@ function genInfoOutput(status) {
 						tempFirepower = tempFirepower + 8
 						break
 				}
-				
+				output[i].firepower = tempFirepower
 				output[i].total = "反潛:" + tempFirepower + " 命中+" + tempHit + " 迴避+" + tempEvade
 			}
 			break
@@ -141,6 +150,9 @@ function genInfoOutput(status) {
 	return output
 }
 
+// ===============================================================================
+// Reducer functions: generate output for status -> d3 page
+// ===============================================================================
 
 function genD3Output(status, airControl, infoOutput) {
 	var output = []
@@ -162,45 +174,6 @@ function genD3Output(status, airControl, infoOutput) {
 		break
 	}
 	
-	return output
-}
-
-function calcSlotFirepower( aircraftId ) {
-	var aircraftSelect = dbAircraft.chain().find({ 'id': aircraftId }).data()
-	var output = {}
-	
-	output.firepower = aircraftSelect[0].firepower
-	switch ( aircraftSelect[0].type) {
-		case "bomber":
-			output.firepower = output.firepower + aircraftSelect[0].bomb * 1.3
-		break
-		case "torpedo":
-			output.firepower = output.firepower + aircraftSelect[0].torpedo
-		break
-	}
-	output.firepower = Math.floor( output.firepower * 1.5 )
-	output.hit = aircraftSelect[0].hit
-	output.evade = aircraftSelect[0].evade
-	return output
-}
-
-function calcSlotSonar( aircraftId ) {
-	var aircraftSelect = dbAircraft.chain().find({ 'id': aircraftId }).data()
-	var output = {}
-	
-	switch ( aircraftSelect[0].type) {
-		case "bomber":
-		case "torpedo":
-		case "seaplane":
-		case "heli":
-		case "blue":
-		case "big":
-			output.firepower = aircraftSelect[0].sonar
-		break
-	}
-	output.firepower = Math.floor( output.firepower * 1.5 )
-	output.hit = aircraftSelect[0].hit
-	output.evade = aircraftSelect[0].evade
 	return output
 }
 

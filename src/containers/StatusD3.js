@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { PieChart } from 'react-d3';
+import { PieChart } from 'rd3';
 import {  } from '../actions'
 import {  } from '../constants/ConstList'
 

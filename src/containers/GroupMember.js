@@ -14,7 +14,7 @@ class GroupMember extends Component {
 	}
 	
 	render() {
-		const { selectData, carrierSelect, carrierSlotSelect, airControl, aircraftCount } = this.props
+		const { selectData, carrierSelect, carrierSlotSelect, airControl, aircraftCount, scout } = this.props
 		
 		var theadTemp
 		var theadOut = []
@@ -130,8 +130,9 @@ class GroupMember extends Component {
 			<div className="display-area mdl-cell mdl-cell--8-col">
 				<GroupInfoBox />
 				<div className="group-unit mdl-shadow--4dp mdl-grid">
-					<div className="mdl-cell mdl-cell--2-col">艦隊総制空力: {airControl}</div>
 					<div className="mdl-cell mdl-cell--2-col">艦載機総數: {aircraftCount}</div>
+					<div className="mdl-cell mdl-cell--2-col">艦隊総制空力: {airControl}</div>
+					<div className="mdl-cell mdl-cell--4-col">触接率: {scout}%(確保) {Math.floor(scout*0.6)}%(優勢)</div>
 				</div>
 				<table className="group-unit group-table mdl-data-table mdl-js-data-table mdl-shadow--4dp">
 					{theadOut}
@@ -145,6 +146,7 @@ class GroupMember extends Component {
 GroupMember.propTypes = {
 	selectData: PropTypes.array.isRequired,
 	airControl: PropTypes.number.isRequired,
+	scout: PropTypes.number.isRequired,
 	aircraftCount: PropTypes.number.isRequired
 }
 
@@ -152,6 +154,7 @@ const mapStateToProps = (state) => {
 	return {
 		selectData: state.dbStore.dbCarrierSelect,
 		airControl: state.dbStore.airControl,
+		scout: state.dbStore.scout,
 		aircraftCount: state.dbStore.aircraftCount
 	}
 }
