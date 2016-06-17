@@ -8,8 +8,8 @@ class FleetMap extends Component {
 		return (
 			<div className="page-content">
 				<div className="mdl-grid">
-					<div className="mdl-cell mdl-cell--6-col mdl-color--white mdl-shadow--4dp">6</div>
-					<div className="mdl-cell mdl-cell--6-col mdl-color--white mdl-shadow--4dp">6</div>
+					<div className="mdl-cell mdl-cell--6-col mdl-color--white mdl-shadow--4dp">Under</div>
+					<div className="mdl-cell mdl-cell--6-col mdl-color--white mdl-shadow--4dp">Construction</div>
 				</div>
 			</div>
 		)
