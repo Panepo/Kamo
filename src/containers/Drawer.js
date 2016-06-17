@@ -18,13 +18,6 @@ class Drawer extends Component {
 			<div className="mdl-layout__drawer">
 				<span className="mdl-layout-title">Config</span>
 				<nav className="mdl-navigation">
-					<ToggleSwitch
-						key={"switch1"}
-						classes={"nav-toggle"}
-						modelId={"1"}
-						display={aircraftSkillDisp.toString()}
-						onClickFunc={(modelId) => aircraftSkillDisplay(modelId)}
-						title={"艦載機熟練度表示"} />
 				</nav>
 				<Footer />
 			</div>

@@ -31,10 +31,8 @@ class Header extends Component {
 					<span className="mdl-layout-title">KAMO</span>
 					<div className="mdl-layout-spacer"></div>
 					<nav className="mdl-navigation mdl-layout--large-screen-only">
-						<a className="mdl-navigation__link" href="">Link</a>
-						<a className="mdl-navigation__link" href="">Link</a>
-						<a className="mdl-navigation__link" href="">Link</a>
-						<a className="mdl-navigation__link" href="">Link</a>
+						<a className="mdl-navigation__link" href="http://www.dmm.com/netgame_s/kancolle/">艦これ</a>
+						<a className="mdl-navigation__link" href="http://wikiwiki.jp/kancolle/">攻略Wiki</a>
 					</nav>
 				</div>
 				<div className="mdl-layout__tab-bar mdl-js-ripple-effect">
