@@ -13,12 +13,9 @@ class FleetStatus extends Component {
 		componentHandler.upgradeDom()
 	}
 	
-	componentWillMount() {
+	componentWillMount () {
 		const { statusInitial, selectData, airControl, airDamage } = this.props
-		
-		if (selectData.length > 0) {
-			statusInitial( airControl, airDamage )
-		}
+		statusInitial( airControl, airDamage )
 	}
 	
 	render() {
