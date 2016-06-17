@@ -48,7 +48,7 @@ const initialState = {
 	scout1: 0,
 	scout2: 0,
 	scout3: 0,
-	airdamage: 0,
+	airdamage: 100,
 	carrierDisp: 1,
 	dbAircraftTypeQuery: [],
 	dbAircraftSelect: [],
@@ -144,8 +144,22 @@ export default function dbStore(state = initialState, action) {
 		case CARRIER_SELECT:
 			var carrierSelect = dbCarrier.findOne({'id': action.modelId })
 			var carrierSelected = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('type').data()
+			var tempCount = state.aircraftCount
 			
 			if ( carrierSelect.select > 0 ) {
+				if ( carrierSelect.slot1id ) {
+					tempCount = tempCount - carrierSelect.slot1
+				}
+				if ( carrierSelect.slot2id ) {
+					tempCount = tempCount - carrierSelect.slot2
+				}
+				if ( carrierSelect.slot3id ) {
+					tempCount = tempCount - carrierSelect.slot3
+				}
+				if ( carrierSelect.slot4id ) {
+					tempCount = tempCount - carrierSelect.slot4
+				}
+				
 				carrierSelect.select = 0
 				carrierSelect.slot1id = null
 				carrierSelect.slot1short = null
@@ -169,9 +183,19 @@ export default function dbStore(state = initialState, action) {
 				}
 			}
 			dbCarrier.update(carrierSelect)
+			dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
+			tempObject = calcGroupAir(dbTemp)
 			
 			return Object.assign({}, state, {
-				dbCarrierSelect: dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
+				dbCarrierSelect: dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data(),
+				airControl: tempObject.ac,
+				scout: tempObject.scout,
+				scout0: tempObject.chance0,
+				scout1: tempObject.chance1,
+				scout2: tempObject.chance2,
+				scout3: tempObject.chance3,
+				airdamage: tempObject.airdamage,
+				aircraftCount: tempCount
 			})
 		// ===============================================================================
 		// CARRIER_SLOT_SELECT
@@ -345,7 +369,7 @@ function calcGroupAir(input) {
 	}
 	output.chance0 = (1 - tempChance)*(1 - output.chance1 - output.chance2 - output.chance3)
 	
-	output.airdamage = 0.2 * output.chance3 + 0.17 * output.chance2 + 0.12 * ( output.chance0 + output.chance1)
+	output.airdamage = 1 + 0.2 * output.chance3 + 0.17 * output.chance2 + 0.12 * ( output.chance0 + output.chance1)
 	
 	output.scout = Math.floor(output.scout)
 	output.chance0 = Math.floor(output.chance0*100)

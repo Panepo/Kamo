@@ -132,9 +132,9 @@ class GroupMember extends Component {
 				<div className="group-unit mdl-shadow--4dp mdl-grid">
 					<div className="mdl-cell mdl-cell--2-col">艦載機総數: {aircraftCount}</div>
 					<div className="mdl-cell mdl-cell--2-col">艦隊総制空力: {airControl}</div>
-					<div className="mdl-cell mdl-cell--3-col">触接開始率: {scout}%(確保) {Math.floor(scout*0.6)}%(優勢)</div>
+					<div className="mdl-cell mdl-cell--4-col">触接開始率: {scout}%(確保) {Math.floor(scout*0.6)}%(優勢)</div>
 					<div className="mdl-cell mdl-cell--2-col">触接率: {scout3}/{scout2}/{scout1 + scout0}%</div>
-					<div className="mdl-cell mdl-cell--2-col">期望觸接倍率: {100+airdamage}%</div>
+					<div className="mdl-cell mdl-cell--2-col">期望觸接倍率: {airdamage}%</div>
 				</div>
 				<table className="group-unit group-table mdl-data-table mdl-js-data-table mdl-shadow--4dp">
 					{theadOut}
