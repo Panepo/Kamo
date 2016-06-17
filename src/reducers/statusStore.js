@@ -10,6 +10,7 @@ import { listCarrierThead, searchName, searchSlot, searchSkill, searchText } fro
 const initialState = {
 	status: 'air',
 	airControl: 0,
+	airDamage: 100,
 	outputInfo: [],
 	outputD3: []
 }
@@ -23,14 +24,15 @@ export default function statusStore(state = initialState, action) {
 	
 	switch (action.type) {
 		case STATUS_INITIAL:
-			infoOutput = genInfoOutput(state.status)
+			infoOutput = genInfoOutput(state.status, action.airDamage)
 			return Object.assign({}, state, {
 				airControl: action.airControl,
+				airDamage: action.airDamage,
 				outputInfo: infoOutput,
 				outputD3: genD3Output(state.status, action.airControl, infoOutput )
 			})
 		case STATUS_CHANGE:
-			infoOutput = genInfoOutput(action.modelId)
+			infoOutput = genInfoOutput(action.modelId, state.airDamage)
 			return Object.assign({}, state, {
 				status: action.modelId,
 				outputInfo: infoOutput,
@@ -45,7 +47,7 @@ export default function statusStore(state = initialState, action) {
 // Reducer functions: generate output for status -> info page
 // ===============================================================================
 
-function genInfoOutput(status) {
+function genInfoOutput(status, airDamage) {
 	var output = []
 	var dbCarrierSelect = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
 	var tempValue = 0
@@ -66,6 +68,24 @@ function genInfoOutput(status) {
 						output[i][searchText[j]] = dbCarrierSelect[i].name + " " + listCarrierThead[j+1]
 						output[i][searchSlot[j]] = calcSlotAircontrol( dbCarrierSelect[i][searchName[j]], dbCarrierSelect[i][searchSlot[j]], dbCarrierSelect[i][searchSkill[j]] )
 						tempValue = tempValue + output[i][searchSlot[j]]
+					}
+				}
+				output[i].total = tempValue
+			}
+			break
+		case "airstrike":
+			for (var i=0; i<dbCarrierSelect.length; i++) {
+				output[i] = {}
+				tempValue = 0
+				tempObject = {}
+				output[i].imgsrc = 'image/ship/' + dbCarrierSelect[i].id + '.jpg'
+				
+				for (var j=0; j<searchName.length; j++) {
+					if ( dbCarrierSelect[i][searchName[j]] ) {
+						output[i][searchText[j]] = dbCarrierSelect[i].name + " " + listCarrierThead[j+1]
+						tempObject = calcSlotAirstrike( dbCarrierSelect[i][searchName[j]], dbCarrierSelect[i][searchSlot[j]], airDamage )
+						output[i][searchSlot[j]] = tempObject.string
+						tempValue = tempValue + tempObject.dam
 					}
 				}
 				output[i].total = tempValue

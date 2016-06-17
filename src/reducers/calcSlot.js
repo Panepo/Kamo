@@ -19,21 +19,25 @@ export function calcSlotFirepower( aircraftId ) {
 	return output
 }
 
-export function calcSlotAirstrike( aircraftId, slot, scout ) {
+export function calcSlotAirstrike( aircraftId, slot, airDamage ) {
 	var aircraftSelect = dbAircraft.chain().find({ 'id': aircraftId }).data()
 	var output = {}
 	var tempDam = 0
 	
 	switch ( aircraftSelect[0].type) {
 		case "bomber":
-			tempDam = (aircraftSelect[0].bomb * Math.sqrt(slot) + 25) * scout
-			output.as1 = tempDam
+			tempDam = (aircraftSelect[0].bomb * Math.sqrt(slot) + 25) * airDamage / 100
+			output.as1 = Math.floor( tempDam )
 			output.as2 = 0
+			output.dam = output.as1
+			output.string = output.as1.toString()
 		break
 		case "torpedo":
-			tempDam = (aircraftSelect[0].torpedo * Math.sqrt(slot) + 25) * scout
+			tempDam = (aircraftSelect[0].torpedo * Math.sqrt(slot) + 25) * airDamage / 100
 			output.as1 = Math.floor( tempDam * 0.8 )
 			output.as2 = Math.floor( tempDam * 0.7 )
+			output.dam = Math.floor( tempDam * 1.15 )
+			output.string = output.as1.toString() + "/" + (output.as1+output.as2).toString()
 		break
 	}
 	return output

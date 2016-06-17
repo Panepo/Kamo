@@ -48,7 +48,7 @@ const initialState = {
 	scout1: 0,
 	scout2: 0,
 	scout3: 0,
-	airdamage: 100,
+	airDamage: 100,
 	carrierDisp: 1,
 	dbAircraftTypeQuery: [],
 	dbAircraftSelect: [],
@@ -194,7 +194,7 @@ export default function dbStore(state = initialState, action) {
 				scout1: tempObject.chance1,
 				scout2: tempObject.chance2,
 				scout3: tempObject.chance3,
-				airdamage: tempObject.airdamage,
+				airDamage: tempObject.airDamage,
 				aircraftCount: tempCount
 			})
 		// ===============================================================================
@@ -228,7 +228,7 @@ export default function dbStore(state = initialState, action) {
 					scout1: tempObject.chance1,
 					scout2: tempObject.chance2,
 					scout3: tempObject.chance3,
-					airdamage: tempObject.airdamage,
+					airDamage: tempObject.airDamage,
 					aircraftCount: state.aircraftCount - seletcedTarget[selectedSlot]
 				})
 			}
@@ -250,7 +250,7 @@ export default function dbStore(state = initialState, action) {
 						scout1: tempObject.chance1,
 						scout2: tempObject.chance2,
 						scout3: tempObject.chance3,
-						airdamage: tempObject.airdamage,
+						airDamage: tempObject.airDamage,
 						aircraftCount: state.aircraftCount - seletcedTarget[selectedSlot]
 					})
 				} else {
@@ -269,7 +269,7 @@ export default function dbStore(state = initialState, action) {
 						scout1: tempObject.chance1,
 						scout2: tempObject.chance2,
 						scout3: tempObject.chance3,
-						airdamage: tempObject.airdamage,
+						airDamage: tempObject.airDamage,
 						aircraftCount: state.aircraftCount
 					})
 				}
@@ -297,7 +297,7 @@ export default function dbStore(state = initialState, action) {
 						scout1: tempObject.chance1,
 						scout2: tempObject.chance2,
 						scout3: tempObject.chance3,
-						airdamage: tempObject.airdamage,
+						airDamage: tempObject.airDamage,
 						aircraftCount: tempCount
 					})
 
@@ -369,14 +369,14 @@ function calcGroupAir(input) {
 	}
 	output.chance0 = (1 - tempChance)*(1 - output.chance1 - output.chance2 - output.chance3)
 	
-	output.airdamage = 1 + 0.2 * output.chance3 + 0.17 * output.chance2 + 0.12 * ( output.chance0 + output.chance1)
+	output.airDamage = 1 + 0.2 * output.chance3 + 0.17 * output.chance2 + 0.12 * ( output.chance0 + output.chance1)
 	
 	output.scout = Math.floor(output.scout)
 	output.chance0 = Math.floor(output.chance0*100)
 	output.chance1 = Math.floor(output.chance1*100)
 	output.chance2 = Math.floor(output.chance2*100)
 	output.chance3 = Math.floor(output.chance3*100)
-	output.airdamage = Math.floor(output.airdamage*100)
+	output.airDamage = Math.floor(output.airDamage*100)
 	
 	return output
 }

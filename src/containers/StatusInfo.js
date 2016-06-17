@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { listStautTheadAir, listStautTheadFP, searchSlot } from '../constants/ConstList'
+import { listStautTheadAir, listStautTheadFP, listStautTheadAS, searchSlot } from '../constants/ConstList'
 
 class StatusInfo extends Component {
 	componentDidUpdate() {
@@ -20,6 +20,8 @@ class StatusInfo extends Component {
 			case "sonar":
 				listStautThead = listStautTheadFP
 				break
+			case "airstrike":
+				listStautThead = listStautTheadAS
 		}
 		
 		var theadTemp

@@ -14,10 +14,10 @@ class FleetStatus extends Component {
 	}
 	
 	componentWillMount() {
-		const { statusInitial, selectData, airControl } = this.props
+		const { statusInitial, selectData, airControl, airDamage } = this.props
 		
 		if (selectData.length > 0) {
-			statusInitial( airControl )
+			statusInitial( airControl, airDamage )
 		}
 	}
 	
@@ -42,12 +42,14 @@ class FleetStatus extends Component {
 
 FleetStatus.propTypes = {
 	airControl: PropTypes.number.isRequired,
+	airDamage: PropTypes.number.isRequired,
 	selectData: PropTypes.array.isRequired
 }
 
 const mapStateToProps = (state) => {
 	return {
 		airControl: state.dbStore.airControl,
+		airDamage: state.dbStore.airDamage,
 		selectData: state.dbStore.dbCarrierSelect
 	}
 }

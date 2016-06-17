@@ -22,3 +22,4 @@ export const listStatusButtonS = ["air", "airstrike", "firepower", "sonar"]
 
 export const listStautTheadAir = ["艦娘", "艦娘制空力", "第一隊", "第二隊", "第三隊", "第四隊"]
 export const listStautTheadFP = ["艦娘", "資訊", "第一隊", "第二隊", "第三隊", "第四隊"]
+export const listStautTheadAS = ["艦娘", "空襲總傷害", "第一隊", "第二隊", "第三隊", "第四隊"]
