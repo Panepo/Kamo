@@ -23,6 +23,10 @@ export function calcSlotAirstrike( aircraftId, slot, airDamage ) {
 	var aircraftSelect = dbAircraft.chain().find({ 'id': aircraftId }).data()
 	var output = {}
 	var tempDam = 0
+	output.as1 = 0
+	output.as2 = 0
+	output.dam = 0
+	output.string = 0
 	
 	switch ( aircraftSelect[0].type) {
 		case "bomber":
