@@ -171,3 +171,32 @@ export function calcSlotScout( aircraftId, slotSize ) {
 	}
 	return output
 }
+
+export function calcSlotScout2( aircraftId ) {
+	var aircraftSelect = dbAircraft.chain().find({ 'id': aircraftId }).data()
+	var output = {}
+	
+	switch ( aircraftSelect[0].type ) {
+		case "scout":
+		case "scout2":
+		case "big":
+		case "torpedo":
+			switch ( aircraftSelect[0].hit ) {
+				case 3:
+					output.hit3 = 0.07 * aircraftSelect[0].scout
+					break
+				case 2:
+					output.hit2 = 0.07 * aircraftSelect[0].scout
+					break
+				case 1:
+					output.hit1 = 0.07 * aircraftSelect[0].scout
+					break
+				case 0:
+					output.hit0 = 0.07 * aircraftSelect[0].scout
+					break
+			}
+		break
+	}
+	
+	return output
+}

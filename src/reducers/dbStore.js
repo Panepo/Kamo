@@ -10,7 +10,7 @@ import {
 } from '../constants/ConstActionTypes'
 
 import { searchName, searchSlot, searchSkill } from '../constants/ConstList'
-import { calcSlotAircontrol, calcSlotScout } from './calcSlot'
+import { calcSlotAircontrol, calcSlotScout, calcSlotScout2 } from './calcSlot'
 
 // ===============================================================================
 // Initial database
@@ -44,6 +44,11 @@ const initialState = {
 	aircraftCount: 0,
 	airControl: 0,
 	scout: 0,
+	scout0: 0,
+	scout1: 0,
+	scout2: 0,
+	scout3: 0,
+	airdamage: 0,
 	carrierDisp: 1,
 	dbAircraftTypeQuery: [],
 	dbAircraftSelect: [],
@@ -195,6 +200,11 @@ export default function dbStore(state = initialState, action) {
 					dbCarrierSelect: dbTemp,
 					airControl: tempObject.ac,
 					scout: tempObject.scout,
+					scout0: tempObject.chance0,
+					scout1: tempObject.chance1,
+					scout2: tempObject.chance2,
+					scout3: tempObject.chance3,
+					airdamage: tempObject.airdamage,
 					aircraftCount: state.aircraftCount - seletcedTarget[selectedSlot]
 				})
 			}
@@ -212,6 +222,11 @@ export default function dbStore(state = initialState, action) {
 						dbCarrierSelect: dbTemp,
 						airControl: tempObject.ac,
 						scout: tempObject.scout,
+						scout0: tempObject.chance0,
+						scout1: tempObject.chance1,
+						scout2: tempObject.chance2,
+						scout3: tempObject.chance3,
+						airdamage: tempObject.airdamage,
 						aircraftCount: state.aircraftCount - seletcedTarget[selectedSlot]
 					})
 				} else {
@@ -226,6 +241,11 @@ export default function dbStore(state = initialState, action) {
 						dbCarrierSelect: dbTemp,
 						airControl: tempObject.ac,
 						scout: tempObject.scout,
+						scout0: tempObject.chance0,
+						scout1: tempObject.chance1,
+						scout2: tempObject.chance2,
+						scout3: tempObject.chance3,
+						airdamage: tempObject.airdamage,
 						aircraftCount: state.aircraftCount
 					})
 				}
@@ -249,6 +269,11 @@ export default function dbStore(state = initialState, action) {
 						dbCarrierSelect: dbTemp,
 						airControl: tempObject.ac,
 						scout: tempObject.scout,
+						scout0: tempObject.chance0,
+						scout1: tempObject.chance1,
+						scout2: tempObject.chance2,
+						scout3: tempObject.chance3,
+						airdamage: tempObject.airdamage,
 						aircraftCount: tempCount
 					})
 
@@ -265,21 +290,70 @@ export default function dbStore(state = initialState, action) {
 
 function calcGroupAir(input) {
 	var output = {}
-	var tempAC = 0
-	var tempScout = 0
+	output.ac = 0
+	output.scout = 0
+	output.hit0 = []
+	output.hit1 = []
+	output.hit2 = []
+	output.hit3 = []
+	var tempObject = {}
 	
 	for (var i=0; i<input.length; i++) {
 		for (var j=0; j<searchName.length; j++) {
 			if ( input[i][searchName[j]] ) {
-				tempAC = tempAC + calcSlotAircontrol(input[i][searchName[j]],input[i][searchSlot[j]], input[i][searchSkill[j]] )
-				tempScout = tempScout + calcSlotScout(input[i][searchName[j]],input[i][searchSlot[j]] )
+				output.ac = output.ac + calcSlotAircontrol(input[i][searchName[j]],input[i][searchSlot[j]], input[i][searchSkill[j]] )
+				output.scout = output.scout + calcSlotScout(input[i][searchName[j]],input[i][searchSlot[j]] )
+				tempObject = calcSlotScout2( input[i][searchName[j]] )
+				if ( tempObject.hit0 > 0 ) {
+					output.hit0.push( tempObject.hit0 )
+				}
+				if ( tempObject.hit1 > 0 ) {
+					output.hit1.push( tempObject.hit1 )
+				}
+				if ( tempObject.hit2 > 0 ) {
+					output.hit2.push( tempObject.hit2 )
+				}
+				if ( tempObject.hit3 > 0 ) {
+					output.hit3.push( tempObject.hit3 )
+				}
 			}
 		}
 	}
 	
-	output.ac = tempAC
-	output.scout = Math.floor(tempScout)
-	console.log(output)
+	
+	var tempChance = 1
+	for (var i=0; i<output.hit3.length; i++) {
+		tempChance = tempChance * ( 1 - output.hit3[i] )
+	}
+	output.chance3 = 1 - tempChance
+	
+	tempChance = 1
+	for (var i=0; i<output.hit2.length; i++) {
+		tempChance = tempChance * ( 1 - output.hit2[i] )
+	}
+	output.chance2 = (1 - tempChance)*(1 - output.chance3)
+	
+	tempChance = 1
+	for (var i=0; i<output.hit1.length; i++) {
+		tempChance = tempChance * ( 1 - output.hit1[i] )
+	}
+	output.chance1 = (1 - tempChance)*(1 - output.chance2 - output.chance3)
+	
+	tempChance = 1
+	for (var i=0; i<output.hit0.length; i++) {
+		tempChance = tempChance * ( 1 - output.hit0[i] )
+	}
+	output.chance0 = (1 - tempChance)*(1 - output.chance1 - output.chance2 - output.chance3)
+	
+	output.airdamage = 0.2 * output.chance3 + 0.17 * output.chance2 + 0.12 * ( output.chance0 + output.chance1)
+	
+	output.scout = Math.floor(output.scout)
+	output.chance0 = Math.floor(output.chance0*100)
+	output.chance1 = Math.floor(output.chance1*100)
+	output.chance2 = Math.floor(output.chance2*100)
+	output.chance3 = Math.floor(output.chance3*100)
+	output.airdamage = Math.floor(output.airdamage*100)
+	
 	return output
 }
 
