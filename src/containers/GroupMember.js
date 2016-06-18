@@ -51,6 +51,7 @@ class GroupMember extends Component {
 								Cactive={"mdl-button--raised mdl-button--colored"}
 								Cinactive={""}
 								imgSrc={imgSrcTemp}
+								text={""}
 								title={selectData[i].name} />
 						</td>
 						)

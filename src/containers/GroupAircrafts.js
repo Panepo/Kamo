@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import ToggleButton from '../components/ToggleButton'
 import ToggleImgButton from '../components/ToggleImgButton'
 import { aircraftChange, aircraftTypeChange } from '../actions'
-import { listAircraft, listAircraftS } from '../constants/ConstList'
+import { listAircraft, listAircraftS, listAircraftName } from '../constants/ConstList'
 import '../../css/GroupAircrafts.css'
 
 class GroupAircrafts extends Component {
@@ -27,6 +27,7 @@ class GroupAircrafts extends Component {
 					Cactive={"img-button mdl-button--raised mdl-button--colored"}
 					Cinactive={"img-button"}
 					imgSrc={"./image/icon/" + listAircraftS[i] + ".png"}
+					text={listAircraftName[i]}
 					title={listAircraft[i]} />
 			)
 			buttonOut.push(buttonTemp)

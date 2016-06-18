@@ -32,6 +32,7 @@ class GroupCarriers extends Component {
 					Cactive={"carrier-button mdl-button--raised mdl-button--colored"}
 					Cinactive={"carrier-button"}
 					imgSrc={"./image/ship/" + carrierData[i].id + '.jpg'}
+					text={""}
 					title={carrierData[i].name} />
 			)
 			buttonOut.push(buttonTemp)
