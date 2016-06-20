@@ -192,6 +192,16 @@ export default function dbStore(state = initialState, action) {
 				carrierSelect.slot4short = null
 				carrierSelect.slot4type = null
 				carrierSelect.slot4text = null
+				switch ( carrierSelect.type ) {
+					case "AC":
+					case "CV":
+					case "CVL":
+					case "TP":
+						carrierSelect.firepowerEQ = Math.floor(carrierSelect.firepower * 1.5) + 55
+						break
+					default:
+						carrierSelect.firepowerEQ = carrierSelect.firepower + 5
+				}
 				if ( carrierSelected.length === 1 ) {
 					selectCounter = 10;
 				}

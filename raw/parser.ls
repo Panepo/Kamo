@@ -34,7 +34,7 @@ for carrier, i in carriers
 for carrier, i in outCarrier
 	switch carrier["type"]
 		case 'AC', 'CV', 'CVL', 'TP'
-			carrier["firepowerEQ"] = carrier["firepower"] + 55
+			carrier["firepowerEQ"] = Math.floor carrier["firepower"]*1.5 + 55
 		default
 			carrier["firepowerEQ"] = carrier["firepower"] + 5
 

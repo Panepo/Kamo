@@ -110,27 +110,23 @@ function genInfoOutput(status, airDamage) {
 								output[i][searchText[j]] = dbCarrierSelect[i].name + " " + listCarrierThead[j+1]
 								tempObject = calcSlotFirepower( dbCarrierSelect[i][searchName[j]], dbCarrierSelect[i].type )
 								output[i][searchSlot[j]] = tempObject.firepower
-								tempFirepower = tempFirepower + tempObject.firepower
 								tempHit = tempHit + tempObject.hit
 								tempEvade = tempEvade + tempObject.evade
 							}
 						}
-						tempFirepower = tempFirepower + 55 + Math.floor(dbCarrierSelect[i].firepower * 1.5)
 						break
 					default:
 						for (var j=0; j<searchName.length; j++) {
 							if ( dbCarrierSelect[i][searchName[j]] ) {
 								output[i][searchText[j]] = dbCarrierSelect[i].name + " " + listCarrierThead[j+1]
 								tempObject = calcSlotFirepower( dbCarrierSelect[i][searchName[j]], dbCarrierSelect[i].type )
-								tempFirepower = tempFirepower + tempObject.firepower
 								tempHit = tempHit + tempObject.hit
 								tempEvade = tempEvade + tempObject.evade
 							}
 						}
-						tempFirepower = dbCarrierSelect[i].firepower + 5
 				}
-				output[i].firepower = tempFirepower
-				output[i].total = "火力:" + tempFirepower + " 命中+" + tempHit + " 迴避+" + tempEvade
+				output[i].firepower = dbCarrierSelect[i].firepowerEQ
+				output[i].total = "火力:" + dbCarrierSelect[i].firepowerEQ + " 命中+" + tempHit + " 迴避+" + tempEvade
 			}
 			break
 		case "sonar":
