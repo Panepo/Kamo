@@ -22,14 +22,21 @@ fs.writeFileSync './raw/aircrafts.json', outAircraft
 # ===============================================================================
 # PARSE CARRIERS DATA
 # ===============================================================================
-slotCarrier = <[name type id slot1 slot2 slot3 slot4 fighter bomber torpedo scout scout2 seaplane seaplaneX heli blue big display firepower]>
+slotCarrier = <[name type id slot1 slot2 slot3 slot4 fighter bomber torpedo scout scout2 seaplane seaplaneX heli blue big display firepower firepowerEQ]>
 outCarrier = []
 
 for carrier, i in carriers
 	outCarrier[i] = {}
 	for slotValue, j in slotCarrier
 		if slotValue !== 'X'
-			outCarrier[i][slotValue] = carrier[j]
+				outCarrier[i][slotValue] = carrier[j]
+
+for carrier, i in outCarrier
+	switch carrier["type"]
+		case 'AC', 'CV', 'CVL', 'TP'
+			carrier["firepowerEQ"] = carrier["firepower"] + 55
+		default
+			carrier["firepowerEQ"] = carrier["firepower"] + 5
 
 outCarrier = JSON.stringify outCarrier
 console.log 'carriers.json arrange complete!'

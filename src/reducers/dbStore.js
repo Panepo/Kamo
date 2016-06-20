@@ -10,7 +10,7 @@ import {
 } from '../constants/ConstActionTypes'
 
 import { searchName, searchSlot, searchSkill, searchText } from '../constants/ConstList'
-import { calcSlotAircontrol, calcSlotScout, calcSlotScout2, calcSlotText } from './calcSlot'
+import { calcSlotAircontrol, calcSlotScout, calcSlotScout2, calcSlotText, calcSlotFirepower } from './calcSlot'
 
 // ===============================================================================
 // Initial database
@@ -84,7 +84,7 @@ export default function dbStore(state = initialState, action) {
 				calcGroupText( '', '', state.aircraftSkill)
 				return Object.assign({}, state, {
 					aircraftTypeSelect: '',
-					aircraftSelect: '',
+					aircraftSelect: '0',
 					dbAircraftTypeQuery: [],
 					dbAircraftSelect: [],
 					dbCarrierSelect: dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data(),
@@ -100,7 +100,7 @@ export default function dbStore(state = initialState, action) {
 				calcGroupText( '', '', state.aircraftSkill)
 				return Object.assign({}, state, {
 					dbCarrierSelect: dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data(),
-					aircraftSelect: '',
+					aircraftSelect: '0',
 					dbAircraftSelect: []
 				})
 			} else {
@@ -239,13 +239,18 @@ export default function dbStore(state = initialState, action) {
 			var selectedAC = dbAircraft.findOne({'id': state.aircraftSelect })
 			var dbTemp
 			var tempObject = {}
+			var tempFP = {}
 			
 			if ( state.aircraftSelect === '0' ) {
+				if ( seletcedTarget[slotID] ) {
+					tempFP = calcSlotFirepower( seletcedTarget[slotID], seletcedTarget.type )
+					seletcedTarget["firepowerEQ"] = seletcedTarget["firepowerEQ"] - tempFP.firepower
+				}
 				seletcedTarget[slotID] = null
 				seletcedTarget[slotName] = null
 				seletcedTarget[slotType] = null
 				seletcedTarget[slotSkill] = null
-				seletcedTarget[slotText] = calcSlotText( selectedAC.id, selectedAC.type, seletcedTarget[selectedSlot], state.aircraftSkill)
+				seletcedTarget[slotText] = calcSlotText( "", "", seletcedTarget[selectedSlot], state.aircraftSkill)
 				dbCarrier.update(seletcedTarget)
 				dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
 				tempObject = calcGroupAir(dbTemp)
@@ -264,11 +269,13 @@ export default function dbStore(state = initialState, action) {
 			
 			if ( seletcedTarget[slotID] === state.aircraftSelect ) {
 				if ( seletcedTarget[slotSkill] === state.aircraftSkill ) {
+					tempFP = calcSlotFirepower( selectedAC.id, seletcedTarget.type )
 					seletcedTarget[slotID] = null
 					seletcedTarget[slotName] = null
 					seletcedTarget[slotType] = null
 					seletcedTarget[slotSkill] = null
 					seletcedTarget[slotText] = calcSlotText( selectedAC.id, selectedAC.type, seletcedTarget[selectedSlot], state.aircraftSkill)
+					seletcedTarget["firepowerEQ"] = seletcedTarget["firepowerEQ"] - tempFP.firepower
 					dbCarrier.update(seletcedTarget)
 					dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
 					tempObject = calcGroupAir(dbTemp)
@@ -284,11 +291,13 @@ export default function dbStore(state = initialState, action) {
 						aircraftCount: state.aircraftCount - seletcedTarget[selectedSlot]
 					})
 				} else {
+					tempFP = calcSlotFirepower( selectedAC.id, seletcedTarget.type )
 					seletcedTarget[slotID] = selectedAC.id
 					seletcedTarget[slotName] = selectedAC.short
 					seletcedTarget[slotType] = selectedAC.type
 					seletcedTarget[slotSkill] = state.aircraftSkill
 					seletcedTarget[slotText] = ""
+					seletcedTarget["firepowerEQ"] = seletcedTarget["firepowerEQ"] + tempFP.firepower
 					dbCarrier.update(seletcedTarget)
 					dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
 					tempObject = calcGroupAir(dbTemp)
@@ -312,12 +321,13 @@ export default function dbStore(state = initialState, action) {
 					} else {
 						tempCount =  state.aircraftCount + seletcedTarget[selectedSlot]
 					}
-					
+					tempFP = calcSlotFirepower( selectedAC.id, seletcedTarget.type )
 					seletcedTarget[slotID] = selectedAC.id
 					seletcedTarget[slotName] = selectedAC.short
 					seletcedTarget[slotType] = selectedAC.type
 					seletcedTarget[slotSkill] = state.aircraftSkill
 					seletcedTarget[slotText] = ""
+					seletcedTarget["firepowerEQ"] = seletcedTarget["firepowerEQ"] + tempFP.firepower
 					dbCarrier.update(seletcedTarget)
 					dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
 					tempObject = calcGroupAir(dbTemp)

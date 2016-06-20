@@ -37,7 +37,7 @@ class GroupMember extends Component {
 		var tbodyOut = []
 		for (var i=0; i<selectData.length; i++){
 			tdOut = []
-			for (var j=0; j<listCarrierTbody.length; j++){
+			for (var j=0; j<listCarrierTbody.length+1; j++){
 				stringTemp = 'tbodyGroup' + i.toString() + j.toString()
 				if ( j === 0 ) {
 					var imgSrcTemp = 'image/ship/' + selectData[i].id + '.jpg'
@@ -55,17 +55,19 @@ class GroupMember extends Component {
 								title={selectData[i].name} />
 						</td>
 						)
+				} else if ( j === 1 ) {
+					tdTemp = <td key={"groupFP" + i.toString()}>{selectData[i]["firepowerEQ"]}</td>
 				} else {
-					if ( selectData[i][listCarrierTbody[j]] > 0 ) {
+					if ( selectData[i][listCarrierTbody[j-1]] > 0 ) {
 						var textTemp = ''
-						var idTemp = listCarrierTbody[j] + selectData[i].id
-						var slotID = listCarrierTbody[j] + 'id'
-						var slotName = listCarrierTbody[j] + 'short'
-						var slotType = listCarrierTbody[j] + 'type'
+						var idTemp = listCarrierTbody[j-1] + selectData[i].id
+						var slotID = listCarrierTbody[j-1] + 'id'
+						var slotName = listCarrierTbody[j-1] + 'short'
+						var slotType = listCarrierTbody[j-1] + 'type'
 						var classTemp = "group-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"
 						
 						if ( selectData[i][slotID] ) {
-							textTemp = selectData[i][slotName] + "(" + selectData[i][listCarrierTbody[j]].toString() + ") " + listAircraftSkill2[selectData[i][listCarrierTbody[j] + 'skill']]
+							textTemp = selectData[i][slotName] + "(" + selectData[i][listCarrierTbody[j-1]].toString() + ")" + listAircraftSkill2[selectData[i][listCarrierTbody[j-1] + 'skill']]
 							switch ( selectData[i][slotType] ) {
 								case listAircraft[0]:
 									classTemp = classTemp + " mdl-color--" + listAircraftColor[0] + " mdl-button--raised"
@@ -100,7 +102,7 @@ class GroupMember extends Component {
 							}
 							
 						} else {
-							textTemp = selectData[i][listCarrierTbodyText[j]].toString()
+							textTemp = selectData[i][listCarrierTbodyText[j-1]].toString()
 						}
 						
 						tdTemp = (

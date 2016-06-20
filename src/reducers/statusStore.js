@@ -108,7 +108,7 @@ function genInfoOutput(status, airDamage) {
 						for (var j=0; j<searchName.length; j++) {
 							if ( dbCarrierSelect[i][searchName[j]] ) {
 								output[i][searchText[j]] = dbCarrierSelect[i].name + " " + listCarrierThead[j+1]
-								tempObject = calcSlotFirepower( dbCarrierSelect[i][searchName[j]] )
+								tempObject = calcSlotFirepower( dbCarrierSelect[i][searchName[j]], dbCarrierSelect[i].type )
 								output[i][searchSlot[j]] = tempObject.firepower
 								tempFirepower = tempFirepower + tempObject.firepower
 								tempHit = tempHit + tempObject.hit
@@ -121,7 +121,8 @@ function genInfoOutput(status, airDamage) {
 						for (var j=0; j<searchName.length; j++) {
 							if ( dbCarrierSelect[i][searchName[j]] ) {
 								output[i][searchText[j]] = dbCarrierSelect[i].name + " " + listCarrierThead[j+1]
-								tempObject = calcSlotFirepower( dbCarrierSelect[i][searchName[j]] )
+								tempObject = calcSlotFirepower( dbCarrierSelect[i][searchName[j]], dbCarrierSelect[i].type )
+								tempFirepower = tempFirepower + tempObject.firepower
 								tempHit = tempHit + tempObject.hit
 								tempEvade = tempEvade + tempObject.evade
 							}

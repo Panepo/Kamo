@@ -15,7 +15,7 @@ export const listAircraftTypeN = ["雷裝", "爆裝", "対空", "反潛", "索�
 export const listAircraftSkill = ["無熟練", "|", "||", "|||", "/", "//", "///", ">>"]
 export const listAircraftSkill2 = ["", "|", "||", "|||", "/", "//", "///", ">>"]
 
-export const listCarrierThead = ["艦娘", "第一隊", "第二隊", "第三隊", "第四隊"]
+export const listCarrierThead = ["艦娘", "火力", "第一隊", "第二隊", "第三隊", "第四隊"]
 export const listCarrierTbody = ["id", "slot1", "slot2", "slot3", "slot4"]
 export const listCarrierTbodyText = ["id", "slot1text", "slot2text", "slot3text", "slot4text"]
 

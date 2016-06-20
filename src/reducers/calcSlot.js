@@ -1,19 +1,29 @@
 import { dbAircraft } from './dbStore'
 
-export function calcSlotFirepower( aircraftId ) {
+export function calcSlotFirepower( aircraftId, carrierType ) {
 	var aircraftSelect = dbAircraft.chain().find({ 'id': aircraftId }).data()
 	var output = {}
 	
-	output.firepower = aircraftSelect[0].firepower
-	switch ( aircraftSelect[0].type) {
-		case "bomber":
-			output.firepower = output.firepower + aircraftSelect[0].bomb * 1.3
-		break
-		case "torpedo":
-			output.firepower = output.firepower + aircraftSelect[0].torpedo
-		break
+	switch (carrierType) {
+		case "AC":
+		case "CV":
+		case "CVL":
+		case "TP":
+			output.firepower = aircraftSelect[0].firepower
+			switch ( aircraftSelect[0].type) {
+				case "bomber":
+					output.firepower = output.firepower + aircraftSelect[0].bomb * 1.3
+				break
+				case "torpedo":
+					output.firepower = output.firepower + aircraftSelect[0].torpedo
+				break
+			}
+			output.firepower = Math.floor( output.firepower * 1.5 )
+			break
+		default:
+			output.firepower = aircraftSelect[0].firepower
 	}
-	output.firepower = Math.floor( output.firepower * 1.5 )
+	
 	output.hit = aircraftSelect[0].hit
 	output.evade = aircraftSelect[0].evade
 	return output
