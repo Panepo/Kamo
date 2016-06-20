@@ -17,6 +17,7 @@ export const listAircraftSkill2 = ["", "|", "||", "|||", "/", "//", "///", ">>"]
 
 export const listCarrierThead = ["艦娘", "第一隊", "第二隊", "第三隊", "第四隊"]
 export const listCarrierTbody = ["id", "slot1", "slot2", "slot3", "slot4"]
+export const listCarrierTbodyText = ["id", "slot1text", "slot2text", "slot3text", "slot4text"]
 
 export const listStatusButton = ["制空能力", "航空攻撃", "砲撃戦攻撃", "対潜攻撃"]
 export const listStatusButtonS = ["air", "airstrike", "firepower", "sonar"]

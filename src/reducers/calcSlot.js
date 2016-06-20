@@ -19,7 +19,7 @@ export function calcSlotFirepower( aircraftId ) {
 	return output
 }
 
-export function calcSlotAirstrike( aircraftId, slot, airDamage ) {
+export function calcSlotAirstrike( aircraftId, slotSize, airDamage ) {
 	var aircraftSelect = dbAircraft.chain().find({ 'id': aircraftId }).data()
 	var output = {}
 	var tempDam = 0
@@ -30,18 +30,19 @@ export function calcSlotAirstrike( aircraftId, slot, airDamage ) {
 	
 	switch ( aircraftSelect[0].type) {
 		case "bomber":
-			tempDam = (aircraftSelect[0].bomb * Math.sqrt(slot) + 25) * airDamage / 100
+		case "seaplane":
+			tempDam = (aircraftSelect[0].bomb * Math.sqrt(slotSize) + 25) * airDamage / 100
 			output.as1 = Math.floor( tempDam )
 			output.as2 = 0
 			output.dam = output.as1
 			output.string = output.as1.toString()
 		break
 		case "torpedo":
-			tempDam = (aircraftSelect[0].torpedo * Math.sqrt(slot) + 25) * airDamage / 100
+			tempDam = (aircraftSelect[0].torpedo * Math.sqrt(slotSize) + 25) * airDamage / 100
 			output.as1 = Math.floor( tempDam * 0.8 )
 			output.as2 = Math.floor( tempDam * 0.7 )
 			output.dam = Math.floor( tempDam * 1.15 )
-			output.string = output.as1.toString() + "/" + (output.as1+output.as2).toString()
+			output.string = output.as1.toString() + "," + (output.as1+output.as2).toString()
 		break
 	}
 	return output
@@ -208,3 +209,46 @@ export function calcSlotScout2( aircraftId ) {
 	
 	return output
 }
+
+export function calcSlotText( aircraftId, aircraftType, slotSize, slotSkill) {
+	var output = slotSize.toString()
+	var tempObject = {}
+	var tempAC = 0
+	var tempAS = ""
+	var tempScout = 0
+	
+	switch ( aircraftType ) {
+		case "fighter":
+		case "bomber":
+		case "torpedo":
+		case "seaplane":
+		case "seaplaneX":
+			tempAC = calcSlotAircontrol(aircraftId, slotSize, slotSkill )
+			break
+	}
+	switch ( aircraftType ) {
+		case "bomber":
+		case "torpedo":
+		case "seaplane":
+			tempObject = calcSlotAirstrike ( aircraftId, slotSize, 100 )
+			tempAS = tempObject.string
+			break
+	}
+	
+	if ( tempAC > 0 ) {
+		if ( tempAS.length > 0 ) {
+			output = tempAC + "/" + tempAS + "(" + slotSize.toString() + ")"
+		} else {
+			output = tempAC + "(" + slotSize.toString() + ")"
+		}
+	} else {
+		if ( tempAS.length > 0 ) {
+			output = tempAS + "(" + slotSize.toString() + ")"
+		}
+	}
+
+	return output
+}
+
+
+

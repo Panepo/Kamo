@@ -5,7 +5,7 @@ import GroupInfoBox from './GroupInfoBox'
 import ToggleButton from '../components/ToggleButton'
 import ToggleImgButton from '../components/ToggleImgButton'
 import { carrierSelect, carrierSlotSelect } from '../actions'
-import { listCarrierThead, listCarrierTbody, listAircraft, listAircraftColor, listAircraftSkill, listAircraftSkill2 } from '../constants/ConstList'
+import { listCarrierThead, listCarrierTbody, listCarrierTbodyText, listAircraft, listAircraftColor, listAircraftSkill, listAircraftSkill2 } from '../constants/ConstList'
 import '../../css/GroupMember.css'
 
 class GroupMember extends Component {
@@ -100,7 +100,7 @@ class GroupMember extends Component {
 							}
 							
 						} else {
-							textTemp = selectData[i][listCarrierTbody[j]].toString()
+							textTemp = selectData[i][listCarrierTbodyText[j]].toString()
 						}
 						
 						tdTemp = (
