@@ -53,7 +53,7 @@ Content.propTypes = {
 
 const mapStateToProps = (state) => {
 	return {
-		dispStatus: state.dispStatus.status
+		dispStatus: state.reducerPage.status
 	}
 }
 

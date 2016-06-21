@@ -3,7 +3,7 @@ import {
 	STATUS_CHANGE
 } from '../constants/ConstActionTypes'
 
-import { dbCarrier } from './dbStore'
+import { dbCarrier } from './database'
 import { calcSlotAircontrol, calcSlotFirepower, calcSlotAirstrike, calcSlotSonar } from './calcSlot'
 import { listCarrierThead, searchName, searchSlot, searchSkill, searchText } from '../constants/ConstList'
 
@@ -19,7 +19,7 @@ const initialState = {
 // Reducer main function
 // ===============================================================================
 
-export default function statusStore(state = initialState, action) {
+export default function reducerStatus(state = initialState, action) {
 	var infoOutput = []
 	
 	switch (action.type) {
@@ -65,7 +65,7 @@ function genInfoOutput(status, airDamage) {
 				
 				for (var j=0; j<searchName.length; j++) {
 					if ( dbCarrierSelect[i][searchName[j]] ) {
-						output[i][searchText[j]] = dbCarrierSelect[i].name + " " + listCarrierThead[j+1]
+						output[i][searchText[j]] = dbCarrierSelect[i].name + " " + listCarrierThead[j+2]
 						output[i][searchSlot[j]] = calcSlotAircontrol( dbCarrierSelect[i][searchName[j]], dbCarrierSelect[i][searchSlot[j]], dbCarrierSelect[i][searchSkill[j]] )
 						tempValue = tempValue + output[i][searchSlot[j]]
 					}
@@ -82,7 +82,7 @@ function genInfoOutput(status, airDamage) {
 				
 				for (var j=0; j<searchName.length; j++) {
 					if ( dbCarrierSelect[i][searchName[j]] ) {
-						output[i][searchText[j]] = dbCarrierSelect[i].name + " " + listCarrierThead[j+1]
+						output[i][searchText[j]] = dbCarrierSelect[i].name + " " + listCarrierThead[j+2]
 						tempObject = calcSlotAirstrike( dbCarrierSelect[i][searchName[j]], dbCarrierSelect[i][searchSlot[j]], airDamage )
 						output[i][searchSlot[j]] = tempObject.string
 						tempValue = tempValue + tempObject.dam
@@ -107,7 +107,7 @@ function genInfoOutput(status, airDamage) {
 					case "TP":
 						for (var j=0; j<searchName.length; j++) {
 							if ( dbCarrierSelect[i][searchName[j]] ) {
-								output[i][searchText[j]] = dbCarrierSelect[i].name + " " + listCarrierThead[j+1]
+								output[i][searchText[j]] = dbCarrierSelect[i].name + " " + listCarrierThead[j+2]
 								tempObject = calcSlotFirepower( dbCarrierSelect[i][searchName[j]], dbCarrierSelect[i].type )
 								output[i][searchSlot[j]] = tempObject.firepower
 								tempHit = tempHit + tempObject.hit
@@ -118,7 +118,7 @@ function genInfoOutput(status, airDamage) {
 					default:
 						for (var j=0; j<searchName.length; j++) {
 							if ( dbCarrierSelect[i][searchName[j]] ) {
-								output[i][searchText[j]] = dbCarrierSelect[i].name + " " + listCarrierThead[j+1]
+								output[i][searchText[j]] = dbCarrierSelect[i].name + " " + listCarrierThead[j+2]
 								tempObject = calcSlotFirepower( dbCarrierSelect[i][searchName[j]], dbCarrierSelect[i].type )
 								tempHit = tempHit + tempObject.hit
 								tempEvade = tempEvade + tempObject.evade
@@ -148,7 +148,7 @@ function genInfoOutput(status, airDamage) {
 					case "TP":
 						for (var j=0; j<searchName.length; j++) {
 							if ( dbCarrierSelect[i][searchName[j]] ) {
-								output[i][searchText[j]] = dbCarrierSelect[i].name + " " + listCarrierThead[j+1]
+								output[i][searchText[j]] = dbCarrierSelect[i].name + " " + listCarrierThead[j+2]
 								tempObject = calcSlotSonar( dbCarrierSelect[i][searchName[j]] )
 								output[i][searchSlot[j]] = tempObject.firepower
 								tempFirepower = tempFirepower + tempObject.firepower

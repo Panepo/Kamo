@@ -46,7 +46,7 @@ StatusMenu.propTypes = {
 
 const mapStateToProps = (state) => {
 	return {
-		status: state.statusStore.status
+		status: state.reducerStatus.status
 	}
 }
 

@@ -1,4 +1,4 @@
-import { dbAircraft } from './dbStore'
+import { dbAircraft } from './database'
 
 export function calcSlotFirepower( aircraftId, carrierType ) {
 	var aircraftSelect = dbAircraft.chain().find({ 'id': aircraftId }).data()
@@ -52,7 +52,7 @@ export function calcSlotAirstrike( aircraftId, slotSize, airDamage ) {
 			output.as1 = Math.floor( tempDam * 0.8 )
 			output.as2 = Math.floor( tempDam * 0.7 )
 			output.dam = Math.floor( tempDam * 1.15 )
-			output.string = output.as1.toString() + "," + (output.as1+output.as2).toString()
+			output.string = output.as1.toString() + "/" + (output.as1+output.as2).toString()
 		break
 	}
 	return output

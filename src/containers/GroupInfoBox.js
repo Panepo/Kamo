@@ -69,9 +69,9 @@ GroupInfoBox.propTypes = {
 
 const mapStateToProps = (state) => {
 	return {
-		dbAircraftSelect: state.dbStore.dbAircraftSelect,
-		aircraftSkillDisp: state.dbStore.aircraftSkillDisp,
-		aircraftSkill: state.dbStore.aircraftSkill
+		dbAircraftSelect: state.reducerGroup.dbAircraftSelect,
+		aircraftSkillDisp: state.reducerGroup.aircraftSkillDisp,
+		aircraftSkill: state.reducerGroup.aircraftSkill
 	}
 }
 

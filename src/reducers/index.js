@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
-import { default as dispStatus } from './dispStatus'
-import { default as dbStore } from './dbStore'
-import { default as statusStore } from './statusStore'
+import { default as reducerPage } from './reducerPage'
+import { default as reducerGroup } from './reducerGroup'
+import { default as reducerStatus } from './reducerStatus'
 
 export default combineReducers({
-	dispStatus,
-	dbStore,
-	statusStore
+	reducerPage,
+	reducerGroup,
+	reducerStatus
 })

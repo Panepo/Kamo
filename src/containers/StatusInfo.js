@@ -87,8 +87,8 @@ StatusInfo.propTypes = {
 
 const mapStateToProps = (state) => {
 	return {
-		status: state.statusStore.status,
-		outputInfo: state.statusStore.outputInfo
+		status: state.reducerStatus.status,
+		outputInfo: state.reducerStatus.outputInfo
 	}
 }
 

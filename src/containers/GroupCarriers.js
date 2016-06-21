@@ -62,9 +62,9 @@ GroupCarriers.propTypes = {
 
 const mapStateToProps = (state) => {
 	return {
-		carrierData: state.dbStore.dbCarrierTypeQuery,
-		selectData: state.dbStore.dbCarrierSelect,
-		carrierDisp: state.dbStore.carrierDisp
+		carrierData: state.reducerGroup.dbCarrierTypeQuery,
+		selectData: state.reducerGroup.dbCarrierSelect,
+		carrierDisp: state.reducerGroup.carrierDisp
 	}
 }
 

@@ -17,7 +17,6 @@ class FleetStatus extends Component {
 	}
 	
 	render() {
-		const {  } = this.props
 
 		return (
 			<div className="page-content display-area">
@@ -42,8 +41,8 @@ FleetStatus.propTypes = {
 
 const mapStateToProps = (state) => {
 	return {
-		airControl: state.dbStore.airControl,
-		airDamage: state.dbStore.airDamage
+		airControl: state.reducerGroup.airControl,
+		airDamage: state.reducerGroup.airDamage
 	}
 }
 

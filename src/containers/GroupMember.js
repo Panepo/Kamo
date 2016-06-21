@@ -162,15 +162,15 @@ GroupMember.propTypes = {
 
 const mapStateToProps = (state) => {
 	return {
-		selectData: state.dbStore.dbCarrierSelect,
-		airControl: state.dbStore.airControl,
-		scout: state.dbStore.scout,
-		scout0: state.dbStore.scout0,
-		scout1: state.dbStore.scout1,
-		scout2: state.dbStore.scout2,
-		scout3: state.dbStore.scout3,
-		airDamage: state.dbStore.airDamage,
-		aircraftCount: state.dbStore.aircraftCount
+		selectData: state.reducerGroup.dbCarrierSelect,
+		airControl: state.reducerGroup.airControl,
+		scout: state.reducerGroup.scout,
+		scout0: state.reducerGroup.scout0,
+		scout1: state.reducerGroup.scout1,
+		scout2: state.reducerGroup.scout2,
+		scout3: state.reducerGroup.scout3,
+		airDamage: state.reducerGroup.airDamage,
+		aircraftCount: state.reducerGroup.aircraftCount
 	}
 }
 

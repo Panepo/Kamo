@@ -6,7 +6,7 @@ const initialState = {
 	status: 'group'
 }
 
-export default function dispStatus(state = initialState, action) {
+export default function reducerPage(state = initialState, action) {
 	switch (action.type) {
 		case PAGE_CHANGE:
 			return Object.assign({}, state, {

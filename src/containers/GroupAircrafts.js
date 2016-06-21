@@ -69,9 +69,9 @@ GroupAircrafts.propTypes = {
 
 const mapStateToProps = (state) => {
 	return {
-		typeSelect: state.dbStore.aircraftTypeSelect,
-		aircraftData: state.dbStore.dbAircraftTypeQuery,
-		aircraftSelect: state.dbStore.aircraftSelect
+		typeSelect: state.reducerGroup.aircraftTypeSelect,
+		aircraftData: state.reducerGroup.dbAircraftTypeQuery,
+		aircraftSelect: state.reducerGroup.aircraftSelect
 	}
 }
 

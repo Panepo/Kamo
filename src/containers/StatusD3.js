@@ -46,9 +46,9 @@ StatusD3.propTypes = {
 
 const mapStateToProps = (state) => {
 	return {
-		airControl: state.dbStore.airControl,
-		status: state.statusStore.status,
-		outputD3: state.statusStore.outputD3
+		airControl: state.reducerGroup.airControl,
+		status: state.reducerStatus.status,
+		outputD3: state.reducerStatus.outputD3
 	}
 }
 
