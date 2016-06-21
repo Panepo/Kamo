@@ -18,7 +18,7 @@ const initialState = {
 	aircraftTypeSelect: '',
 	aircraftSelect: '',
 	aircraftSkillDisp: 1,
-	aircraftSkill: 7,
+	aircraftSkill: "7",
 	aircraftCount: 0,
 	airControl: 0,
 	scout: 0,
@@ -107,14 +107,18 @@ export default function reducerGroup(state = initialState, action) {
 		// AIRCRAFT_SKILL_CHANGE
 		// ===============================================================================
 		case AIRCRAFT_SKILL_CHANGE:
-			if ( state.aircraftSelect.length > 0 ) {
+			if ( state.aircraftSelect != '0' ) {
 				var tempDb = dbAircraft.findOne({'id': state.aircraftSelect })
-				calcGroupText( tempDb.id, tempDb.type, action.modelId)
-			}
-			return Object.assign({}, state, {
+				calcGroupText( tempDb.id, tempDb.type, action.modelId )
+				return Object.assign({}, state, {
 					dbCarrierSelect: dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data(),
 					aircraftSkill: action.modelId
 				})
+			} else {
+				return Object.assign({}, state, {
+					aircraftSkill: action.modelId
+				})
+			}
 		// ===============================================================================
 		// CARRIER_DISPLAY
 		// ===============================================================================

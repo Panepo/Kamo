@@ -88,25 +88,25 @@ export function calcSlotAircontrol(aircraftId, slotSize, slotSkill ) {
 			acValue = acValue + Math.floor( aircraftSelect.air * Math.sqrt(slotSize))
 
 			switch ( slotSkill ) {
-				case 1:
+				case "1":
 					acValue = acValue + 0 + 1
 					break
-				case 2:
+				case "2":
 					acValue = acValue + 2 + 1
 					break
-				case 3:
+				case "3":
 					acValue = acValue + 5 + 2
 					break
-				case 4:
+				case "4":
 					acValue = acValue + 9 + 2
 					break
-				case 5:
+				case "5":
 					acValue = acValue + 14 + 2
 					break
-				case 6:
+				case "6":
 					acValue = acValue + 14 + 3
 					break
-				case 7:
+				case "7":
 					acValue = acValue + 22 + 3
 					break
 			}
@@ -119,25 +119,25 @@ export function calcSlotAircontrol(aircraftId, slotSize, slotSkill ) {
 			}
 			
 			switch ( slotSkill ) {
-				case 1:
+				case "1":
 					acValue = acValue + 1
 					break
-				case 2:
+				case "2":
 					acValue = acValue + 1
 					break
-				case 3:
+				case "3":
 					acValue = acValue + 2
 					break
-				case 4:
+				case "4":
 					acValue = acValue + 2
 					break
-				case 5:
+				case "5":
 					acValue = acValue + 2
 					break
-				case 6:
+				case "6":
 					acValue = acValue + 3
 					break
-				case 7:
+				case "7":
 					acValue = acValue + 3
 					break
 			}
@@ -149,25 +149,25 @@ export function calcSlotAircontrol(aircraftId, slotSize, slotSkill ) {
 			}
 			
 			switch ( slotSkill ) {
-				case 1:
+				case "1":
 					acValue = acValue + 0 + 1
 					break
-				case 2:
+				case "2":
 					acValue = acValue + 1 + 1
 					break
-				case 3:
+				case "3":
 					acValue = acValue + 1 + 2
 					break
-				case 4:
+				case "4":
 					acValue = acValue + 1 + 2
 					break
-				case 5:
+				case "5":
 					acValue = acValue + 3 + 2
 					break
-				case 6:
+				case "6":
 					acValue = acValue + 3 + 3
 					break
-				case 7:
+				case "7":
 					acValue = acValue + 6 + 3
 					break
 			}

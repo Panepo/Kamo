@@ -64,7 +64,7 @@ class GroupInfoBox extends Component {
 GroupInfoBox.propTypes = {
 	dbAircraftSelect: PropTypes.array.isRequired,
 	aircraftSkillDisp: PropTypes.number.isRequired,
-	aircraftSkill: PropTypes.number.isRequired
+	aircraftSkill: PropTypes.string.isRequired
 }
 
 const mapStateToProps = (state) => {
