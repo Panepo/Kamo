@@ -1,1 +1,0 @@
-export const updateTime = '2016/05/16'
