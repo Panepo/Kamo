@@ -11,7 +11,7 @@ class GroupInfoBox extends Component {
 	}
 	
 	render() {
-		const { dbAircraftSelect, aircraftSkill, aircraftSkillDisp, aircraftSkillChange } = this.props
+		const { dbAircraftSelect, aircraftSkill, aircraftSkillChange } = this.props
 		
 		var infoOut = []
 		var infoTemp
@@ -29,22 +29,20 @@ class GroupInfoBox extends Component {
 		
 		var buttTemp
 		var buttOut = []
-		if ( aircraftSkillDisp ) {
-			for (var i=0; i<listAircraftSkill.length; i++){
-				buttTemp = (
-					<div key={"info-skill" + i.toString()} className="mdl-cell mdl-cell--1-col">
-						<ToggleButton
-							modelId={i.toString()}
-							key={"info-skill" + i.toString()}
-							display={aircraftSkill.toString()}
-							onClickFunc={(modelId) => aircraftSkillChange(modelId)}
-							Cactive={"mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"}
-							Cinactive={"mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent"}
-							title={listAircraftSkill[i]} />
-					</div>
-				)
-				buttOut.push(buttTemp)
-			}
+		for (var i=0; i<listAircraftSkill.length; i++){
+			buttTemp = (
+				<div key={"info-skill" + i.toString()} className="mdl-cell mdl-cell--1-col">
+					<ToggleButton
+						modelId={i.toString()}
+						key={"info-skill" + i.toString()}
+						display={aircraftSkill.toString()}
+						onClickFunc={(modelId) => aircraftSkillChange(modelId)}
+						Cactive={"mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"}
+						Cinactive={"mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent"}
+						title={listAircraftSkill[i]} />
+				</div>
+			)
+			buttOut.push(buttTemp)
 		}
 
 
@@ -63,14 +61,12 @@ class GroupInfoBox extends Component {
 
 GroupInfoBox.propTypes = {
 	dbAircraftSelect: PropTypes.array.isRequired,
-	aircraftSkillDisp: PropTypes.number.isRequired,
 	aircraftSkill: PropTypes.string.isRequired
 }
 
 const mapStateToProps = (state) => {
 	return {
 		dbAircraftSelect: state.reducerGroup.dbAircraftSelect,
-		aircraftSkillDisp: state.reducerGroup.aircraftSkillDisp,
 		aircraftSkill: state.reducerGroup.aircraftSkill
 	}
 }

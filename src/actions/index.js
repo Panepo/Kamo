@@ -21,13 +21,6 @@ export function aircraftTypeChange(modelId) {
 	}
 }
 
-export function aircraftSkillDisplay(modelId) {
-	return {
-		type: types.AIRCRAFT_SKILL_DISPLAY,
-		modelId
-	}
-}
-
 export function aircraftSkillChange(modelId) {
 	return {
 		type: types.AIRCRAFT_SKILL_CHANGE,
