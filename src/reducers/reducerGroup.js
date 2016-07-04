@@ -2,6 +2,7 @@ import {
 	AIRCRAFT_TYPE_CHANGE,
 	AIRCRAFT_CHANGE,
 	AIRCRAFT_SKILL_CHANGE,
+	AIRCRAFT_FACTORY_CHANGE,
 	CARRIER_SELECT,
 	CARRIER_SLOT_SELECT,
 	CARRIER_DISPLAY,
@@ -15,8 +16,9 @@ import { calcSlotText, calcSlotFirepower } from './calcSlot'
 
 const initialState = {
 	aircraftTypeSelect: '',
-	aircraftSelect: '',
+	aircraftSelect: '0',
 	aircraftSkill: "7",
+	aircraftFactory: "0",
 	aircraftCount: 0,
 	airControl: 0,
 	scout: 0,
@@ -102,6 +104,22 @@ export default function reducerGroup(state = initialState, action) {
 			} else {
 				return Object.assign({}, state, {
 					aircraftSkill: action.modelId
+				})
+			}
+		// ===============================================================================
+		// AIRCRAFT_FACTORY_CHANGE
+		// ===============================================================================
+		case AIRCRAFT_FACTORY_CHANGE:
+			if ( state.aircraftSelect != '0' ) {
+				var tempDb = dbAircraft.findOne({'id': state.aircraftSelect })
+				calcGroupText( tempDb.id, tempDb.type, state.aircraftSkill )
+				return Object.assign({}, state, {
+					dbCarrierSelect: dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data(),
+					aircraftFactory: action.modelId
+				})
+			} else {
+				return Object.assign({}, state, {
+					aircraftFactory: action.modelId
 				})
 			}
 		// ===============================================================================

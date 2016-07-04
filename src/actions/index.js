@@ -28,6 +28,13 @@ export function aircraftSkillChange(modelId) {
 	}
 }
 
+export function aircraftFactoryChange(modelId) {
+	return {
+		type: types.AIRCRAFT_FACTORY_CHANGE,
+		modelId
+	}
+}
+
 export function carrierSelect(modelId) {
 	return {
 		type: types.CARRIER_SELECT,
