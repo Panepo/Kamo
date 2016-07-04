@@ -1,5 +1,5 @@
 import { dbCarrier } from './database'
-import { searchName, searchSlot, searchSkill, searchText } from '../constants/ConstList'
+import { searchName, searchSlot, searchSkill, searchText, searchFactory } from '../constants/ConstList'
 import { calcSlotAircontrol, calcSlotScout, calcSlotScout2, calcSlotText } from './calcSlot'
 
 export function calcGroupAir(input) {
@@ -15,7 +15,7 @@ export function calcGroupAir(input) {
 	for (var i=0; i<input.length; i++) {
 		for (var j=0; j<searchName.length; j++) {
 			if ( input[i][searchName[j]] ) {
-				output.ac = output.ac + calcSlotAircontrol(input[i][searchName[j]],input[i][searchSlot[j]], input[i][searchSkill[j]] )
+				output.ac = output.ac + calcSlotAircontrol(input[i][searchName[j]],input[i][searchSlot[j]], input[i][searchSkill[j]], input[i][searchFactory[j]] )
 				output.scout = output.scout + calcSlotScout(input[i][searchName[j]],input[i][searchSlot[j]] )
 				tempObject = calcSlotScout2( input[i][searchName[j]] )
 				if ( tempObject.hit0 > 0 ) {
@@ -71,7 +71,7 @@ export function calcGroupAir(input) {
 	return output
 }
 
-export function calcGroupText( aircraftId, aircraftType, aircraftSkill) {
+export function calcGroupText( aircraftId, aircraftType, aircraftSkill, aircraftFactory ) {
 	var carrierSelected = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('type').data()
 	
 	if ( aircraftId.length > 0 ) {
@@ -80,7 +80,7 @@ export function calcGroupText( aircraftId, aircraftType, aircraftSkill) {
 			for (var j=0; j<searchName.length; j++) {
 				if ( !seletcedTarget[searchName[j]] ) {
 					if ( seletcedTarget[aircraftType] === 1 ) {
-						seletcedTarget[searchText[j]] = calcSlotText( aircraftId, aircraftType, seletcedTarget[searchSlot[j]], aircraftSkill)
+						seletcedTarget[searchText[j]] = calcSlotText( aircraftId, aircraftType, seletcedTarget[searchSlot[j]], aircraftSkill, aircraftFactory)
 						dbCarrier.update(seletcedTarget)
 					} else {
 						seletcedTarget[searchText[j]] = "裝載不可(" + seletcedTarget[searchSlot[j]] + ")"

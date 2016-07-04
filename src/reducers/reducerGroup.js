@@ -48,7 +48,7 @@ export default function reducerGroup(state = initialState, action) {
 		case AIRCRAFT_TYPE_CHANGE:
 			if ( state.aircraftTypeSelect != action.modelId ) {
 				var tempDb = dbAircraft.chain().find({ 'type': action.modelId }).simplesort('name').data()
-				calcGroupText( tempDb[0].id, action.modelId, state.aircraftSkill)
+				calcGroupText( tempDb[0].id, action.modelId, state.aircraftSkill, state.aircraftFactory)
 				
 				return Object.assign({}, state, {
 					aircraftTypeSelect: action.modelId,
@@ -59,7 +59,7 @@ export default function reducerGroup(state = initialState, action) {
 					dbCarrierTypeQuery: dbCarrier.chain().find({ 'display': state.carrierDisp }).where( function( obj ){ return obj[action.modelId] == 1 }).simplesort('type').data()
 				})
 			} else {
-				calcGroupText( '', '', state.aircraftSkill)
+				calcGroupText( '', '', state.aircraftSkill, state.aircraftFactory)
 				return Object.assign({}, state, {
 					aircraftTypeSelect: '',
 					aircraftSelect: '0',
@@ -75,7 +75,7 @@ export default function reducerGroup(state = initialState, action) {
 		// ===============================================================================
 		case AIRCRAFT_CHANGE:
 			if ( state.aircraftSelect === action.modelId ) {
-				calcGroupText( '', '', state.aircraftSkill)
+				calcGroupText( '', '', state.aircraftSkill, state.aircraftFactory)
 				return Object.assign({}, state, {
 					dbCarrierSelect: dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data(),
 					aircraftSelect: '0',
@@ -83,7 +83,7 @@ export default function reducerGroup(state = initialState, action) {
 				})
 			} else {
 				var tempDb = dbAircraft.chain().find({ 'id': action.modelId }).data()
-				calcGroupText( action.modelId, tempDb[0].type, state.aircraftSkill)
+				calcGroupText( action.modelId, tempDb[0].type, state.aircraftSkill, state.aircraftFactory)
 				return Object.assign({}, state, {
 					dbCarrierSelect: dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data(),
 					aircraftSelect: action.modelId,
@@ -96,7 +96,7 @@ export default function reducerGroup(state = initialState, action) {
 		case AIRCRAFT_SKILL_CHANGE:
 			if ( state.aircraftSelect != '0' ) {
 				var tempDb = dbAircraft.findOne({'id': state.aircraftSelect })
-				calcGroupText( tempDb.id, tempDb.type, action.modelId )
+				calcGroupText( tempDb.id, tempDb.type, action.modelId, state.aircraftFactory)
 				return Object.assign({}, state, {
 					dbCarrierSelect: dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data(),
 					aircraftSkill: action.modelId
@@ -112,7 +112,7 @@ export default function reducerGroup(state = initialState, action) {
 		case AIRCRAFT_FACTORY_CHANGE:
 			if ( state.aircraftSelect != '0' ) {
 				var tempDb = dbAircraft.findOne({'id': state.aircraftSelect })
-				calcGroupText( tempDb.id, tempDb.type, state.aircraftSkill )
+				calcGroupText( tempDb.id, tempDb.type, state.aircraftSkill, action.modelId )
 				return Object.assign({}, state, {
 					dbCarrierSelect: dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data(),
 					aircraftFactory: action.modelId
@@ -165,18 +165,22 @@ export default function reducerGroup(state = initialState, action) {
 				carrierSelect.slot1short = null
 				carrierSelect.slot1type = null
 				carrierSelect.slot1text = null
+				carrierSelect.slot1fac = null
 				carrierSelect.slot2id = null
 				carrierSelect.slot2short = null
 				carrierSelect.slot2type = null
 				carrierSelect.slot2text = null
+				carrierSelect.slot2fac = null
 				carrierSelect.slot3id = null
 				carrierSelect.slot3short = null
 				carrierSelect.slot3type = null
 				carrierSelect.slot3text = null
+				carrierSelect.slot4fac = null
 				carrierSelect.slot4id = null
 				carrierSelect.slot4short = null
 				carrierSelect.slot4type = null
 				carrierSelect.slot4text = null
+				carrierSelect.slot5fac = null
 				switch ( carrierSelect.type ) {
 					case "AC":
 					case "CV":
@@ -197,7 +201,7 @@ export default function reducerGroup(state = initialState, action) {
 					for (var i=0; i<searchName.length; i++) {
 						if ( !carrierSelect[searchName[i]] ) {
 							if ( tempDb.type ) {
-								carrierSelect[searchText[i]] = calcSlotText( state.aircraftSelect, tempDb.type, carrierSelect[searchSlot[i]], state.aircraftSkill)
+								carrierSelect[searchText[i]] = calcSlotText( state.aircraftSelect, tempDb.type, carrierSelect[searchSlot[i]], state.aircraftSkill, state.aircraftFactory)
 							} else {
 								carrierSelect[searchText[i]] = carrierSelect[searchSlot[i]]
 							}
@@ -231,6 +235,7 @@ export default function reducerGroup(state = initialState, action) {
 			var slotType = selectedSlot + 'type'
 			var slotSkill = selectedSlot + 'skill'
 			var slotText = selectedSlot + 'text'
+			var slotFac = selectedSlot + 'fac'
 			var selectedAC = dbAircraft.findOne({'id': state.aircraftSelect })
 			var dbTemp
 			var tempObject = {}
@@ -245,6 +250,7 @@ export default function reducerGroup(state = initialState, action) {
 				seletcedTarget[slotName] = null
 				seletcedTarget[slotType] = null
 				seletcedTarget[slotSkill] = null
+				seletcedTarget[slotFac] = null
 				seletcedTarget[slotText] = calcSlotText( "", "", seletcedTarget[selectedSlot], state.aircraftSkill)
 				dbCarrier.update(seletcedTarget)
 				dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
@@ -269,7 +275,8 @@ export default function reducerGroup(state = initialState, action) {
 					seletcedTarget[slotName] = null
 					seletcedTarget[slotType] = null
 					seletcedTarget[slotSkill] = null
-					seletcedTarget[slotText] = calcSlotText( selectedAC.id, selectedAC.type, seletcedTarget[selectedSlot], state.aircraftSkill)
+					seletcedTarget[slotFac] = null
+					seletcedTarget[slotText] = calcSlotText( selectedAC.id, selectedAC.type, seletcedTarget[selectedSlot], state.aircraftSkill, state.aircraftFactory)
 					seletcedTarget["firepowerEQ"] = seletcedTarget["firepowerEQ"] - tempFP.firepower
 					dbCarrier.update(seletcedTarget)
 					dbTemp = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
@@ -291,6 +298,7 @@ export default function reducerGroup(state = initialState, action) {
 					seletcedTarget[slotName] = selectedAC.short
 					seletcedTarget[slotType] = selectedAC.type
 					seletcedTarget[slotSkill] = state.aircraftSkill
+					seletcedTarget[slotFac] = state.aircraftFactory
 					seletcedTarget[slotText] = ""
 					seletcedTarget["firepowerEQ"] = seletcedTarget["firepowerEQ"] + tempFP.firepower
 					dbCarrier.update(seletcedTarget)
@@ -321,6 +329,7 @@ export default function reducerGroup(state = initialState, action) {
 					seletcedTarget[slotName] = selectedAC.short
 					seletcedTarget[slotType] = selectedAC.type
 					seletcedTarget[slotSkill] = state.aircraftSkill
+					seletcedTarget[slotFac] = state.aircraftFactory
 					seletcedTarget[slotText] = ""
 					seletcedTarget["firepowerEQ"] = seletcedTarget["firepowerEQ"] + tempFP.firepower
 					dbCarrier.update(seletcedTarget)

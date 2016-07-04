@@ -78,14 +78,14 @@ export function calcSlotSonar( aircraftId ) {
 	return output
 }
 
-export function calcSlotAircontrol(aircraftId, slotSize, slotSkill ) {
+export function calcSlotAircontrol(aircraftId, slotSize, slotSkill, slotFactory ) {
 	var aircraftSelect = dbAircraft.findOne({'id': aircraftId })
 	var acValue = 0
 	
 	switch ( aircraftSelect.type ) {
 		case 'fighter':
 		case 'seaplaneX':
-			acValue = acValue + Math.floor( aircraftSelect.air * Math.sqrt(slotSize))
+			acValue = Math.floor((aircraftSelect.air + 0.2*slotFactory) * Math.sqrt(slotSize))
 
 			switch ( slotSkill ) {
 				case "1":
@@ -115,7 +115,7 @@ export function calcSlotAircontrol(aircraftId, slotSize, slotSkill ) {
 		case 'bomber':
 		case 'torpedo':
 			if ( aircraftSelect.air > 0 ) {
-				acValue = acValue + Math.floor( aircraftSelect.air * Math.sqrt(slotSize))
+				acValue = Math.floor( aircraftSelect.air * Math.sqrt(slotSize))
 			}
 			
 			switch ( slotSkill ) {
@@ -145,7 +145,7 @@ export function calcSlotAircontrol(aircraftId, slotSize, slotSkill ) {
 			break 
 		case 'seaplane':
 			if ( aircraftSelect.air > 0 ) {
-				acValue = acValue + Math.floor( aircraftSelect.air * Math.sqrt(slotSize))
+				acValue = Math.floor( aircraftSelect.air * Math.sqrt(slotSize))
 			}
 			
 			switch ( slotSkill ) {
@@ -220,7 +220,7 @@ export function calcSlotScout2( aircraftId ) {
 	return output
 }
 
-export function calcSlotText( aircraftId, aircraftType, slotSize, slotSkill) {
+export function calcSlotText( aircraftId, aircraftType, slotSize, slotSkill, slotFactory) {
 	var output = slotSize.toString()
 	var tempObject = {}
 	var tempAC = 0
@@ -233,7 +233,7 @@ export function calcSlotText( aircraftId, aircraftType, slotSize, slotSkill) {
 		case "torpedo":
 		case "seaplane":
 		case "seaplaneX":
-			tempAC = calcSlotAircontrol(aircraftId, slotSize, slotSkill )
+			tempAC = calcSlotAircontrol(aircraftId, slotSize, slotSkill, slotFactory )
 			break
 	}
 	switch ( aircraftType ) {
