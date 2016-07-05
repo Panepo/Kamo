@@ -5,7 +5,7 @@ import GroupInfoBox from './GroupInfoBox'
 import ToggleButton from '../components/ToggleButton'
 import ToggleImgButton from '../components/ToggleImgButton'
 import { carrierSelect, carrierSlotSelect } from '../actions'
-import { listCarrierThead, listCarrierTbody, listCarrierTbodyText, listAircraft, listAircraftColor, listAircraftSkill, listAircraftSkill2 } from '../constants/ConstList'
+import { listCarrierThead, listCarrierTbody, listCarrierTbodyText, listAircraft, listAircraftColor, listAircraftSkill, listAircraftSkill2} from '../constants/ConstList'
 import '../../css/GroupMember.css'
 
 class GroupMember extends Component {
@@ -43,31 +43,33 @@ class GroupMember extends Component {
 					var imgSrcTemp = 'image/ship/' + selectData[i].id + '.jpg'
 					tdTemp = (
 						<td key={stringTemp}>
-							<ToggleImgButton
-								key={"groupButton" + i.toString()}
-								modelId={selectData[i].id}
-								display={'0'}
-								onClickFunc={(modelId) => carrierSelect(modelId)}
-								Cactive={"mdl-button--raised mdl-button--colored"}
-								Cinactive={""}
-								imgSrc={imgSrcTemp}
-								text={""}
-								title={selectData[i].name} />
+							<div>
+								<ToggleImgButton
+									key={"groupButton" + i.toString()}
+									modelId={selectData[i].id}
+									display={'0'}
+									onClickFunc={(modelId) => carrierSelect(modelId)}
+									Cactive={"mdl-button--raised mdl-button--colored"}
+									Cinactive={""}
+									imgSrc={imgSrcTemp}
+									text={""}
+									title={selectData[i].name} />
+							</div>
+							<div className="thead">火力: {selectData[i]["firepowerEQ"]}</div>
 						</td>
 						)
-				} else if ( j === 1 ) {
-					tdTemp = <td key={"groupFP" + i.toString()}>{selectData[i]["firepowerEQ"]}</td>
 				} else {
-					if ( selectData[i][listCarrierTbody[j-1]] > 0 ) {
+					if ( selectData[i][listCarrierTbody[j]] > 0 ) {
 						var textTemp = ''
-						var idTemp = listCarrierTbody[j-1] + selectData[i].id
-						var slotID = listCarrierTbody[j-1] + 'id'
-						var slotName = listCarrierTbody[j-1] + 'short'
-						var slotType = listCarrierTbody[j-1] + 'type'
+						var idTemp = listCarrierTbody[j] + selectData[i].id
+						var slotID = listCarrierTbody[j] + 'id'
+						var slotName = listCarrierTbody[j] + 'short'
+						var slotType = listCarrierTbody[j] + 'type'
+						var slotFac = listCarrierTbody[j] + 'fac'
 						var classTemp = "group-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"
 						
 						if ( selectData[i][slotID] ) {
-							textTemp = selectData[i][slotName] + "(" + selectData[i][listCarrierTbody[j-1]].toString() + ")" + listAircraftSkill2[selectData[i][listCarrierTbody[j-1] + 'skill']]
+							textTemp = "+" + selectData[i][slotFac] + selectData[i][slotName] + "(" + selectData[i][listCarrierTbody[j]].toString() + ")" + listAircraftSkill2[selectData[i][listCarrierTbody[j] + 'skill']]
 							switch ( selectData[i][slotType] ) {
 								case listAircraft[0]:
 									classTemp = classTemp + " mdl-color--" + listAircraftColor[0] + " mdl-button--raised"
@@ -102,7 +104,7 @@ class GroupMember extends Component {
 							}
 							
 						} else {
-							textTemp = selectData[i][listCarrierTbodyText[j-1]].toString()
+							textTemp = selectData[i][listCarrierTbodyText[j]].toString()
 						}
 						
 						tdTemp = (
