@@ -71,7 +71,7 @@ class GroupInfoBox extends Component {
 					</div>
 					{buttOut}
 				</div>
-				<div className="mdl-grid">
+				<div className="mdl-grid mdl-grid--no-spacing">
 					<div className="mdl-cell mdl-cell--1-col" />
 					{factoryOut}
 				</div>

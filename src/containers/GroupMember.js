@@ -141,10 +141,12 @@ class GroupMember extends Component {
 					<div className="mdl-cell mdl-cell--2-col">触接率: {scout3}/{scout2}/{scout1 + scout0}%</div>
 					<div className="mdl-cell mdl-cell--2-col">期望觸接倍率: {airDamage}%</div>
 				</div>
-				<table className="group-unit group-table mdl-data-table mdl-js-data-table mdl-shadow--4dp">
-					{theadOut}
-					{tbodyOut}
-				</table>
+				<div className="group-unit group-table group-table-div mdl-shadow--4dp">
+					<table className="group-table mdl-data-table mdl-js-data-table">
+						{theadOut}
+						{tbodyOut}
+					</table>
+				</div>
 			</div>
 		)
 	}

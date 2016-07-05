@@ -17,3 +17,8 @@
 .group-unit {
 	margin-bottom: 10px;
 }
+
+.group-table-div {
+	overflow:auto;
+	height: calc(100% - 208px);
+}
