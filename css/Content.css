@@ -19,7 +19,7 @@
 
 .content {
 	height: 100%;
-	max-height: calc(100% - 112px);
+	max-height: calc(100% - 64px);
 	overflow: hidden;
 }
 
