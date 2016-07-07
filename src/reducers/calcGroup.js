@@ -1,5 +1,5 @@
 import { dbCarrier } from './database'
-import { searchName, searchSlot, searchSkill, searchText, searchFactory } from '../constants/ConstList'
+import { searchName, searchSlot, searchSkill, searchText, searchFactory, searchShort, listAircraftSkill2 } from '../constants/ConstList'
 import { calcSlotAircontrol, calcSlotScout, calcSlotScout2, calcSlotText } from './calcSlot'
 
 export function calcGroupAir(input) {
@@ -98,4 +98,27 @@ export function calcGroupText( aircraftId, aircraftType, aircraftSkill, aircraft
 			}
 		}
 	}
+}
+
+export function calcOutputText() {
+	var carrierSelected = dbCarrier.chain().find({ 'select': { '$gt' : 1 } }).simplesort('select').data()
+	var output = []
+	var tempString = ''
+	
+	if ( carrierSelected.length > 0 ) {
+		for (var i=0; i<carrierSelected.length; i++) {
+			output[i] = carrierSelected[i].name + " "
+			
+			for (var j=0; j<4; j++) {
+				if ( carrierSelected[i][searchName[j]] ) {
+					tempString = "+" + carrierSelected[i][searchFactory[j]] + " " + carrierSelected[i][searchShort[j]] + " " + listAircraftSkill2[carrierSelected[i][searchSkill[j]]]
+					output[i] = output[i] + tempString + " "
+				} else {
+					output[i] = output[i] + "empty "
+				}
+			}
+		}
+	}
+	
+	return output
 }

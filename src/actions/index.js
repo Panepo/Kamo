@@ -7,6 +7,20 @@ export function pageChange(modelId) {
 	}
 }
 
+export function modelOpen(modelId) {
+	return {
+		type: types.MODEL_OPEN,
+		modelId
+	}
+}
+
+export function modelClose(modelId) {
+	return {
+		type: types.MODEL_CLOSE,
+		modelId
+	}
+}
+
 export function aircraftChange(modelId) {
 	return {
 		type: types.AIRCRAFT_CHANGE,

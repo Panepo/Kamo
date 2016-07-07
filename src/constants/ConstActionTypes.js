@@ -1,4 +1,6 @@
 export const PAGE_CHANGE = 'PAGE_CHANGE'
+export const MODEL_OPEN = 'MODEL_OPEN'
+export const MODEL_CLOSE = 'MODEL_CLOSE'
 
 export const AIRCRAFT_CHANGE = 'AIRCRAFT_CHANGE'
 export const AIRCRAFT_TYPE_CHANGE = 'AIRCRAFT_TYPE_CHANGE'

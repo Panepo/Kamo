@@ -1,13 +1,15 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { pageChange } from '../actions'
+import { pageChange, modelOpen, modelClose } from '../actions'
 import ToggleButton from '../components/ToggleButton'
+import TextModel from '../components/TextModel'
 import { listStatus, listStatusS } from '../constants/ConstList'
+import '../../css/Header.css'
 
 class Header extends Component {
 	render() {
-		const { dispStatus, pageChange } = this.props
+		const { pageStatus, pageChange, modelStatus, modelOpen, modelClose, textOutput } = this.props
 		
 		var buttonTemp
 		var buttonOut = []
@@ -16,7 +18,7 @@ class Header extends Component {
 				<ToggleButton
 					key={"statusButton" + i.toString()}
 					modelId={listStatusS[i]}
-					display={dispStatus}
+					display={pageStatus}
 					onClickFunc={(modelId) => pageChange(modelId)}
 					Cactive={"mdl-layout__tab is-active"}
 					Cinactive={"mdl-layout__tab"}
@@ -27,12 +29,17 @@ class Header extends Component {
 		
 		return (
 			<header className="mdl-layout__header">
+				<TextModel
+					display={modelStatus}
+					input={textOutput} 
+					modelClose={() => modelClose(0)} />
 				<div className="mdl-layout__header-row">
 					<span className="mdl-layout-title">KAMO</span>
 					<div className="mdl-layout-spacer"></div>
 					<nav className="mdl-navigation mdl-layout--large-screen-only">
 						<a className="mdl-navigation__link" href="http://www.dmm.com/netgame_s/kancolle/">艦これ</a>
 						<a className="mdl-navigation__link" href="http://wikiwiki.jp/kancolle/">攻略Wiki</a>
+						<a className="mdl-navigation__link" onClick={() => modelOpen(0)}>掲示板張り付け用</a>
 					</nav>
 				</div>
 				<div className="mdl-layout__tab-bar mdl-js-ripple-effect">
@@ -44,16 +51,28 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-	dispStatus: PropTypes.string.isRequired
+	pageStatus: PropTypes.string.isRequired,
+	modelStatus: PropTypes.bool.isRequired,
+	textOutput: PropTypes.array.isRequired
 }
 
 const mapStateToProps = (state) => {
 	return {
-		dispStatus: state.reducerPage.status
+		pageStatus: state.reducerPage.status,
+		modelStatus: state.reducerPage.modelStatus,
+		textOutput: state.reducerPage.textOutput
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		pageChange: bindActionCreators(pageChange, dispatch),
+		modelOpen: bindActionCreators(modelOpen, dispatch),
+		modelClose: bindActionCreators(modelClose, dispatch)
 	}
 }
 
 export default connect(
 	mapStateToProps,
-	{ pageChange }
+	mapDispatchToProps
 )(Header)
