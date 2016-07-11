@@ -22,3 +22,11 @@
 	overflow:auto;
 	height: calc(100% - 211px);
 }
+
+.group-info {
+	height: 108px;
+}
+
+.group-info-up {
+	height: 50px;
+}
