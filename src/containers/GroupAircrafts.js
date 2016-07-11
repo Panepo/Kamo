@@ -42,7 +42,7 @@ class GroupAircrafts extends Component {
 							key={"tableAircraft" + j.toString()}
 							display={aircraftSelect}
 							onClickFunc={(modelId) => aircraftChange(modelId)}
-							Cactive={"aircraft-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised mdl-color--green-800"}
+							Cactive={"aircraft-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised mdl-color--yellow-900"}
 							Cinactive={"aircraft-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"}
 							title={aircraftData[j].name} />
 					)
