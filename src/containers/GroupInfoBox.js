@@ -64,7 +64,7 @@ class GroupInfoBox extends Component {
 		}
 		
 		return (
-			<div className="group-unit mdl-shadow--4dp">
+			<div className="group-info  group-unit mdl-shadow--4dp">
 				<div className="mdl-grid">
 					<div className="mdl-cell mdl-cell--4-col">
 						{infoOut}

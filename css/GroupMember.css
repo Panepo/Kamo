@@ -20,5 +20,9 @@
 
 .group-table-div {
 	overflow:auto;
-	height: calc(100% - 208px);
+	height: calc(100% - 211px);
+}
+
+.group-info {
+	height: 108px;
 }
