@@ -113,6 +113,33 @@ export function calcSlotAircontrol(aircraftId, slotSize, slotSkill, slotFactory 
 			
 			break
 		case 'bomber':
+			acValue = Math.floor( (aircraftSelect.air + 0.25*slotFactory) * Math.sqrt(slotSize))
+			
+			switch ( slotSkill ) {
+				case "1":
+					acValue = acValue + 1
+					break
+				case "2":
+					acValue = acValue + 1
+					break
+				case "3":
+					acValue = acValue + 2
+					break
+				case "4":
+					acValue = acValue + 2
+					break
+				case "5":
+					acValue = acValue + 2
+					break
+				case "6":
+					acValue = acValue + 3
+					break
+				case "7":
+					acValue = acValue + 3
+					break
+			}
+			
+			break 
 		case 'torpedo':
 			if ( aircraftSelect.air > 0 ) {
 				acValue = Math.floor( aircraftSelect.air * Math.sqrt(slotSize))
